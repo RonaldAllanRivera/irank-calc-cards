@@ -318,7 +318,7 @@ function irank_cc_render_calculator_block( $attributes ) {
           <div class="irank-calc__question" style="<?php echo $style_question; ?>"><?php echo $questionText; ?></div>
           <div class="irank-calc__current" style="<?php echo $style_weight; ?>">
             <label style="<?php echo $style_weight; ?>"><?php echo $weightLabel; ?></label>
-            <div class="irank-calc__value"><span class="irank-calc__weight"><?php echo (int)$init; ?></span> <?php echo $unit; ?></div>
+            <div class="irank-calc__value"><span class="irank-calc__weight"><?php echo (int)$init; ?></span> <span class="irank-calc__unit"><?php echo $unit; ?></span></div>
           </div>
           <input type="range" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="<?php echo $step; ?>" value="<?php echo $init; ?>" class="irank-calc__slider"/>
           <div class="irank-calc__loss" style="<?php echo $style_loss; ?>"><?php echo $lossLabel; ?> <strong><span class="irank-calc__loss-val" aria-live="polite">0</span> <?php echo $unit; ?></strong></div>
