@@ -135,15 +135,45 @@
   align-items: center;
   margin: 8px 0;
 }
-.irank-calc__value{ display:flex; align-items:center; gap:6px; }
-.irank-calc__weight{ font-weight:400; font-size:36px; line-height:1; }
-.irank-calc__unit{ font-weight:400; font-size:24px; line-height:1; }
+.irank-calc__value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.irank-calc__weight {
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1;
+}
+.irank-calc__unit {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+}
 .irank-calc__slider {
   width: 100%;
   margin: 10px 0;
 }
 .irank-calc__loss {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 8px 0;
+}
+.irank-calc__loss-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.irank-calc__loss-val {
+  font-weight: bold;
+  font-size: 56px;
+  line-height: 1;
+}
+.irank-calc__loss-unit {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
 }
 .irank-calc__timer {
   margin-top: 0;
