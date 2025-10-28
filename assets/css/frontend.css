@@ -89,22 +89,15 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #F0532C;
-  box-shadow: 0 10px 22px rgba(240, 83, 44, 0.15);
+  background: transparent;
+  background-image: url('../img/circle.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  border: 0;
+  box-shadow: none;
 }
-.irank-calc__ba-handle::before {
-  content: '\2039\00A0\203A';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #F0532C;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 4px;
-  z-index: 3;
-}
+.irank-calc__ba-handle::before { content: none; }
 .irank-calc__label {
   position: absolute;
   bottom: 10px;
