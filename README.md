@@ -10,7 +10,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 ## Plugin metadata
 - Requires at least: 6.8
 - Requires PHP: 8.1
-- Stable tag: 0.1.3
+- Stable tag: 0.1.4
 - License: GPL-2.0-or-later
 
 ## Description
@@ -24,6 +24,11 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Ranges, loss factor, unit, colors, images
 - Typography controls (Typography panel): font family, weight, size, color per text
   - Fonts: Poppins (bundled via Google Fonts), Nohemi (fallback to Poppins/system)
+- Buttons panel for CTA and Before/After label colors
+  - CTA: background/text + hover background/text/border
+  - Labels: background/text + hover background/text/border
+- CTA button defaults: 70% width (centered), 64px radius; labels 64px radius
+- Before/After labels are clickable to reveal left/right and auto‑hide near edges
 - Responsive before/after images with `srcset` when media IDs are used
 - Results overlay opens on CTA click (Escape closes)
 - First‑party conversion tracking (DB + REST + `sendBeacon`), CSV export

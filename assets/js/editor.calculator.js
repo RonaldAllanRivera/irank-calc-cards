@@ -85,6 +85,18 @@
       timerFontWeight:{type:'number',default:500},
       timerFontSize:{type:'string',default:'14px'},
       timerColor:{type:'string',default:'#ffffff'},
+
+      // Button colors (CTA and Before/After labels)
+      ctaBg:{type:'string',default:'#92245A'},
+      ctaHoverBg:{type:'string',default:'#ffffff'},
+      ctaHoverColor:{type:'string',default:'#000000'},
+      ctaHoverBorder:{type:'string',default:'#000000'},
+
+      labelBg:{type:'string',default:'#92245A'},
+      labelColor:{type:'string',default:'#ffffff'},
+      labelHoverBg:{type:'string',default:'#ffffff'},
+      labelHoverColor:{type:'string',default:'#000000'},
+      labelHoverBorder:{type:'string',default:'#000000'},
     },
     edit: function(props){
       var a = props.attributes;
@@ -187,6 +199,53 @@
             el('div',{},[
               el('label',{},__('Color','irank-calc-cards')),
               el(ColorPalette,{value:a.timerColor,onChange:function(v){props.setAttributes({timerColor:v});}})
+            ])
+          ])
+          ,
+          el(PanelBody,{title:__('Buttons','irank-calc-cards'),initialOpen:false},[
+            el('h4',{},__('CTA Button','irank-calc-cards')),
+            el('div',{},[
+              el('label',{},__('Background','irank-calc-cards')),
+              el(ColorPalette,{value:a.ctaBg,onChange:function(v){props.setAttributes({ctaBg:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Text Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.ctaColor,onChange:function(v){props.setAttributes({ctaColor:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Hover Background','irank-calc-cards')),
+              el(ColorPalette,{value:a.ctaHoverBg,onChange:function(v){props.setAttributes({ctaHoverBg:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Hover Text','irank-calc-cards')),
+              el(ColorPalette,{value:a.ctaHoverColor,onChange:function(v){props.setAttributes({ctaHoverColor:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Hover Border','irank-calc-cards')),
+              el(ColorPalette,{value:a.ctaHoverBorder,onChange:function(v){props.setAttributes({ctaHoverBorder:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('Before/After Labels','irank-calc-cards')),
+            el('div',{},[
+              el('label',{},__('Background','irank-calc-cards')),
+              el(ColorPalette,{value:a.labelBg,onChange:function(v){props.setAttributes({labelBg:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Text Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.labelColor,onChange:function(v){props.setAttributes({labelColor:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Hover Background','irank-calc-cards')),
+              el(ColorPalette,{value:a.labelHoverBg,onChange:function(v){props.setAttributes({labelHoverBg:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Hover Text','irank-calc-cards')),
+              el(ColorPalette,{value:a.labelHoverColor,onChange:function(v){props.setAttributes({labelHoverColor:v});}})
+            ]),
+            el('div',{},[
+              el('label',{},__('Hover Border','irank-calc-cards')),
+              el(ColorPalette,{value:a.labelHoverBorder,onChange:function(v){props.setAttributes({labelHoverBorder:v});}})
             ])
           ])
         ),

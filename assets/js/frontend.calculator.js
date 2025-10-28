@@ -50,6 +50,7 @@
       ba.style.setProperty('--ba', (pct*100).toFixed(2)+'%');
       sessionStorage.setItem('irank_calc_weight', String(w));
       sessionStorage.setItem('irank_calc_loss', String(loss));
+      updateLabelVisibility();
     }
 
     slider.addEventListener('input', update);
@@ -69,15 +70,43 @@
     overlay && overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !overlay.hidden){ closeOverlay(); } });
 
+    // Before/After reveal helpers
+    function getBA(){ var val = parseFloat((ba && ba.style.getPropertyValue('--ba') || '50%').replace('%',''))||50; return clamp(val,0,100); }
+    function updateLabelVisibility(){
+      var beforeBtn = $('.irank-calc__label--before', section);
+      var afterBtn  = $('.irank-calc__label--after', section);
+      if(!(beforeBtn||afterBtn)) return;
+      var pct = getBA();
+      var hideBefore = pct <= 8;   // near left edge
+      var hideAfter  = pct >= 92;  // near right edge
+      if(beforeBtn){ beforeBtn.hidden = !!hideBefore; }
+      if(afterBtn){ afterBtn.hidden = !!hideAfter; }
+    }
+    function setBA(pct){ pct = clamp(pct,0,100); if(ba){ ba.style.setProperty('--ba', pct+'%'); } if(baHandle){ baHandle.setAttribute('aria-valuenow', String(Math.round(pct))); } updateLabelVisibility(); }
+    function animateBA(target){
+      var from = getBA(); var to = clamp(target,0,100); var start=null, dur=250;
+      function step(ts){ if(!start) start=ts; var p=Math.min(1,(ts-start)/dur); setBA(from + (to-from)*p); if(p<1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    }
+
     // Keyboard BA handle: left/right move clip
     if(baHandle){
-      function setBA(pct){ pct = clamp(pct,0,100); ba.style.setProperty('--ba', pct+'%'); baHandle.setAttribute('aria-valuenow', String(Math.round(pct))); }
       baHandle.addEventListener('keydown', function(e){
-        var val = parseFloat((ba.style.getPropertyValue('--ba')||'50%').replace('%',''))||50;
+        var val = getBA();
         if(e.key==='ArrowLeft'){ setBA(val-5); e.preventDefault(); }
         if(e.key==='ArrowRight'){ setBA(val+5); e.preventDefault(); }
       });
     }
+
+    // Click Before/After labels to move slider
+    var beforeBtn = $('.irank-calc__label--before', section);
+    var afterBtn  = $('.irank-calc__label--after', section);
+    if(beforeBtn){ beforeBtn.addEventListener('click', function(){ animateBA(0); }); }
+    if(afterBtn){ afterBtn.addEventListener('click', function(){ animateBA(100); }); }
+
+    // Ensure labels toggle on load and on resize
+    updateLabelVisibility();
+    var resizeTO=null; window.addEventListener('resize', function(){ clearTimeout(resizeTO); resizeTO = setTimeout(updateLabelVisibility, 100); });
   }
 
   document.addEventListener('DOMContentLoaded', function(){

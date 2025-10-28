@@ -2,7 +2,7 @@
 /**
  * Plugin Name: IRANK Calc & Cards
  * Description: Weight loss calculator and product cards as no-build Gutenberg blocks with same-page results and first-party tracking.
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author: Ronald Allan Rivera
  * Requires at least: 6.8
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'IRANK_CC_VER', '0.1.3' );
+define( 'IRANK_CC_VER', '0.1.4' );
 define( 'IRANK_CC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IRANK_CC_URL', plugin_dir_url( __FILE__ ) );
 
@@ -196,6 +196,20 @@ function irank_cc_register_blocks() {
             'timerFontWeight' => array( 'type' => 'number', 'default' => 500 ),
             'timerFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
             'timerColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            // Button colors (CTA)
+            'ctaBg'           => array( 'type' => 'string', 'default' => '#92245A' ),
+            'ctaColor'        => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'ctaHoverBg'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'ctaHoverColor'   => array( 'type' => 'string', 'default' => '#000000' ),
+            'ctaHoverBorder'  => array( 'type' => 'string', 'default' => '#000000' ),
+
+            // Label colors (Before/After badges)
+            'labelBg'           => array( 'type' => 'string', 'default' => '#92245A' ),
+            'labelColor'        => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'labelHoverBg'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'labelHoverColor'   => array( 'type' => 'string', 'default' => '#000000' ),
+            'labelHoverBorder'  => array( 'type' => 'string', 'default' => '#000000' ),
         ),
     ) );
 
@@ -250,6 +264,19 @@ function irank_cc_render_calculator_block( $attributes ) {
     $beforeLabel = isset($a['beforeLabel']) ? esc_html($a['beforeLabel']) : 'Before';
     $afterLabel = isset($a['afterLabel']) ? esc_html($a['afterLabel']) : 'After';
 
+    // Button/label colors
+    $ctaBg = isset($a['ctaBg']) ? sanitize_hex_color($a['ctaBg']) : '#92245A';
+    $ctaTextCol = isset($a['ctaColor']) ? sanitize_hex_color($a['ctaColor']) : '#ffffff';
+    $ctaHoverBg = isset($a['ctaHoverBg']) ? sanitize_hex_color($a['ctaHoverBg']) : '#ffffff';
+    $ctaHoverCol = isset($a['ctaHoverColor']) ? sanitize_hex_color($a['ctaHoverColor']) : '#000000';
+    $ctaHoverBorder = isset($a['ctaHoverBorder']) ? sanitize_hex_color($a['ctaHoverBorder']) : '#000000';
+
+    $labelBg = isset($a['labelBg']) ? sanitize_hex_color($a['labelBg']) : '#92245A';
+    $labelCol = isset($a['labelColor']) ? sanitize_hex_color($a['labelColor']) : '#ffffff';
+    $labelHoverBg = isset($a['labelHoverBg']) ? sanitize_hex_color($a['labelHoverBg']) : '#ffffff';
+    $labelHoverCol = isset($a['labelHoverColor']) ? sanitize_hex_color($a['labelHoverColor']) : '#000000';
+    $labelHoverBorder = isset($a['labelHoverBorder']) ? sanitize_hex_color($a['labelHoverBorder']) : '#000000';
+
     // Typography helpers
     $ff = function($primary){
         $primary = trim((string)$primary);
@@ -259,14 +286,15 @@ function irank_cc_render_calculator_block( $attributes ) {
     $style_question = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['questionFontFamily'])), (int)$a['questionFontWeight'], esc_attr($a['questionFontSize']), esc_attr($a['questionColor']) );
     $style_weight   = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['weightFontFamily'])), (int)$a['weightFontWeight'], esc_attr($a['weightFontSize']), esc_attr($a['weightColor']) );
     $style_loss     = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['lossFontFamily'])), (int)$a['lossFontWeight'], esc_attr($a['lossFontSize']), esc_attr($a['lossColor']) );
-    $style_before   = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['beforeFontFamily'])), (int)$a['beforeFontWeight'], esc_attr($a['beforeFontSize']), esc_attr($a['beforeColor']) );
-    $style_after    = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['afterFontFamily'])), (int)$a['afterFontWeight'], esc_attr($a['afterFontSize']), esc_attr($a['afterColor']) );
-    $style_cta      = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['ctaFontFamily'])), (int)$a['ctaFontWeight'], esc_attr($a['ctaFontSize']), esc_attr($a['ctaColor']) );
+    // For labels and CTA, omit inline color so CSS variables + :hover can control text color
+    $style_before   = sprintf('font-family:%s;font-weight:%d;font-size:%s;', esc_attr($ff($a['beforeFontFamily'])), (int)$a['beforeFontWeight'], esc_attr($a['beforeFontSize']) );
+    $style_after    = sprintf('font-family:%s;font-weight:%d;font-size:%s;', esc_attr($ff($a['afterFontFamily'])), (int)$a['afterFontWeight'], esc_attr($a['afterFontSize']) );
+    $style_cta      = sprintf('font-family:%s;font-weight:%d;font-size:%s;', esc_attr($ff($a['ctaFontFamily'])), (int)$a['ctaFontWeight'], esc_attr($a['ctaFontSize']) );
     $style_timer    = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['timerFontFamily'])), (int)$a['timerFontWeight'], esc_attr($a['timerFontSize']), esc_attr($a['timerColor']) );
 
     ob_start();
     ?>
-    <section class="irank-calc" data-unit="<?php echo $unit; ?>" data-loss-factor="<?php echo esc_attr($lossFactor); ?>" data-page-id="<?php echo esc_attr( get_queried_object_id() ); ?>" style="--irank-grad-start: <?php echo $gs; ?>; --irank-grad-end: <?php echo $ge; ?>;">
+    <section class="irank-calc" data-unit="<?php echo $unit; ?>" data-loss-factor="<?php echo esc_attr($lossFactor); ?>" data-page-id="<?php echo esc_attr( get_queried_object_id() ); ?>" style="--irank-grad-start: <?php echo $gs; ?>; --irank-grad-end: <?php echo $ge; ?>; --irank-cta-bg: <?php echo esc_attr($ctaBg); ?>; --irank-cta-color: <?php echo esc_attr($ctaTextCol); ?>; --irank-cta-hover-bg: <?php echo esc_attr($ctaHoverBg); ?>; --irank-cta-hover-color: <?php echo esc_attr($ctaHoverCol); ?>; --irank-cta-hover-border: <?php echo esc_attr($ctaHoverBorder); ?>; --irank-label-bg: <?php echo esc_attr($labelBg); ?>; --irank-label-color: <?php echo esc_attr($labelCol); ?>; --irank-label-hover-bg: <?php echo esc_attr($labelHoverBg); ?>; --irank-label-hover-color: <?php echo esc_attr($labelHoverCol); ?>; --irank-label-hover-border: <?php echo esc_attr($labelHoverBorder); ?>;">
       <div class="irank-calc__wrap">
         <div class="irank-calc__visual">
           <div class="irank-calc__ba">

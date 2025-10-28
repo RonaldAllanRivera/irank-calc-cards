@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.4 - Button styles, CTA width, BA label UX
+- Buttons panel in block editor for configurable colors:
+  - CTA background/text + hover background/text/border
+  - Before/After label background/text + hover background/text/border
+- CTA button width set to 70% of panel and centered; 64px radius
+- Before/After labels set to 64px radius
+- Before/After labels are clickable to reveal left/right with animation
+- Labels auto-hide near edges (≤8% hides Before, ≥92% hides After)
+
 ## 0.1.3 - Typography controls and fonts
 - Added Typography panel with per-text controls: font family, weight, size, color
 - Limited font choices to Poppins and Nohemi (per Figma)
