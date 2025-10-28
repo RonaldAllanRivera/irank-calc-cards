@@ -49,6 +49,7 @@
       animateNumber(lossEl, loss);
       var pct = (w-min)/(max-min); pct = isFinite(pct)?pct:0.5;
       ba.style.setProperty('--ba', (pct*100).toFixed(2)+'%');
+      if(slider && slider.style){ slider.style.setProperty('--slider-pct', ((pct*100).toFixed(2)+'%')); }
       sessionStorage.setItem('irank_calc_weight', String(w));
       sessionStorage.setItem('irank_calc_loss', String(loss));
       updateLabelVisibility();

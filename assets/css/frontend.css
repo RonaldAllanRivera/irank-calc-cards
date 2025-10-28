@@ -153,6 +153,52 @@
 .irank-calc__slider {
   width: 100%;
   margin: 10px 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #92245a 0,
+    #92245a var(--slider-pct, 50%),
+    #ffffff var(--slider-pct, 50%),
+    #ffffff 100%
+  );
+  outline: none;
+}
+
+/* WebKit/Blink thumb */
+.irank-calc__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #92245a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Firefox track/progress */
+.irank-calc__slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+.irank-calc__slider::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #92245a;
+}
+.irank-calc__slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #92245a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 .irank-calc__loss {
   display: flex;
