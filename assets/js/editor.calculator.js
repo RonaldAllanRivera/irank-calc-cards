@@ -42,8 +42,8 @@
       ctaText:{type:'string',default:__('Get started','irank-calc-cards')},
       showTimer:{type:'boolean',default:true},
       timerText:{type:'string',default:__('Get pre-approved in under 90 seconds!','irank-calc-cards')},
-      gradientStart:{type:'string',default:'#f77737'},
-      gradientEnd:{type:'string',default:'#fbad50'},
+      gradientStart:{type:'string',default:'#FFBB8E'},
+      gradientEnd:{type:'string',default:'#F0532C'},
     },
     edit: function(props){
       var a = props.attributes;

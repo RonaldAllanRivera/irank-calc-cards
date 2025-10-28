@@ -22,8 +22,8 @@ function irank_cc_default_options() {
         'step' => 1,
         'loss_factor' => 0.15,
         'unit' => 'lbs',
-        'gradient_start' => '#f77737',
-        'gradient_end' => '#fbad50',
+        'gradient_start' => '#FFBB8E',
+        'gradient_end' => '#f67a51',
         'tracking_enabled' => 1,
     );
 }
@@ -144,8 +144,8 @@ function irank_cc_register_blocks() {
             'ctaText' => array( 'type' => 'string', 'default' => 'Get started' ),
             'showTimer' => array( 'type' => 'boolean', 'default' => true ),
             'timerText' => array( 'type' => 'string', 'default' => 'Get pre-approved in under 90 seconds!' ),
-            'gradientStart' => array( 'type' => 'string', 'default' => '#f77737' ),
-            'gradientEnd' => array( 'type' => 'string', 'default' => '#fbad50' ),
+            'gradientStart' => array( 'type' => 'string', 'default' => '#FFBB8E' ),
+            'gradientEnd' => array( 'type' => 'string', 'default' => '#f67a51' ),
         ),
     ) );
 
