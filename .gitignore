@@ -1,0 +1,14 @@
+# WordPress plugin .gitignore
+/.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+/node_modules/
+/vendor/
+/build/
+/dist/
+*.zip
+# OS junk
+ehthumbs.db
+Icon?
