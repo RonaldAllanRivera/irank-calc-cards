@@ -7,7 +7,8 @@
   function animateNumber(el, to){
     var from = parseFloat(el.getAttribute('data-from')||el.textContent)||0;
     var start = null; var dur = 300; to = +to;
-    function step(ts){ if(!start) start = ts; var p = clamp((ts-start)/dur,0,1); var val = from + (to-from)*p; el.textContent = fmt(val); if(p<1) requestAnimationFrame(step); else el.setAttribute('data-from', to); }
+    var prefix = el.getAttribute('data-sign') || '';
+    function step(ts){ if(!start) start = ts; var p = clamp((ts-start)/dur,0,1); var val = from + (to-from)*p; el.textContent = prefix + fmt(val); if(p<1) requestAnimationFrame(step); else el.setAttribute('data-from', to); }
     requestAnimationFrame(step);
   }
 
@@ -59,7 +60,7 @@
     function openOverlay(){
       var w = parseFloat(slider.value||min); var loss = w*factor;
       resWeight.textContent = fmt(w);
-      resLoss.textContent = fmt(loss);
+      resLoss.textContent = '-' + fmt(loss);
       overlay.hidden = false; overlay.setAttribute('aria-hidden','false'); document.body.classList.add('irank-no-scroll');
       trackEvent({weight:w, loss:loss, page_id:pageId, session_id:uuid(), referrer:document.referrer||''});
     }
