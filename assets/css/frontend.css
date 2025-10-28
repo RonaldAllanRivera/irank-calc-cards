@@ -16,6 +16,9 @@
   gap: 24px;
   align-items: stretch;
   grid-template-columns: 1fr;
+  grid-template-areas:
+    'panel'
+    'visual';
   background: linear-gradient(
     100deg,
     var(--irank-grad-start),
@@ -29,6 +32,7 @@
 @media (min-width: 900px) {
   .irank-calc__wrap {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-areas: 'visual panel';
   }
   .irank-calc__ba--before,
   .irank-calc__ba--after {
@@ -38,6 +42,7 @@
 /* .irank-calc__visual{ position:relative; min-height:490px; background:rgba(255,255,255,.1); border-radius:12px; padding:8px; } */
 
 .irank-calc__visual {
+  grid-area: visual;
   position: relative;
   min-height: 490px;
   border-radius: 12px;
@@ -126,6 +131,7 @@
 
 /* .irank-calc__panel{ background:rgba(255,255,255,.12); padding:16px; border-radius:12px; } */
 .irank-calc__panel {
+  grid-area: panel;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -378,4 +384,16 @@
 .irank-cards__dot[aria-current="true"] {
   background: #111;
   color: #fff;
+}
+
+/* Mobile typography & spacing adjustments */
+@media (max-width: 600px) {
+  .irank-calc__question { font-size: 34px !important; line-height: 42px !important; }
+  .irank-calc__current { margin: 12px 0; }
+  .irank-calc__loss { margin: 14px 0; }
+  .irank-calc__weight { font-size: 32px; }
+  .irank-calc__unit { font-size: 20px; }
+  .irank-calc__loss-val { font-size: 48px; }
+  .irank-calc__slider { margin: 20px 0 24px 0; }
+  .irank-calc__cta { width: 100%; }
 }
