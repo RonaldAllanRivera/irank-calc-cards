@@ -165,6 +165,7 @@ function irank_cc_register_blocks() {
             'questionFontFamily' => array( 'type' => 'string', 'default' => 'Nohemi' ),
             'questionFontWeight' => array( 'type' => 'number', 'default' => 600 ),
             'questionFontSize'   => array( 'type' => 'string', 'default' => '48px' ),
+            'questionLineHeight' => array( 'type' => 'string', 'default' => '54px' ),
             'questionColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
 
             'weightFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
@@ -283,7 +284,7 @@ function irank_cc_render_calculator_block( $attributes ) {
         if ($primary === 'Nohemi') return "'Nohemi','Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
         return "'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
     };
-    $style_question = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['questionFontFamily'])), (int)$a['questionFontWeight'], esc_attr($a['questionFontSize']), esc_attr($a['questionColor']) );
+    $style_question = sprintf('font-family:%s;font-weight:%d;font-size:%s;line-height:%s;color:%s;text-align:center;', esc_attr($ff($a['questionFontFamily'])), (int)$a['questionFontWeight'], esc_attr($a['questionFontSize']), esc_attr($a['questionLineHeight']), esc_attr($a['questionColor']) );
     $style_weight   = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['weightFontFamily'])), (int)$a['weightFontWeight'], esc_attr($a['weightFontSize']), esc_attr($a['weightColor']) );
     $style_loss     = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['lossFontFamily'])), (int)$a['lossFontWeight'], esc_attr($a['lossFontSize']), esc_attr($a['lossColor']) );
     // For labels and CTA, omit inline color so CSS variables + :hover can control text color

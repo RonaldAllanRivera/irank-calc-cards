@@ -54,6 +54,7 @@
       questionFontFamily:{type:'string',default:'Nohemi'},
       questionFontWeight:{type:'number',default:600},
       questionFontSize:{type:'string',default:'48px'},
+      questionLineHeight:{type:'string',default:'54px'},
       questionColor:{type:'string',default:'#ffffff'},
 
       weightFontFamily:{type:'string',default:'Poppins'},
@@ -136,6 +137,7 @@
             el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.questionFontFamily,options:[{label:'Nohemi',value:'Nohemi'},{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({questionFontFamily:v});}}),
             el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.questionFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({questionFontWeight:parseInt(v,10)});}}),
             el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.questionFontSize,onChange:function(v){props.setAttributes({questionFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:a.questionLineHeight,onChange:function(v){props.setAttributes({questionLineHeight:v});}}),
             el('div',{},[
               el('label',{},__('Color','irank-calc-cards')),
               el(ColorPalette,{value:a.questionColor,onChange:function(v){props.setAttributes({questionColor:v});}})
