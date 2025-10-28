@@ -10,7 +10,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 ## Plugin metadata
 - Requires at least: 6.8
 - Requires PHP: 8.1
-- Stable tag: 0.1.0
+- Stable tag: 0.1.2
 - License: GPL-2.0-or-later
 
 ## Description
@@ -18,7 +18,10 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 
 ## Features
 - Dynamic blocks (SSR) with tiny vanilla JS enhancement
-- Editor controls for ranges, loss factor, unit, colors, images, CTA text
+- Editor controls for all calculator text:
+  - Headline, weight labels, Before/After labels
+  - CTA text and timer text in "Text Labels" panel
+  - Ranges, loss factor, unit, colors, images
 - Responsive before/after images with `srcset` when media IDs are used
 - Results overlay opens on CTA click (Escape closes)
 - First‑party conversion tracking (DB + REST + `sendBeacon`), CSV export

@@ -20,6 +20,19 @@
 
 # Short Gutenberg guide (no‑build)
 
+## Editing calculator text
+- Select the Weight Loss Calculator block.
+- In the sidebar, open Text Labels.
+- Editable fields:
+  - Headline ("How much weight can you lose")
+  - Current weight label
+  - Weight loss label
+  - Before label / After label
+  - CTA text
+  - Timer text
+- The Show Timer toggle is under Calculator Settings.
+- Existing pages keep saved copy. To use new defaults, clear a field or re‑insert the block.
+
 - **Open Inspector Controls**
   - Click the block → right sidebar shows settings.
 - **Calculator block controls**

@@ -43,7 +43,12 @@
       showTimer:{type:'boolean',default:true},
       timerText:{type:'string',default:__('Get pre-approved in under 90 seconds!','irank-calc-cards')},
       gradientStart:{type:'string',default:'#FFBB8E'},
-      gradientEnd:{type:'string',default:'#F0532C'},
+      gradientEnd:{type:'string',default:'#f67a51'},
+      questionText:{type:'string',default:__('How much weight can you lose','irank-calc-cards')},
+      weightLabel:{type:'string',default:__('My current weight:','irank-calc-cards')},
+      lossLabel:{type:'string',default:__('Weight loss potential:','irank-calc-cards')},
+      beforeLabel:{type:'string',default:__('Before','irank-calc-cards')},
+      afterLabel:{type:'string',default:__('After','irank-calc-cards')},
     },
     edit: function(props){
       var a = props.attributes;
@@ -58,9 +63,7 @@
             el(TextControl,{label:__('Unit','irank-calc-cards'),value:a.unit,onChange:function(v){props.setAttributes({unit:v});}}),
             el(ImagePicker,{label:__('Before Image','irank-calc-cards'),valueUrl:a.beforeImage,onChange:function(obj){props.setAttributes({beforeImage:obj.url, beforeImageId:obj.id});}}),
             el(ImagePicker,{label:__('After Image','irank-calc-cards'),valueUrl:a.afterImage,onChange:function(obj){props.setAttributes({afterImage:obj.url, afterImageId:obj.id});}}),
-            el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:a.ctaText,onChange:function(v){props.setAttributes({ctaText:v});}}),
             el(ToggleControl,{label:__('Show Timer','irank-calc-cards'),checked:a.showTimer,onChange:function(v){props.setAttributes({showTimer:v});}}),
-            el(TextControl,{label:__('Timer Text','irank-calc-cards'),value:a.timerText,onChange:function(v){props.setAttributes({timerText:v});}}),
             el('div',{},[
               el('label',{},__('Gradient Start','irank-calc-cards')),
               el(ColorPalette,{value:a.gradientStart,onChange:function(v){props.setAttributes({gradientStart:v});}})
@@ -69,12 +72,22 @@
               el('label',{},__('Gradient End','irank-calc-cards')),
               el(ColorPalette,{value:a.gradientEnd,onChange:function(v){props.setAttributes({gradientEnd:v});}})
             ])
+          ]),
+          el(PanelBody,{title:__('Text Labels','irank-calc-cards'),initialOpen:false},[
+            el(TextControl,{label:__('Headline','irank-calc-cards'),value:a.questionText,onChange:function(v){props.setAttributes({questionText:v});}}),
+            el(TextControl,{label:__('Current Weight Label','irank-calc-cards'),value:a.weightLabel,onChange:function(v){props.setAttributes({weightLabel:v});}}),
+            el(TextControl,{label:__('Loss Label','irank-calc-cards'),value:a.lossLabel,onChange:function(v){props.setAttributes({lossLabel:v});}}),
+            el(TextControl,{label:__('Before Label','irank-calc-cards'),value:a.beforeLabel,onChange:function(v){props.setAttributes({beforeLabel:v});}}),
+            el(TextControl,{label:__('After Label','irank-calc-cards'),value:a.afterLabel,onChange:function(v){props.setAttributes({afterLabel:v});}}),
+            el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:a.ctaText,onChange:function(v){props.setAttributes({ctaText:v});}}),
+            el(TextControl,{label:__('Timer Text','irank-calc-cards'),value:a.timerText,onChange:function(v){props.setAttributes({timerText:v});}})
           ])
         ),
         el('div',{className:'irank-calc-preview',style:{border:'1px dashed #ddd',padding:'16px'}},[
           el('strong',{},__('Weight Loss Calculator Preview','irank-calc-cards')),
-          el('div',{}, __('Initial Weight: ','irank-calc-cards') + a.initialWeight + ' ' + a.unit),
-          el('div',{}, __('Loss Factor: ','irank-calc-cards') + a.lossFactor)
+          el('div',{}, a.questionText || __('How much weight can you lose','irank-calc-cards')),
+          el('div',{}, (a.weightLabel || __('My current weight:','irank-calc-cards')) + ' ' + a.initialWeight + ' ' + a.unit),
+          el('div',{}, a.lossLabel || __('Weight loss potential:','irank-calc-cards'))
         ])
       ];
     },

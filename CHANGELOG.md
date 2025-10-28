@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 - Editable text labels and gradient updates
+- Added editable text fields in block editor for all calculator text:
+  - Headline ("How much weight can you lose")
+  - Current weight label
+  - Weight loss label
+  - Before/After labels
+  - CTA text
+  - Timer text
+- Moved CTA and Timer text to "Text Labels" panel in block editor
+- Updated default gradient colors to `#FFBB8E` (start) and `#f67a51` (end)
+- Changed gradient angle to 100° for a more balanced look
+- Updated documentation in README.md and HOWTO.md
+
 ## 0.1.1 - Blocks working, overlay + images, reports, docs
 - Weight Loss Calculator dynamic block
   - Overlay now hidden on load; opens on CTA; closes on outside click and Escape

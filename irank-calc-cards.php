@@ -146,6 +146,12 @@ function irank_cc_register_blocks() {
             'timerText' => array( 'type' => 'string', 'default' => 'Get pre-approved in under 90 seconds!' ),
             'gradientStart' => array( 'type' => 'string', 'default' => '#FFBB8E' ),
             'gradientEnd' => array( 'type' => 'string', 'default' => '#f67a51' ),
+            // Editable texts
+            'questionText' => array( 'type' => 'string', 'default' => 'How much weight can you lose' ),
+            'weightLabel' => array( 'type' => 'string', 'default' => 'My current weight:' ),
+            'lossLabel' => array( 'type' => 'string', 'default' => 'Weight loss potential:' ),
+            'beforeLabel' => array( 'type' => 'string', 'default' => 'Before' ),
+            'afterLabel' => array( 'type' => 'string', 'default' => 'After' ),
         ),
     ) );
 
@@ -194,6 +200,11 @@ function irank_cc_render_calculator_block( $attributes ) {
     $timerText = esc_html( $a['timerText'] );
     $gs = esc_attr( $a['gradientStart'] );
     $ge = esc_attr( $a['gradientEnd'] );
+    $questionText = isset($a['questionText']) ? esc_html($a['questionText']) : 'How much weight can you lose';
+    $weightLabel = isset($a['weightLabel']) ? esc_html($a['weightLabel']) : 'My current weight:';
+    $lossLabel = isset($a['lossLabel']) ? esc_html($a['lossLabel']) : 'Weight loss potential:';
+    $beforeLabel = isset($a['beforeLabel']) ? esc_html($a['beforeLabel']) : 'Before';
+    $afterLabel = isset($a['afterLabel']) ? esc_html($a['afterLabel']) : 'After';
 
     ob_start();
     ?>
@@ -212,18 +223,18 @@ function irank_cc_render_calculator_block( $attributes ) {
                 <img src="<?php echo $after; ?>" alt="" decoding="async" class="irank-calc__ba--after" />
             <?php } ?>
             <div class="irank-calc__ba-handle" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
-            <span class="irank-calc__label irank-calc__label--before">Before</span>
-            <span class="irank-calc__label irank-calc__label--after">After</span>
+            <span class="irank-calc__label irank-calc__label--before"><?php echo $beforeLabel; ?></span>
+            <span class="irank-calc__label irank-calc__label--after"><?php echo $afterLabel; ?></span>
           </div>
         </div>
         <div class="irank-calc__panel">
-          <div class="irank-calc__question">How much weight can you lose</div>
+          <div class="irank-calc__question"><?php echo $questionText; ?></div>
           <div class="irank-calc__current">
-            <label>My current weight:</label>
+            <label><?php echo $weightLabel; ?></label>
             <div class="irank-calc__value"><span class="irank-calc__weight"><?php echo (int)$init; ?></span> <?php echo $unit; ?></div>
           </div>
           <input type="range" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="<?php echo $step; ?>" value="<?php echo $init; ?>" class="irank-calc__slider"/>
-          <div class="irank-calc__loss">Weight loss potential: <strong><span class="irank-calc__loss-val" aria-live="polite">0</span> <?php echo $unit; ?></strong></div>
+          <div class="irank-calc__loss"><?php echo $lossLabel; ?> <strong><span class="irank-calc__loss-val" aria-live="polite">0</span> <?php echo $unit; ?></strong></div>
           <?php if ( $timer ): ?><div class="irank-calc__timer"><?php echo $timerText; ?></div><?php endif; ?>
           <button type="button" class="irank-calc__cta"><?php echo $cta; ?></button>
         </div>
