@@ -49,3 +49,9 @@
   - Use ↑/↓ to reorder, Remove to delete.
 - **Save/Preview**
   - Update the page, then View to test interactions.
+
+## Load Nohemi font (optional)
+- Get the cloud CSS link for your licensed Nohemi kit (e.g., Adobe Fonts/Typekit or your CDN).
+- Go to WP Admin → Settings → IRANK Calc & Cards.
+- Paste the URL into “Nohemi CSS URL (optional)”.
+- Save Changes, then hard‑refresh the editor and the frontend.

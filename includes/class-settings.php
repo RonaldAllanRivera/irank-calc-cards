@@ -18,6 +18,7 @@ class IRANK_CC_Settings {
         self::add_field( 'unit', __( 'Unit (lbs or kg)', 'irank-calc-cards' ), 'text' );
         self::add_field( 'gradient_start', __( 'Gradient Start Color', 'irank-calc-cards' ), 'text' );
         self::add_field( 'gradient_end', __( 'Gradient End Color', 'irank-calc-cards' ), 'text' );
+        self::add_field( 'nohemi_css_url', __( 'Nohemi CSS URL (optional)', 'irank-calc-cards' ), 'text' );
         self::add_field( 'tracking_enabled', __( 'Enable Tracking', 'irank-calc-cards' ), 'checkbox' );
     }
 
@@ -37,6 +38,7 @@ class IRANK_CC_Settings {
         $out['unit'] = isset($input['unit']) ? sanitize_text_field($input['unit']) : $out['unit'];
         $out['gradient_start'] = isset($input['gradient_start']) ? sanitize_text_field($input['gradient_start']) : $out['gradient_start'];
         $out['gradient_end'] = isset($input['gradient_end']) ? sanitize_text_field($input['gradient_end']) : $out['gradient_end'];
+        $out['nohemi_css_url'] = isset($input['nohemi_css_url']) ? esc_url_raw($input['nohemi_css_url']) : $out['nohemi_css_url'];
         $out['tracking_enabled'] = !empty($input['tracking_enabled']) ? 1 : 0;
         return $out;
     }
@@ -50,7 +52,18 @@ class IRANK_CC_Settings {
         if ( $type === 'checkbox' ) {
             echo '<label><input type="checkbox" name="'.esc_attr($name).'" value="1" '.checked( $val, 1, false ).'> ' . esc_html__( 'Enabled', 'irank-calc-cards' ) . '</label>';
         } else {
-            printf('<input type="%s" class="regular-text" name="%s" value="%s"/>', esc_attr($type), esc_attr($name), esc_attr($val));
+            $extra = '';
+            if ( $key === 'nohemi_css_url' ) {
+                $extra = ' placeholder="https://use.typekit.net/xxxxxxx.css" title="Paste your licensed Nohemi cloud CSS URL (Adobe Fonts/Typekit or your CDN), then Save settings and hard-refresh the editor and frontend."';
+            }
+            printf('<input type="%s" class="regular-text" name="%s" value="%s"%s/>', esc_attr($type), esc_attr($name), esc_attr($val), $extra);
+            if ( $key === 'nohemi_css_url' ) {
+                echo '<p class="description">'.
+                    esc_html__('How to use:', 'irank-calc-cards').
+                    ' '.
+                    esc_html__('Get the cloud CSS link for your licensed Nohemi kit (e.g., Adobe Fonts/Typekit or your CDN). Paste the URL here. Click Save Changes, then hard-refresh the editor and frontend.', 'irank-calc-cards') .
+                '</p>';
+            }
         }
     }
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.3 - Typography controls and fonts
+- Added Typography panel with per-text controls: font family, weight, size, color
+- Limited font choices to Poppins and Nohemi (per Figma)
+- Loaded Poppins (500/600/700) via Google Fonts for editor and frontend
+- Applied defaults per spec:
+  - Headline: Nohemi, 600, 48px, white
+  - Current weight: Poppins, 600, 14px, white
+  - Weight loss: Poppins, 600, 14px, white
+  - Before/After: Poppins, 600, 12px, white
+  - CTA: Poppins, 600, 18px, white
+  - Timer: Poppins, 500, 14px, white
+- README and HOWTO updated
+
 ## 0.1.2 - Editable text labels and gradient updates
 - Added editable text fields in block editor for all calculator text:
   - Headline ("How much weight can you lose")

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: IRANK Calc & Cards
  * Description: Weight loss calculator and product cards as no-build Gutenberg blocks with same-page results and first-party tracking.
- * Version: 0.1.0
+ * Version: 0.1.3
  * Author: Ronald Allan Rivera
  * Requires at least: 6.8
  * Requires PHP: 8.1
@@ -11,7 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'IRANK_CC_VER', '0.1.0' );
+define( 'IRANK_CC_VER', '0.1.3' );
 define( 'IRANK_CC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IRANK_CC_URL', plugin_dir_url( __FILE__ ) );
 
@@ -24,6 +24,7 @@ function irank_cc_default_options() {
         'unit' => 'lbs',
         'gradient_start' => '#FFBB8E',
         'gradient_end' => '#f67a51',
+        'nohemi_css_url' => '',
         'tracking_enabled' => 1,
     );
 }
@@ -112,8 +113,16 @@ add_action('admin_post_irank_cc_export_csv','irank_cc_export_csv');
 
 function irank_cc_register_assets() {
     $v = function($rel){ $p = IRANK_CC_DIR . $rel; return file_exists($p) ? filemtime($p) : IRANK_CC_VER; };
-    wp_register_style( 'irank-cc-editor', IRANK_CC_URL . 'assets/css/editor.css', array(), $v('assets/css/editor.css') );
-    wp_register_style( 'irank-cc-frontend', IRANK_CC_URL . 'assets/css/frontend.css', array(), $v('assets/css/frontend.css') );
+    // Fonts: Poppins (Google Fonts). Nohemi is not bundled; will fall back.
+    wp_register_style( 'irank-cc-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap', array(), null );
+    $opts = get_option( 'irank_cc_options', irank_cc_default_options() );
+    $deps = array('irank-cc-fonts');
+    if ( ! empty( $opts['nohemi_css_url'] ) ) {
+        wp_register_style( 'irank-cc-nohemi', esc_url_raw($opts['nohemi_css_url']), array(), null );
+        $deps[] = 'irank-cc-nohemi';
+    }
+    wp_register_style( 'irank-cc-editor', IRANK_CC_URL . 'assets/css/editor.css', $deps, $v('assets/css/editor.css') );
+    wp_register_style( 'irank-cc-frontend', IRANK_CC_URL . 'assets/css/frontend.css', $deps, $v('assets/css/frontend.css') );
 
     wp_register_script( 'irank-cc-editor-calculator', IRANK_CC_URL . 'assets/js/editor.calculator.js', array( 'wp-blocks','wp-element','wp-components','wp-i18n','wp-block-editor','wp-editor' ), $v('assets/js/editor.calculator.js'), true );
     wp_register_script( 'irank-cc-editor-cards', IRANK_CC_URL . 'assets/js/editor.cards.js', array( 'wp-blocks','wp-element','wp-components','wp-i18n','wp-block-editor','wp-editor' ), $v('assets/js/editor.cards.js'), true );
@@ -152,6 +161,41 @@ function irank_cc_register_blocks() {
             'lossLabel' => array( 'type' => 'string', 'default' => 'Weight loss potential:' ),
             'beforeLabel' => array( 'type' => 'string', 'default' => 'Before' ),
             'afterLabel' => array( 'type' => 'string', 'default' => 'After' ),
+            // Typography: defaults follow Figma spec
+            'questionFontFamily' => array( 'type' => 'string', 'default' => 'Nohemi' ),
+            'questionFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'questionFontSize'   => array( 'type' => 'string', 'default' => '48px' ),
+            'questionColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'weightFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'weightFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'weightFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
+            'weightColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'lossFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'lossFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'lossFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
+            'lossColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'beforeFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'beforeFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'beforeFontSize'   => array( 'type' => 'string', 'default' => '12px' ),
+            'beforeColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'afterFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'afterFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'afterFontSize'   => array( 'type' => 'string', 'default' => '12px' ),
+            'afterColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'ctaFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'ctaFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'ctaFontSize'   => array( 'type' => 'string', 'default' => '18px' ),
+            'ctaColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'timerFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'timerFontWeight' => array( 'type' => 'number', 'default' => 500 ),
+            'timerFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
+            'timerColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
         ),
     ) );
 
@@ -206,6 +250,20 @@ function irank_cc_render_calculator_block( $attributes ) {
     $beforeLabel = isset($a['beforeLabel']) ? esc_html($a['beforeLabel']) : 'Before';
     $afterLabel = isset($a['afterLabel']) ? esc_html($a['afterLabel']) : 'After';
 
+    // Typography helpers
+    $ff = function($primary){
+        $primary = trim((string)$primary);
+        if ($primary === 'Nohemi') return "'Nohemi','Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
+        return "'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
+    };
+    $style_question = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['questionFontFamily'])), (int)$a['questionFontWeight'], esc_attr($a['questionFontSize']), esc_attr($a['questionColor']) );
+    $style_weight   = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['weightFontFamily'])), (int)$a['weightFontWeight'], esc_attr($a['weightFontSize']), esc_attr($a['weightColor']) );
+    $style_loss     = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['lossFontFamily'])), (int)$a['lossFontWeight'], esc_attr($a['lossFontSize']), esc_attr($a['lossColor']) );
+    $style_before   = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['beforeFontFamily'])), (int)$a['beforeFontWeight'], esc_attr($a['beforeFontSize']), esc_attr($a['beforeColor']) );
+    $style_after    = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['afterFontFamily'])), (int)$a['afterFontWeight'], esc_attr($a['afterFontSize']), esc_attr($a['afterColor']) );
+    $style_cta      = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['ctaFontFamily'])), (int)$a['ctaFontWeight'], esc_attr($a['ctaFontSize']), esc_attr($a['ctaColor']) );
+    $style_timer    = sprintf('font-family:%s;font-weight:%d;font-size:%s;color:%s;', esc_attr($ff($a['timerFontFamily'])), (int)$a['timerFontWeight'], esc_attr($a['timerFontSize']), esc_attr($a['timerColor']) );
+
     ob_start();
     ?>
     <section class="irank-calc" data-unit="<?php echo $unit; ?>" data-loss-factor="<?php echo esc_attr($lossFactor); ?>" data-page-id="<?php echo esc_attr( get_queried_object_id() ); ?>" style="--irank-grad-start: <?php echo $gs; ?>; --irank-grad-end: <?php echo $ge; ?>;">
@@ -223,20 +281,20 @@ function irank_cc_render_calculator_block( $attributes ) {
                 <img src="<?php echo $after; ?>" alt="" decoding="async" class="irank-calc__ba--after" />
             <?php } ?>
             <div class="irank-calc__ba-handle" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
-            <span class="irank-calc__label irank-calc__label--before"><?php echo $beforeLabel; ?></span>
-            <span class="irank-calc__label irank-calc__label--after"><?php echo $afterLabel; ?></span>
+            <span class="irank-calc__label irank-calc__label--before" style="<?php echo $style_before; ?>"><?php echo $beforeLabel; ?></span>
+            <span class="irank-calc__label irank-calc__label--after" style="<?php echo $style_after; ?>"><?php echo $afterLabel; ?></span>
           </div>
         </div>
         <div class="irank-calc__panel">
-          <div class="irank-calc__question"><?php echo $questionText; ?></div>
-          <div class="irank-calc__current">
-            <label><?php echo $weightLabel; ?></label>
+          <div class="irank-calc__question" style="<?php echo $style_question; ?>"><?php echo $questionText; ?></div>
+          <div class="irank-calc__current" style="<?php echo $style_weight; ?>">
+            <label style="<?php echo $style_weight; ?>"><?php echo $weightLabel; ?></label>
             <div class="irank-calc__value"><span class="irank-calc__weight"><?php echo (int)$init; ?></span> <?php echo $unit; ?></div>
           </div>
           <input type="range" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="<?php echo $step; ?>" value="<?php echo $init; ?>" class="irank-calc__slider"/>
-          <div class="irank-calc__loss"><?php echo $lossLabel; ?> <strong><span class="irank-calc__loss-val" aria-live="polite">0</span> <?php echo $unit; ?></strong></div>
-          <?php if ( $timer ): ?><div class="irank-calc__timer"><?php echo $timerText; ?></div><?php endif; ?>
-          <button type="button" class="irank-calc__cta"><?php echo $cta; ?></button>
+          <div class="irank-calc__loss" style="<?php echo $style_loss; ?>"><?php echo $lossLabel; ?> <strong><span class="irank-calc__loss-val" aria-live="polite">0</span> <?php echo $unit; ?></strong></div>
+          <?php if ( $timer ): ?><div class="irank-calc__timer" style="<?php echo $style_timer; ?>"><?php echo $timerText; ?></div><?php endif; ?>
+          <button type="button" class="irank-calc__cta" style="<?php echo $style_cta; ?>"><?php echo $cta; ?></button>
         </div>
       </div>
       <div class="irank-calc__overlay" hidden aria-hidden="true">

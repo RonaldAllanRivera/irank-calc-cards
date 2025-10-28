@@ -7,6 +7,7 @@
   var TextControl = wp.components.TextControl;
   var RangeControl = wp.components.RangeControl;
   var ToggleControl = wp.components.ToggleControl;
+  var SelectControl = wp.components.SelectControl;
   var MediaUpload = (wp.blockEditor && wp.blockEditor.MediaUpload) || (wp.editor && wp.editor.MediaUpload);
   var Button = wp.components.Button;
   var ColorPalette = (wp.blockEditor && wp.blockEditor.ColorPalette) || (wp.editor && wp.editor.ColorPalette);
@@ -49,6 +50,41 @@
       lossLabel:{type:'string',default:__('Weight loss potential:','irank-calc-cards')},
       beforeLabel:{type:'string',default:__('Before','irank-calc-cards')},
       afterLabel:{type:'string',default:__('After','irank-calc-cards')},
+      // Typography
+      questionFontFamily:{type:'string',default:'Nohemi'},
+      questionFontWeight:{type:'number',default:600},
+      questionFontSize:{type:'string',default:'48px'},
+      questionColor:{type:'string',default:'#ffffff'},
+
+      weightFontFamily:{type:'string',default:'Poppins'},
+      weightFontWeight:{type:'number',default:600},
+      weightFontSize:{type:'string',default:'14px'},
+      weightColor:{type:'string',default:'#ffffff'},
+
+      lossFontFamily:{type:'string',default:'Poppins'},
+      lossFontWeight:{type:'number',default:600},
+      lossFontSize:{type:'string',default:'14px'},
+      lossColor:{type:'string',default:'#ffffff'},
+
+      beforeFontFamily:{type:'string',default:'Poppins'},
+      beforeFontWeight:{type:'number',default:600},
+      beforeFontSize:{type:'string',default:'12px'},
+      beforeColor:{type:'string',default:'#ffffff'},
+
+      afterFontFamily:{type:'string',default:'Poppins'},
+      afterFontWeight:{type:'number',default:600},
+      afterFontSize:{type:'string',default:'12px'},
+      afterColor:{type:'string',default:'#ffffff'},
+
+      ctaFontFamily:{type:'string',default:'Poppins'},
+      ctaFontWeight:{type:'number',default:600},
+      ctaFontSize:{type:'string',default:'18px'},
+      ctaColor:{type:'string',default:'#ffffff'},
+
+      timerFontFamily:{type:'string',default:'Poppins'},
+      timerFontWeight:{type:'number',default:500},
+      timerFontSize:{type:'string',default:'14px'},
+      timerColor:{type:'string',default:'#ffffff'},
     },
     edit: function(props){
       var a = props.attributes;
@@ -81,6 +117,77 @@
             el(TextControl,{label:__('After Label','irank-calc-cards'),value:a.afterLabel,onChange:function(v){props.setAttributes({afterLabel:v});}}),
             el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:a.ctaText,onChange:function(v){props.setAttributes({ctaText:v});}}),
             el(TextControl,{label:__('Timer Text','irank-calc-cards'),value:a.timerText,onChange:function(v){props.setAttributes({timerText:v});}})
+          ])
+          ,
+          el(PanelBody,{title:__('Typography','irank-calc-cards'),initialOpen:false},[
+            el('h4',{},__('Headline','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.questionFontFamily,options:[{label:'Nohemi',value:'Nohemi'},{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({questionFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.questionFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({questionFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.questionFontSize,onChange:function(v){props.setAttributes({questionFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.questionColor,onChange:function(v){props.setAttributes({questionColor:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('Current Weight Label','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.weightFontFamily,options:[{label:'Poppins',value:'Poppins'},{label:'Nohemi',value:'Nohemi'}],onChange:function(v){props.setAttributes({weightFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.weightFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({weightFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.weightFontSize,onChange:function(v){props.setAttributes({weightFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.weightColor,onChange:function(v){props.setAttributes({weightColor:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('Loss Label','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.lossFontFamily,options:[{label:'Poppins',value:'Poppins'},{label:'Nohemi',value:'Nohemi'}],onChange:function(v){props.setAttributes({lossFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.lossFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({lossFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.lossFontSize,onChange:function(v){props.setAttributes({lossFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.lossColor,onChange:function(v){props.setAttributes({lossColor:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('Before Label','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.beforeFontFamily,options:[{label:'Poppins',value:'Poppins'},{label:'Nohemi',value:'Nohemi'}],onChange:function(v){props.setAttributes({beforeFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.beforeFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({beforeFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.beforeFontSize,onChange:function(v){props.setAttributes({beforeFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.beforeColor,onChange:function(v){props.setAttributes({beforeColor:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('After Label','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.afterFontFamily,options:[{label:'Poppins',value:'Poppins'},{label:'Nohemi',value:'Nohemi'}],onChange:function(v){props.setAttributes({afterFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.afterFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({afterFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.afterFontSize,onChange:function(v){props.setAttributes({afterFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.afterColor,onChange:function(v){props.setAttributes({afterColor:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('CTA Text','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.ctaFontFamily,options:[{label:'Poppins',value:'Poppins'},{label:'Nohemi',value:'Nohemi'}],onChange:function(v){props.setAttributes({ctaFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.ctaFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({ctaFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.ctaFontSize,onChange:function(v){props.setAttributes({ctaFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.ctaColor,onChange:function(v){props.setAttributes({ctaColor:v});}})
+            ]),
+
+            el('hr'),
+            el('h4',{},__('Timer Text','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:a.timerFontFamily,options:[{label:'Poppins',value:'Poppins'},{label:'Nohemi',value:'Nohemi'}],onChange:function(v){props.setAttributes({timerFontFamily:v});}}),
+            el(SelectControl,{label:__('Font Weight','irank-calc-cards'),value:a.timerFontWeight,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({timerFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Font Size','irank-calc-cards'),value:a.timerFontSize,onChange:function(v){props.setAttributes({timerFontSize:v});}}),
+            el('div',{},[
+              el('label',{},__('Color','irank-calc-cards')),
+              el(ColorPalette,{value:a.timerColor,onChange:function(v){props.setAttributes({timerColor:v});}})
+            ])
           ])
         ),
         el('div',{className:'irank-calc-preview',style:{border:'1px dashed #ddd',padding:'16px'}},[
