@@ -74,22 +74,36 @@
   left: var(--ba);
   top: 0;
   bottom: 0;
-  width: 3px;
-  background: #fff;
+  width: 6px;
+  background: #FFBB8E;
   outline: none;
+  z-index: 2;
+  transform: translateX(-50%);
 }
 .irank-calc__ba-handle::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #fff;
-  color: #000;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  border: 2px solid #F0532C;
+  box-shadow: 0 10px 22px rgba(240, 83, 44, 0.15);
+}
+.irank-calc__ba-handle::before {
+  content: '\2039\00A0\203A';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #F0532C;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 4px;
+  z-index: 3;
 }
 .irank-calc__label {
   position: absolute;
