@@ -134,6 +134,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 8px 0;
+  margin-top: auto;
 }
 .irank-calc__value {
   display: flex;
@@ -152,7 +153,7 @@
 }
 .irank-calc__slider {
   width: 100%;
-  margin: 10px 0;
+  margin: 30px 0 20px 0;
   -webkit-appearance: none;
   appearance: none;
   height: 6px;
@@ -205,6 +206,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 8px 0;
+  margin-bottom: auto;
 }
 .irank-calc__loss-value {
   display: flex;
