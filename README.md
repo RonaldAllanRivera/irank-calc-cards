@@ -14,7 +14,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 - License: GPL-2.0-or-later
 
 ## Description
-Server‑rendered (dynamic) blocks with progressive enhancement. The calculator includes a draggable range slider, responsive before/after image reveal, animated loss estimate, and a same‑page lead form overlay. Product cards are swipeable with CSS scroll‑snap and small JS helpers.
+Server‑rendered (dynamic) blocks with progressive enhancement. The calculator includes a draggable range slider, responsive before/after image reveal, animated loss estimate, and a same‑page lead form overlay. Leads are saved to the WordPress database via admin‑ajax (no REST required). Product cards are swipeable with CSS scroll‑snap and small JS helpers.
 
 ## Features
 - Dynamic blocks (SSR) with tiny vanilla JS enhancement
@@ -43,7 +43,12 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Product Cards: manage cards via the Inspector repeater (name, tagline, price, benefits, badge, CTA).
 
 ### Lead form overlay
-- The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side. No server‑side submission is performed.
+- The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side, then the lead is saved to the database via admin‑ajax. A large centered “Thanks!” message appears and the popup auto‑closes after a few seconds.
+
+### Viewing leads
+- WP Admin → Tools → IRANK Leads
+  - Columns: Date, Name, Email, Phone, Page, Weight, Loss
+  - Export CSV available
 
 ## Settings
 Admin → Settings → IRANK Calc & Cards
@@ -57,7 +62,9 @@ Admin → Settings → IRANK Calc & Cards
 - Nohemi is not bundled; to use it, provide your cloud CSS URL in Settings → IRANK Calc & Cards. Otherwise it falls back to Poppins/system fonts.
 
 ## Privacy
-- No server‑side lead submission or tracking is performed by default.
+- Leads (Full name, Email, Phone) plus context are stored in your WordPress database (`wp_irank_calc_leads`).
+- Saved fields: timestamp, page ID, weight, loss, session ID, referrer, user agent, anonymized IP hash.
+- No third‑party tracking or REST endpoints are used by the plugin.
 
 ## Accessibility
 - Semantic labels and `aria-live` for dynamic loss value

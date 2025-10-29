@@ -1,3 +1,17 @@
+# How to use (for editors)
+
+- Add the calculator to a page
+  - Edit a page in WordPress → click "+" → search "Weight Loss Calculator" → insert.
+- Configure the calculator
+  - In the right sidebar (Block settings), set: min/max/step, initial weight, loss factor (0.15 = 15%), unit (lbs/kg), gradient colors, CTA text, timer toggle/text.
+  - Upload your Before and After images. Drag the divider on the preview to check the visual slider.
+- Publish and view
+  - Click "Update/Publish" → View the page.
+  - The CTA opens a pop‑up with a form (Full name, Email, Phone). Enter a valid email and submit.
+  - You’ll see a big “Thanks! We’ll be in touch soon.”, and the pop‑up will close automatically.
+- See collected leads
+  - WP Admin → Tools → IRANK Leads. You can review entries or Export CSV.
+
 # How to test
 
 - **Activate plugin**

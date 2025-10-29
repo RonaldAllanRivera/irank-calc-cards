@@ -2,11 +2,11 @@
 
 ## 0.1.5 - Remove REST tracking, lead form UX, settings cleanup
 - Removed all custom REST API routes and frontend REST calls
-- Lead form overlay now validates only email and submits client-side (no network)
+- Lead form overlay validates only email and saves leads via admin-ajax to `wp_irank_calc_leads`
 - Removed "Enable Tracking" setting (and related option handling)
 - Cleaned frontend JS and markup (no `data-rest-root`, `trackEvent` is a no-op)
-- Styled lead form inputs to match existing UI
-- Updated README to reflect changes and privacy behavior
+- Styled lead form inputs to match existing UI and added success screen with auto-close
+- Updated README/HOWTO to reflect behavior and privacy
 
 ## 0.1.4 - Button styles, CTA width, BA label UX
 - Buttons panel in block editor for configurable colors:
