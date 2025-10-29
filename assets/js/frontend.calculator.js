@@ -14,15 +14,7 @@
 
   function uuid(){ try{ return sessionStorage.getItem('irank_uuid') || (function(){ var s=(Date.now()+Math.random()).toString(36); sessionStorage.setItem('irank_uuid', s); return s; })(); }catch(e){ return String(Date.now()); } }
 
-  function trackEvent(data){
-    try{
-      var url = (window.wp && window.wp.url && window.wp.url.addQueryArgs) ? '/wp-json/irank/v1/track' : '/wp-json/irank/v1/track';
-      var fd = new FormData();
-      for(var k in data){ fd.append(k, data[k]); }
-      if(navigator.sendBeacon){ navigator.sendBeacon(url, fd); }
-      else { fetch(url,{method:'POST',body:fd,credentials:'same-origin'}); }
-    }catch(e){}
-  }
+  function trackEvent(){ /* REST removed */ }
 
   function initCalc(section){
     var unit = section.getAttribute('data-unit')||'lbs';
@@ -35,12 +27,13 @@
     var cta = $('.irank-calc__cta', section);
     var overlay = $('.irank-calc__overlay', section);
     var overlayClose = $('.irank-calc__overlay-close', section);
-    var resWeight = $('.irank-calc__res-weight', section);
-    var resLoss = $('.irank-calc__res-loss', section);
+    var form = $('.irank-calc__form', section);
+    var formResult = $('.irank-calc__form-result', section);
     var ba = $('.irank-calc__ba', section);
     var baHandle = $('.irank-calc__ba-handle', section);
 
     var min = parseFloat(slider.min||0), max = parseFloat(slider.max||100);
+    // REST removed: no restRoot
 
     function update(){
       var w = parseFloat(slider.value||min);
@@ -60,10 +53,8 @@
 
     function openOverlay(){
       var w = parseFloat(slider.value||min); var loss = w*factor;
-      resWeight.textContent = fmt(w);
-      resLoss.textContent = '-' + fmt(loss);
       overlay.hidden = false; overlay.setAttribute('aria-hidden','false'); document.body.classList.add('irank-no-scroll');
-      trackEvent({weight:w, loss:loss, page_id:pageId, session_id:uuid(), referrer:document.referrer||''});
+      trackEvent();
     }
     function closeOverlay(){ overlay.hidden = true; overlay.setAttribute('aria-hidden','true'); document.body.classList.remove('irank-no-scroll'); }
 
@@ -71,6 +62,27 @@
     overlayClose && overlayClose.addEventListener('click', function(){ closeOverlay(); });
     overlay && overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !overlay.hidden){ closeOverlay(); } });
+
+    // Form submit -> client-side only (REST removed)
+    if(form){
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var w = parseFloat(slider.value||min); var loss = w*factor;
+        var emailInput = form.querySelector('#irank_email');
+        var emailVal = emailInput ? String(emailInput.value||'').trim() : '';
+        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+        if(!emailOk){
+          if(formResult){ formResult.textContent = 'Please enter a valid email address.'; }
+          if(emailInput){ emailInput.focus(); }
+          return;
+        }
+        var submitBtn = form.querySelector('button[type="submit"]');
+        if(submitBtn){ submitBtn.disabled = true; }
+        if(formResult){ formResult.textContent = 'Thanks! We\'ll be in touch soon.'; }
+        form.reset();
+        setTimeout(function(){ if(submitBtn){ submitBtn.disabled = false; } }, 600);
+      });
+    }
 
     // Before/After reveal helpers
     function getBA(){ var val = parseFloat((ba && ba.style.getPropertyValue('--ba') || '50%').replace('%',''))||50; return clamp(val,0,100); }

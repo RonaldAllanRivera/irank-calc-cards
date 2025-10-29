@@ -19,7 +19,6 @@ class IRANK_CC_Settings {
         self::add_field( 'gradient_start', __( 'Gradient Start Color', 'irank-calc-cards' ), 'text' );
         self::add_field( 'gradient_end', __( 'Gradient End Color', 'irank-calc-cards' ), 'text' );
         self::add_field( 'nohemi_css_url', __( 'Nohemi CSS URL (optional)', 'irank-calc-cards' ), 'text' );
-        self::add_field( 'tracking_enabled', __( 'Enable Tracking', 'irank-calc-cards' ), 'checkbox' );
     }
 
     private static function add_field( $key, $label, $type ) {
@@ -39,7 +38,6 @@ class IRANK_CC_Settings {
         $out['gradient_start'] = isset($input['gradient_start']) ? sanitize_text_field($input['gradient_start']) : $out['gradient_start'];
         $out['gradient_end'] = isset($input['gradient_end']) ? sanitize_text_field($input['gradient_end']) : $out['gradient_end'];
         $out['nohemi_css_url'] = isset($input['nohemi_css_url']) ? esc_url_raw($input['nohemi_css_url']) : $out['nohemi_css_url'];
-        $out['tracking_enabled'] = !empty($input['tracking_enabled']) ? 1 : 0;
         return $out;
     }
 

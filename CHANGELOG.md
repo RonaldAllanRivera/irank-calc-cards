@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.5 - Remove REST tracking, lead form UX, settings cleanup
+- Removed all custom REST API routes and frontend REST calls
+- Lead form overlay now validates only email and submits client-side (no network)
+- Removed "Enable Tracking" setting (and related option handling)
+- Cleaned frontend JS and markup (no `data-rest-root`, `trackEvent` is a no-op)
+- Styled lead form inputs to match existing UI
+- Updated README to reflect changes and privacy behavior
+
 ## 0.1.4 - Button styles, CTA width, BA label UX
 - Buttons panel in block editor for configurable colors:
   - CTA background/text + hover background/text/border

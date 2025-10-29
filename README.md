@@ -2,7 +2,7 @@
 
 Lightweight WordPress plugin that adds two Gutenberg blocks without any build tools or external JS libraries.
 
-- Weight Loss Calculator with same-page Results overlay and first‑party tracking
+- Weight Loss Calculator with same‑page lead form overlay
 - Swipeable Product Cards using CSS scroll‑snap (no dependencies)
 
 Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and Laragon. No Node, React, or Vue required.
@@ -14,7 +14,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 - License: GPL-2.0-or-later
 
 ## Description
-Server‑rendered (dynamic) blocks with progressive enhancement. The calculator includes a draggable range slider, responsive before/after image reveal, animated loss estimate, and a same‑page results overlay. Product cards are swipeable with CSS scroll‑snap and small JS helpers.
+Server‑rendered (dynamic) blocks with progressive enhancement. The calculator includes a draggable range slider, responsive before/after image reveal, animated loss estimate, and a same‑page lead form overlay. Product cards are swipeable with CSS scroll‑snap and small JS helpers.
 
 ## Features
 - Dynamic blocks (SSR) with tiny vanilla JS enhancement
@@ -30,8 +30,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - CTA button defaults: 70% width (centered), 64px radius; labels 64px radius
 - Before/After labels are clickable to reveal left/right and auto‑hide near edges
 - Responsive before/after images with `srcset` when media IDs are used
-- Results overlay opens on CTA click (Escape closes)
-- First‑party conversion tracking (DB + REST + `sendBeacon`), CSV export
+- Lead form overlay opens on CTA click (Escape closes)
 
 ## Installation
 1. Copy `irank-calc-cards` to `wp-content/plugins/`.
@@ -43,14 +42,13 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Weight Loss Calculator: add images (Before/After), set min/max/step, initial weight, factor, unit, colors, CTA text.
 - Product Cards: manage cards via the Inspector repeater (name, tagline, price, benefits, badge, CTA).
 
-### Results overlay
-- The calculator CTA opens a modal overlay showing current weight and estimated loss. Overlay is hidden on load, toggled via `hidden` + `aria-hidden`.
+### Lead form overlay
+- The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side. No server‑side submission is performed.
 
 ## Settings
 Admin → Settings → IRANK Calc & Cards
 - Min/Max/Step, Loss factor, Unit (lbs/kg)
 - Gradient colors
-- Enable/disable tracking
 - Nohemi CSS URL (optional) — paste your cloud CSS for Nohemi (Adobe Fonts/Typekit or your CDN)
 
 ## Typography & Fonts
@@ -58,10 +56,8 @@ Admin → Settings → IRANK Calc & Cards
 - Poppins is loaded from Google Fonts for frontend and editor.
 - Nohemi is not bundled; to use it, provide your cloud CSS URL in Settings → IRANK Calc & Cards. Otherwise it falls back to Poppins/system fonts.
 
-## Tracking & Privacy
-- Endpoint: `POST /wp-json/irank/v1/track`
-- Stored: timestamp, page ID, weight, loss, session ID, referrer, UA, anonymized IP hash
-- Admin → Tools → IRANK Reports (KPIs + CSV export)
+## Privacy
+- No server‑side lead submission or tracking is performed by default.
 
 ## Accessibility
 - Semantic labels and `aria-live` for dynamic loss value

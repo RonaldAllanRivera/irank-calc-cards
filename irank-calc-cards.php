@@ -25,7 +25,6 @@ function irank_cc_default_options() {
         'gradient_start' => '#FFBB8E',
         'gradient_end' => '#f67a51',
         'nohemi_css_url' => '',
-        'tracking_enabled' => 1,
     );
 }
 
@@ -52,6 +51,26 @@ function irank_cc_activate() {
         KEY created_at (created_at)
     ) $charset_collate;";
     dbDelta( $sql );
+
+    // Leads table
+    $table2 = $wpdb->prefix . 'irank_calc_leads';
+    $sql2 = "CREATE TABLE $table2 (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        created_at DATETIME NOT NULL,
+        page_id BIGINT UNSIGNED NULL,
+        full_name VARCHAR(190) NULL,
+        email VARCHAR(190) NULL,
+        phone VARCHAR(50) NULL,
+        weight FLOAT NULL,
+        loss FLOAT NULL,
+        session_id VARCHAR(64) NULL,
+        referrer TEXT NULL,
+        user_agent TEXT NULL,
+        ip_hash CHAR(64) NULL,
+        PRIMARY KEY (id),
+        KEY created_at (created_at)
+    ) $charset_collate;";
+    dbDelta( $sql2 );
 }
 register_activation_hook( __FILE__, 'irank_cc_activate' );
 
@@ -82,6 +101,18 @@ function irank_cc_admin_reports_menu() {
 }
 add_action( 'admin_menu', 'irank_cc_admin_reports_menu' );
 
+function irank_cc_admin_leads_menu() {
+    add_submenu_page(
+        'tools.php',
+        'IRANK Leads',
+        'IRANK Leads',
+        'manage_options',
+        'irank-cc-leads',
+        'irank_cc_render_leads_page'
+    );
+}
+add_action( 'admin_menu', 'irank_cc_admin_leads_menu' );
+
 function irank_cc_render_reports_page() {
     if ( ! current_user_can('manage_options') ) return;
     global $wpdb; $table = $wpdb->prefix.'irank_calc_events';
@@ -110,6 +141,42 @@ function irank_cc_export_csv() {
     fclose($out); exit;
 }
 add_action('admin_post_irank_cc_export_csv','irank_cc_export_csv');
+
+function irank_cc_render_leads_page(){
+    if ( ! current_user_can('manage_options') ) return;
+    global $wpdb; $table = $wpdb->prefix.'irank_calc_leads';
+    $rows = $wpdb->get_results("SELECT * FROM $table ORDER BY id DESC LIMIT 200", ARRAY_A);
+    $export_url = wp_nonce_url( admin_url('admin-post.php?action=irank_cc_export_leads'), 'irank_cc_export_leads' );
+    echo '<div class="wrap"><h1>IRANK Leads</h1>';
+    echo '<p><a class="button" href="'.esc_url($export_url).'">Export CSV</a></p>';
+    echo '<table class="widefat"><thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Page</th><th>Weight</th><th>Loss</th></tr></thead><tbody>';
+    if($rows){ foreach($rows as $r){
+        echo '<tr>'
+            .'<td>'.esc_html($r['created_at']).'</td>'
+            .'<td>'.esc_html($r['full_name']).'</td>'
+            .'<td>'.esc_html($r['email']).'</td>'
+            .'<td>'.esc_html($r['phone']).'</td>'
+            .'<td>'.esc_html($r['page_id']).'</td>'
+            .'<td>'.esc_html($r['weight']).'</td>'
+            .'<td>'.esc_html($r['loss']).'</td>'
+            .'</tr>';
+    } } else { echo '<tr><td colspan="7">No leads yet.</td></tr>'; }
+    echo '</tbody></table></div>';
+}
+
+function irank_cc_export_leads(){
+    if ( ! current_user_can('manage_options') ) wp_die('Forbidden');
+    check_admin_referer('irank_cc_export_leads');
+    global $wpdb; $table = $wpdb->prefix.'irank_calc_leads';
+    $rows = $wpdb->get_results("SELECT * FROM $table ORDER BY id DESC", ARRAY_A);
+    nocache_headers();
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="irank-leads.csv"');
+    $out = fopen('php://output','w');
+    if($rows){ fputcsv($out, array_keys($rows[0])); foreach($rows as $row){ fputcsv($out,$row); } }
+    fclose($out); exit;
+}
+add_action('admin_post_irank_cc_export_leads','irank_cc_export_leads');
 
 function irank_cc_register_assets() {
     $v = function($rel){ $p = IRANK_CC_DIR . $rel; return file_exists($p) ? filemtime($p) : IRANK_CC_VER; };
@@ -330,12 +397,27 @@ function irank_cc_render_calculator_block( $attributes ) {
         </div>
       </div>
       <div class="irank-calc__overlay" hidden aria-hidden="true">
-        <div class="irank-calc__overlay-inner" role="dialog" aria-modal="true" aria-label="Your result">
+        <div class="irank-calc__overlay-inner" role="dialog" aria-modal="true" aria-label="Get started">
           <button type="button" class="irank-calc__overlay-close" aria-label="Close">×</button>
-          <h3>Your estimated weight loss</h3>
-          <p><span class="irank-calc__res-weight"></span> <?php echo $unit; ?> current weight</p>
-          <p>Potential loss: <strong><span class="irank-calc__res-loss"></span> <?php echo $unit; ?></strong></p>
-          <a class="irank-calc__overlay-cta" href="#">Continue</a>
+          <h3>Get started</h3>
+          <form class="irank-calc__form" novalidate>
+            <div class="irank-calc__field">
+              <label for="irank_full_name">Full Name</label>
+              <input type="text" id="irank_full_name" name="full_name" />
+            </div>
+            <div class="irank-calc__field">
+              <label for="irank_email">Email</label>
+              <input type="email" id="irank_email" name="email" required />
+            </div>
+            <div class="irank-calc__field">
+              <label for="irank_phone">Phone number (with country code)</label>
+              <input type="tel" id="irank_phone" name="phone" />
+            </div>
+            <div class="irank-calc__form-actions">
+              <button type="submit" class="irank-calc__overlay-cta">Submit</button>
+            </div>
+            <div class="irank-calc__form-result" aria-live="polite"></div>
+          </form>
         </div>
       </div>
     </section>
@@ -381,45 +463,4 @@ function irank_cc_render_cards_block( $attributes ) {
     </section>
     <?php
     return ob_get_clean();
-}
-
-function irank_cc_rest_register() {
-    register_rest_route( 'irank/v1', '/track', array(
-        'methods' => 'POST',
-        'permission_callback' => '__return_true',
-        'callback' => 'irank_cc_rest_track',
-        'args' => array(),
-    ) );
-}
-add_action( 'rest_api_init', 'irank_cc_rest_register' );
-
-function irank_cc_rest_track( WP_REST_Request $req ) {
-    $opts = get_option( 'irank_cc_options', irank_cc_default_options() );
-    if ( empty( $opts['tracking_enabled'] ) ) return new WP_REST_Response( array('ok'=>false), 200 );
-
-    $weight = floatval( $req->get_param('weight') );
-    $loss = floatval( $req->get_param('loss') );
-    $page_id = intval( $req->get_param('page_id') );
-    $session_id = sanitize_text_field( substr( (string)$req->get_param('session_id'), 0, 64 ) );
-    $ref = wp_unslash( (string) $req->get_param('referrer') );
-
-    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
-    $ip_hash = hash( 'sha256', 'irank-salt|' . $ip );
-    $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-
-    global $wpdb;
-    $table = $wpdb->prefix . 'irank_calc_events';
-    $wpdb->insert( $table, array(
-        'created_at' => current_time('mysql'),
-        'page_id' => $page_id ?: null,
-        'weight' => $weight ?: null,
-        'loss' => $loss ?: null,
-        'session_id' => $session_id ?: null,
-        'referrer' => $ref ?: null,
-        'user_agent' => $ua ?: null,
-        'ip_hash' => $ip_hash,
-        'variant' => '',
-    ), array('%s','%d','%f','%f','%s','%s','%s','%s','%s') );
-
-    return new WP_REST_Response( array('ok'=>true), 200 );
 }
