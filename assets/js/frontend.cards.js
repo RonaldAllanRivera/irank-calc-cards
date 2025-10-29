@@ -16,18 +16,32 @@
     var next = section.querySelector('.irank-cards__next');
     var dotsWrap = section.querySelector('.irank-cards__dots');
     var cards = $all('.irank-card', track);
-    dotsWrap.innerHTML='';
-    cards.forEach(function(_,i){ var b=document.createElement('button'); b.type='button'; b.className='irank-cards__dot'; b.setAttribute('aria-label','Go to slide '+(i+1)); b.addEventListener('click',function(){scrollToIndex(track,i);}); dotsWrap.appendChild(b); });
-
-    function updateDots(){
-      var idx = nearestIndex(track);
-      $all('.irank-cards__dot', dotsWrap).forEach(function(d,i){ d.toggleAttribute('aria-current', i===idx); });
+    if(dotsWrap){ dotsWrap.innerHTML=''; }
+    if(dotsWrap){
+      cards.forEach(function(_,i){ var b=document.createElement('button'); b.type='button'; b.className='irank-cards__dot'; b.setAttribute('aria-label','Go to slide '+(i+1)); b.addEventListener('click',function(){scrollToIndex(track,i);}); dotsWrap.appendChild(b); });
     }
-    track.addEventListener('scroll', function(){ window.requestAnimationFrame(updateDots); });
-    updateDots();
 
-    prev && prev.addEventListener('click', function(){ scrollToIndex(track, nearestIndex(track)-1); });
-    next && next.addEventListener('click', function(){ scrollToIndex(track, nearestIndex(track)+1); });
+    function updateUI(){
+      var idx = nearestIndex(track);
+      var max = Math.max(0, cards.length-1);
+      if(dotsWrap){ $all('.irank-cards__dot', dotsWrap).forEach(function(d,i){ d.toggleAttribute('aria-current', i===idx); }); }
+      if(prev){ prev.toggleAttribute('aria-disabled', idx<=0); prev.toggleAttribute('disabled', idx<=0); }
+      if(next){ next.toggleAttribute('aria-disabled', idx>=max); next.toggleAttribute('disabled', idx>=max); }
+      section.classList.toggle('is-at-start', idx<=0);
+      section.classList.toggle('is-at-end', idx>=max);
+    }
+    track.addEventListener('scroll', function(){ window.requestAnimationFrame(updateUI); });
+    window.addEventListener('resize', function(){ window.requestAnimationFrame(updateUI); });
+    updateUI();
+
+    prev && prev.addEventListener('click', function(){ if(prev.getAttribute('aria-disabled')==='true') return; scrollToIndex(track, nearestIndex(track)-1); });
+    next && next.addEventListener('click', function(){ if(next.getAttribute('aria-disabled')==='true') return; scrollToIndex(track, nearestIndex(track)+1); });
+
+    // Keyboard navigation on the track
+    track && track.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollToIndex(track, nearestIndex(track)-1); }
+      else if(e.key === 'ArrowRight'){ e.preventDefault(); scrollToIndex(track, nearestIndex(track)+1); }
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function(){
