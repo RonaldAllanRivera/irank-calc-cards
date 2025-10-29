@@ -26,8 +26,10 @@
 - Tracking: sendBeacon on CTA with weight/loss
 
 ## Phase 3: Product Cards Block
-- Editor: repeater for 3+ cards (name, tagline, price, benefits, badge, image, CTA)
-- Frontend: CSS scroll-snap carousel with prev/next buttons and dots
+- Editor: repeater for 3+ cards (name, tagline, price, benefits, badge, image, CTA). Section heading + subheading.
+- Styling controls: section gradient start/end, card background, CTA (bg/text + hover bg/text/border), badge bg/text, basic typography sizes.
+- Frontend: CSS scroll-snap carousel with prev/next + dots. Split layout per card (image left, content right). Poppins font.
+- Implementation: SSR render with sanitized attributes; CSS variables for theming; dedicated cards.css to avoid conflicts with calculator.
 
 ## Phase 4: Results Overlay
 - UI layer rendered with calculator block
@@ -36,7 +38,6 @@
 
 ## Phase 5: Tracking & Admin
 - DB schema: wp_irank_calc_events (created_at, page_id, weight, loss, session_id, referrer, ua, ip_hash)
-- REST: POST /irank/v1/track
 - Admin page: KPIs + table + CSV export (lightweight canvas chart optional)
 
 ## Phase 6: Polish & Docs

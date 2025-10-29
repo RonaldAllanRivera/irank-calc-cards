@@ -10,7 +10,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 ## Plugin metadata
 - Requires at least: 6.8
 - Requires PHP: 8.1
-- Stable tag: 0.1.4
+- Stable tag: 0.1.6
 - License: GPL-2.0-or-later
 
 ## Description
@@ -18,19 +18,19 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 
 ## Features
 - Dynamic blocks (SSR) with tiny vanilla JS enhancement
-- Editor controls for all calculator text:
-  - Headline, weight labels, Before/After labels
-  - CTA text and timer text in "Text Labels" panel
+- Weight Loss Calculator
+  - Editor controls for all calculator text (headline, weight labels, Before/After labels, CTA text, timer)
   - Ranges, loss factor, unit, colors, images
-- Typography controls (Typography panel): font family, weight, size, color per text
-  - Fonts: Poppins (bundled via Google Fonts), Nohemi (fallback to Poppins/system)
-- Buttons panel for CTA and Before/After label colors
-  - CTA: background/text + hover background/text/border
-  - Labels: background/text + hover background/text/border
-- CTA button defaults: 70% width (centered), 64px radius; labels 64px radius
-- Before/After labels are clickable to reveal left/right and auto‑hide near edges
-- Responsive before/after images with `srcset` when media IDs are used
-- Lead form overlay opens on CTA click (Escape closes)
+  - Typography controls per text (family, weight, size, color)
+  - Buttons panel for CTA and Before/After label colors (normal/hover)
+  - Responsive images with `srcset` when media IDs are used
+  - Lead form overlay opens on CTA click (Escape closes)
+- Product Cards
+  - Repeater for 3+ cards (name, tagline, price, benefits, badge, CTA, image)
+  - Section controls: Header, Heading, Subheading (with Typography panel)
+  - Colors panel: section gradient, card background, CTA bg/text + hover bg/text/border, badge colors
+  - Split layout per card (image left, content right), swipeable carousel with prev/next + dots
+  - Isolated stylesheet (`assets/css/cards.css`) to avoid conflicts with the calculator
 
 ## Installation
 1. Copy `irank-calc-cards` to `wp-content/plugins/`.
@@ -40,7 +40,11 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 ## Usage
 ### Blocks
 - Weight Loss Calculator: add images (Before/After), set min/max/step, initial weight, factor, unit, colors, CTA text.
-- Product Cards: manage cards via the Inspector repeater (name, tagline, price, benefits, badge, CTA).
+- Product Cards: in the Inspector
+  - Section: set Section Header, Heading, Subheading
+  - Cards: add 3+ cards. Each card has Name, Tagline, Price, Benefits (one per line), Badge, CTA Text/URL, Image
+  - Colors: section gradient, card background, CTA colors + hover, badge colors
+  - Typography: Header/Heading/Subheading font family, weight, size, color
 
 ### Lead form overlay
 - The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side, then the lead is saved to the database via admin‑ajax. A large centered “Thanks!” message appears and the popup auto‑closes after a few seconds.

@@ -7,12 +7,15 @@
   var TextControl = wp.components.TextControl;
   var TextareaControl = wp.components.TextareaControl;
   var Button = wp.components.Button;
+  var MediaUpload = (wp.blockEditor && wp.blockEditor.MediaUpload) || (wp.editor && wp.editor.MediaUpload);
+  var SelectControl = wp.components.SelectControl;
+  var ColorPalette = (wp.blockEditor && wp.blockEditor.ColorPalette) || (wp.editor && wp.editor.ColorPalette);
 
   function clone(o){ return JSON.parse(JSON.stringify(o||{})); }
 
   function renderCardEditor(props, idx){
     var cards = props.attributes.cards || [];
-    var c = cards[idx] || {name:'',tagline:'',price:'',benefits:[],badge:'',ctaText:'',ctaUrl:''};
+    var c = cards[idx] || {name:'',tagline:'',price:'',benefits:[],badge:'',ctaText:'',ctaUrl:'',imageId:0,imageUrl:''};
     function update(key,val){
       var next = cards.slice();
       next[idx] = clone(c);
@@ -44,7 +47,12 @@
       el(TextareaControl,{label:__('Benefits (one per line)','irank-calc-cards'),value:(c.benefits||[]).join('\n'),onChange:function(v){update('benefits', (v||'').split(/\n+/).filter(function(s){return s.trim().length; }));}}),
       el(TextControl,{label:__('Badge','irank-calc-cards'),value:c.badge,onChange:function(v){update('badge',v);}}),
       el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:c.ctaText,onChange:function(v){update('ctaText',v);}}),
-      el(TextControl,{label:__('CTA URL','irank-calc-cards'),value:c.ctaUrl,onChange:function(v){update('ctaUrl',v);}})
+      el(TextControl,{label:__('CTA URL','irank-calc-cards'),value:c.ctaUrl,onChange:function(v){update('ctaUrl',v);}}),
+      el('div',{},[
+        el('label',{}, __('Image','irank-calc-cards')),
+        el(MediaUpload,{onSelect:function(m){ update('imageId',m.id); update('imageUrl',(m.sizes&&m.sizes.medium&&m.sizes.medium.url)||m.url||''); },
+          allowedTypes:['image'], value:c.imageId, render:function(o){ return el(Button,{isSecondary:true,onClick:o.open}, c.imageUrl?__('Change Image','irank-calc-cards'):__('Select Image','irank-calc-cards')); }})
+      ])
     ]);
   }
 
@@ -53,17 +61,67 @@
     icon: 'index-card',
     category: 'widgets',
     attributes:{
-      cards:{type:'array',default:[]}
+      cards:{type:'array',default:[]},
+      sectionHeader:{type:'string',default:'Choose your path to transformation'},
+      sectionHeading:{type:'string',default:'All medications included in price.'},
+      sectionSubheading:{type:'string',default:'No hidden pharmacy or lab fees.'},
+      // Colors
+      cardsBgStart:{type:'string'}, cardsBgEnd:{type:'string'}, cardBg:{type:'string'},
+      ctaBg:{type:'string'}, ctaColor:{type:'string'}, ctaHoverBg:{type:'string'}, ctaHoverColor:{type:'string'}, ctaHoverBorder:{type:'string'},
+      badgeBg:{type:'string'}, badgeColor:{type:'string'},
+      // Typography
+      kickerFontFamily:{type:'string',default:'Poppins'}, kickerFontWeight:{type:'number',default:500}, kickerFontSize:{type:'string',default:'14px'}, kickerColor:{type:'string',default:'#ffffff'},
+      headingFontFamily:{type:'string',default:'Poppins'}, headingFontWeight:{type:'number',default:600}, headingFontSize:{type:'string',default:'48px'}, headingLineHeight:{type:'string',default:'54px'}, headingColor:{type:'string',default:'#ffffff'},
+      subFontFamily:{type:'string',default:'Poppins'}, subFontWeight:{type:'number',default:600}, subFontSize:{type:'string',default:'48px'}, subColor:{type:'string',default:'#FFBB8E'}
     },
     edit: function(props){
       var cards = props.attributes.cards || [];
       return [
         el(InspectorControls,{},
+          el(PanelBody,{title:__('Section','irank-calc-cards'),initialOpen:true},[
+            el(TextControl,{label:__('Section Header','irank-calc-cards'),value:props.attributes.sectionHeader||'',onChange:function(v){props.setAttributes({sectionHeader:v});}}),
+            el(TextControl,{label:__('Heading','irank-calc-cards'),value:props.attributes.sectionHeading||'',onChange:function(v){props.setAttributes({sectionHeading:v});}}),
+            el(TextControl,{label:__('Subheading','irank-calc-cards'),value:props.attributes.sectionSubheading||'',onChange:function(v){props.setAttributes({sectionSubheading:v});}})
+          ]),
+          el(PanelBody,{title:__('Typography','irank-calc-cards'),initialOpen:false},[
+            el('h4',{},__('Section Header','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.kickerFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({kickerFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.kickerFontWeight||500,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({kickerFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.kickerFontSize||'14px',onChange:function(v){props.setAttributes({kickerFontSize:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.kickerColor,onChange:function(v){props.setAttributes({kickerColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Heading','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.headingFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({headingFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.headingFontWeight||600,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({headingFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.headingFontSize||'48px',onChange:function(v){props.setAttributes({headingFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.headingLineHeight||'54px',onChange:function(v){props.setAttributes({headingLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.headingColor,onChange:function(v){props.setAttributes({headingColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Subheading','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.subFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({subFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.subFontWeight||600,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({subFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.subFontSize||'48px',onChange:function(v){props.setAttributes({subFontSize:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.subColor,onChange:function(v){props.setAttributes({subColor:v});}}) ])
+          ]),
+          el(PanelBody,{title:__('Colors','irank-calc-cards'),initialOpen:false},[
+            el(TextControl,{label:__('Section Gradient Start','irank-calc-cards'),value:props.attributes.cardsBgStart||'',onChange:function(v){props.setAttributes({cardsBgStart:v});},help:'#7c1a4a'}),
+            el(TextControl,{label:__('Section Gradient End','irank-calc-cards'),value:props.attributes.cardsBgEnd||'',onChange:function(v){props.setAttributes({cardsBgEnd:v});},help:'#7c1a4a'}),
+            el(TextControl,{label:__('Card Background','irank-calc-cards'),value:props.attributes.cardBg||'',onChange:function(v){props.setAttributes({cardBg:v});},help:'#ffffff'}),
+            el(TextControl,{label:__('CTA BG','irank-calc-cards'),value:props.attributes.ctaBg||'',onChange:function(v){props.setAttributes({ctaBg:v});},help:'#92245A'}),
+            el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:props.attributes.ctaColor||'',onChange:function(v){props.setAttributes({ctaColor:v});},help:'#ffffff'}),
+            el(TextControl,{label:__('CTA Hover BG','irank-calc-cards'),value:props.attributes.ctaHoverBg||'',onChange:function(v){props.setAttributes({ctaHoverBg:v});},help:'#ffffff'}),
+            el(TextControl,{label:__('CTA Hover Text','irank-calc-cards'),value:props.attributes.ctaHoverColor||'',onChange:function(v){props.setAttributes({ctaHoverColor:v});},help:'#000000'}),
+            el(TextControl,{label:__('CTA Hover Border','irank-calc-cards'),value:props.attributes.ctaHoverBorder||'',onChange:function(v){props.setAttributes({ctaHoverBorder:v});},help:'#000000'}),
+            el(TextControl,{label:__('Badge BG','irank-calc-cards'),value:props.attributes.badgeBg||'',onChange:function(v){props.setAttributes({badgeBg:v});},help:'#ffbf00'}),
+            el(TextControl,{label:__('Badge Text','irank-calc-cards'),value:props.attributes.badgeColor||'',onChange:function(v){props.setAttributes({badgeColor:v});},help:'#000000'})
+          ]),
           el(PanelBody,{title:__('Cards','irank-calc-cards'),initialOpen:true},[
             cards.map(function(_,i){ return renderCardEditor(props,i); }),
             el(Button,{isPrimary:true,onClick:function(){
               var next = (cards||[]).slice();
-              next.push({name:'',tagline:'',price:'',benefits:[],badge:'',ctaText:'',ctaUrl:''});
+              next.push({name:'',tagline:'',price:'',benefits:[],badge:'',ctaText:'',ctaUrl:'',imageId:0,imageUrl:''});
               props.setAttributes({cards:next});
             }}, __('Add Card','irank-calc-cards'))
           ])

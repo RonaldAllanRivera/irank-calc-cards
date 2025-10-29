@@ -1,4 +1,4 @@
-# How to use (for editors)
+# Weight Loss Calculator - How to use (for editors)
 
 - Add the calculator to a page
   - Edit a page in WordPress → click "+" → search "Weight Loss Calculator" → insert.
@@ -11,6 +11,16 @@
   - You’ll see a big “Thanks! We’ll be in touch soon.”, and the pop‑up will close automatically.
 - See collected leads
   - WP Admin → Tools → IRANK Leads. You can review entries or Export CSV.
+
+# Product Cards — How to use in the editor
+
+- Add “Product Cards” block to a page.
+- In the sidebar:
+  - Section: set Heading and Subheading.
+  - Cards: add 3+ cards. For each: Name, Tagline, Price, Benefits (one per line), Badge (optional), CTA Text/URL, Image.
+  - Colors: set section gradient, card background, CTA colors and hover, badge colors.
+- Frontend
+  - Swipe cards on mobile (scroll-snap). Use prev/next buttons and dots on desktop.
 
 # How to test
 

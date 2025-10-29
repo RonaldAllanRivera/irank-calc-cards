@@ -190,6 +190,7 @@ function irank_cc_register_assets() {
     }
     wp_register_style( 'irank-cc-editor', IRANK_CC_URL . 'assets/css/editor.css', $deps, $v('assets/css/editor.css') );
     wp_register_style( 'irank-cc-frontend', IRANK_CC_URL . 'assets/css/frontend.css', $deps, $v('assets/css/frontend.css') );
+    wp_register_style( 'irank-cc-cards', IRANK_CC_URL . 'assets/css/cards.css', array('irank-cc-frontend'), $v('assets/css/cards.css') );
 
     wp_register_script( 'irank-cc-editor-calculator', IRANK_CC_URL . 'assets/js/editor.calculator.js', array( 'wp-blocks','wp-element','wp-components','wp-i18n','wp-block-editor','wp-editor' ), $v('assets/js/editor.calculator.js'), true );
     wp_register_script( 'irank-cc-editor-cards', IRANK_CC_URL . 'assets/js/editor.cards.js', array( 'wp-blocks','wp-element','wp-components','wp-i18n','wp-block-editor','wp-editor' ), $v('assets/js/editor.cards.js'), true );
@@ -289,6 +290,45 @@ function irank_cc_register_blocks() {
         'render_callback' => 'irank_cc_render_cards_block',
         'attributes' => array(
             'cards' => array( 'type' => 'array', 'default' => array() ),
+            // Section texts
+            'sectionHeader' => array( 'type' => 'string', 'default' => 'Choose your path to transformation' ),
+            'sectionHeading' => array( 'type' => 'string', 'default' => 'All medications included in price.' ),
+            'sectionSubheading' => array( 'type' => 'string', 'default' => 'No hidden pharmacy or lab fees.' ),
+            'cardsBgStart' => array( 'type' => 'string', 'default' => '#7c1a4a' ),
+            'cardsBgEnd'   => array( 'type' => 'string', 'default' => '#7c1a4a' ),
+            'cardBg'       => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'nameFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'nameFontWeight' => array( 'type' => 'number', 'default' => 700 ),
+            'nameFontSize'   => array( 'type' => 'string', 'default' => '32px' ),
+            'nameColor'      => array( 'type' => 'string', 'default' => '#000000' ),
+            'taglineFontSize'=> array( 'type' => 'string', 'default' => '16px' ),
+            'taglineColor'   => array( 'type' => 'string', 'default' => '#666666' ),
+            'priceFontSize'  => array( 'type' => 'string', 'default' => '28px' ),
+            'priceColor'     => array( 'type' => 'string', 'default' => '#000000' ),
+            'benefitColor'   => array( 'type' => 'string', 'default' => '#333333' ),
+            'ctaBg'          => array( 'type' => 'string', 'default' => '#92245A' ),
+            'ctaColor'       => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'ctaHoverBg'     => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'ctaHoverColor'  => array( 'type' => 'string', 'default' => '#000000' ),
+            'ctaHoverBorder' => array( 'type' => 'string', 'default' => '#000000' ),
+            'badgeBg'        => array( 'type' => 'string', 'default' => '#ffbf00' ),
+            'badgeColor'     => array( 'type' => 'string', 'default' => '#000000' ),
+            // Typography for section header/heading/subheading
+            'kickerFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'kickerFontWeight' => array( 'type' => 'number', 'default' => 500 ),
+            'kickerFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
+            'kickerColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'headingFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'headingFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'headingFontSize'   => array( 'type' => 'string', 'default' => '48px' ),
+            'headingLineHeight' => array( 'type' => 'string', 'default' => '54px' ),
+            'headingColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+
+            'subFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'subFontWeight' => array( 'type' => 'number', 'default' => 600 ),
+            'subFontSize'   => array( 'type' => 'string', 'default' => '48px' ),
+            'subColor'      => array( 'type' => 'string', 'default' => '#FFBB8E' ),
         ),
     ) );
 }
@@ -488,22 +528,89 @@ function irank_cc_render_cards_block( $attributes ) {
             array('name'=>'Premium','tagline'=>'Everything included','price'=>'$249','benefits'=>array('Priority support','Extra features'),'badge'=>'','ctaText'=>'Choose plan','ctaUrl'=>'#'),
         );
     }
+
+    // Read styling attributes with fallbacks
+    $cardsBgStart = isset($attributes['cardsBgStart']) ? sanitize_hex_color($attributes['cardsBgStart']) : '#7c1a4a';
+    $cardsBgEnd   = isset($attributes['cardsBgEnd'])   ? sanitize_hex_color($attributes['cardsBgEnd'])   : '#7c1a4a';
+    $cardBg       = isset($attributes['cardBg'])       ? sanitize_hex_color($attributes['cardBg'])       : '#ffffff';
+    $ctaBg        = isset($attributes['ctaBg'])        ? sanitize_hex_color($attributes['ctaBg'])        : '#92245A';
+    $ctaColor     = isset($attributes['ctaColor'])     ? sanitize_hex_color($attributes['ctaColor'])     : '#ffffff';
+    $ctaHoverBg   = isset($attributes['ctaHoverBg'])   ? sanitize_hex_color($attributes['ctaHoverBg'])   : '#ffffff';
+    $ctaHoverCol  = isset($attributes['ctaHoverColor'])? sanitize_hex_color($attributes['ctaHoverColor']): '#000000';
+    $ctaHoverBorder = isset($attributes['ctaHoverBorder'])? sanitize_hex_color($attributes['ctaHoverBorder']) : '#000000';
+    $badgeBg      = isset($attributes['badgeBg'])      ? sanitize_hex_color($attributes['badgeBg'])      : '#ffbf00';
+    $badgeColor   = isset($attributes['badgeColor'])   ? sanitize_hex_color($attributes['badgeColor'])   : '#000000';
+
+    $ff = function($primary){
+        $primary = trim((string)$primary);
+        if ($primary === 'Nohemi') return "'Nohemi','Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
+        return "'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
+    };
+    $nameFamily = isset($attributes['nameFontFamily']) ? $ff($attributes['nameFontFamily']) : $ff('Nohemi');
+    $nameWeight = isset($attributes['nameFontWeight']) ? intval($attributes['nameFontWeight']) : 700;
+    $nameSize   = isset($attributes['nameFontSize'])   ? esc_attr($attributes['nameFontSize']) : '32px';
+    $nameColor  = isset($attributes['nameColor'])      ? sanitize_hex_color($attributes['nameColor']) : '#000000';
+    $tagSize    = isset($attributes['taglineFontSize'])? esc_attr($attributes['taglineFontSize']) : '16px';
+    $tagColor   = isset($attributes['taglineColor'])   ? sanitize_hex_color($attributes['taglineColor']) : '#666666';
+    $priceSize  = isset($attributes['priceFontSize'])  ? esc_attr($attributes['priceFontSize']) : '28px';
+    $priceColor = isset($attributes['priceColor'])     ? sanitize_hex_color($attributes['priceColor']) : '#000000';
+    $benefitCol = isset($attributes['benefitColor'])   ? sanitize_hex_color($attributes['benefitColor']) : '#333333';
+
+    $section_style = sprintf('--cards-grad-start:%s;--cards-grad-end:%s;--card-bg:%s;--cards-cta-bg:%s;--cards-cta-color:%s;--cards-cta-hover-bg:%s;--cards-cta-hover-color:%s;--cards-cta-hover-border:%s;--badge-bg:%s;--badge-color:%s;',
+        esc_attr($cardsBgStart), esc_attr($cardsBgEnd), esc_attr($cardBg), esc_attr($ctaBg), esc_attr($ctaColor), esc_attr($ctaHoverBg), esc_attr($ctaHoverCol), esc_attr($ctaHoverBorder), esc_attr($badgeBg), esc_attr($badgeColor)
+    );
+
+    // Typography for section texts
+    $kFamily = isset($attributes['kickerFontFamily']) ? $ff($attributes['kickerFontFamily']) : $ff('Poppins');
+    $kWeight = isset($attributes['kickerFontWeight']) ? intval($attributes['kickerFontWeight']) : 500;
+    $kSize   = isset($attributes['kickerFontSize'])   ? esc_attr($attributes['kickerFontSize']) : '14px';
+    $kColor  = isset($attributes['kickerColor'])      ? sanitize_hex_color($attributes['kickerColor']) : '#ffffff';
+
+    $hFamily = isset($attributes['headingFontFamily']) ? $ff($attributes['headingFontFamily']) : $ff('Poppins');
+    $hWeight = isset($attributes['headingFontWeight']) ? intval($attributes['headingFontWeight']) : 600;
+    $hSize   = isset($attributes['headingFontSize'])   ? esc_attr($attributes['headingFontSize']) : '48px';
+    $hLine   = isset($attributes['headingLineHeight']) ? esc_attr($attributes['headingLineHeight']) : '54px';
+    $hColor  = isset($attributes['headingColor'])      ? sanitize_hex_color($attributes['headingColor']) : '#ffffff';
+
+    $sFamily = isset($attributes['subFontFamily']) ? $ff($attributes['subFontFamily']) : $ff('Poppins');
+    $sWeight = isset($attributes['subFontWeight']) ? intval($attributes['subFontWeight']) : 600;
+    $sSize   = isset($attributes['subFontSize'])   ? esc_attr($attributes['subFontSize']) : '48px';
+    $sColor  = isset($attributes['subColor'])      ? sanitize_hex_color($attributes['subColor']) : '#FFBB8E';
+
     ob_start();
     ?>
-    <section class="irank-cards">
+    <section class="irank-cards" style="<?php echo $section_style; ?>">
+      <?php if (!empty($attributes['sectionHeader']) || !empty($attributes['sectionHeading']) || !empty($attributes['sectionSubheading'])): ?>
+        <header class="irank-cards__header">
+          <?php if (!empty($attributes['sectionHeader'])): ?>
+            <div class="irank-cards__kicker" style="font-family:<?php echo $kFamily; ?>;font-weight:<?php echo (int)$kWeight; ?>;font-size:<?php echo $kSize; ?>;color:<?php echo esc_attr($kColor); ?>;">
+              <?php echo esc_html($attributes['sectionHeader']); ?>
+            </div>
+          <?php endif; ?>
+          <?php if (!empty($attributes['sectionHeading'])): ?><h2 class="irank-cards__heading" style="font-family:<?php echo $hFamily; ?>;font-weight:<?php echo (int)$hWeight; ?>;font-size:<?php echo $hSize; ?>;line-height:<?php echo $hLine; ?>;color:<?php echo esc_attr($hColor); ?>;"><?php echo esc_html($attributes['sectionHeading']); ?></h2><?php endif; ?>
+          <?php if (!empty($attributes['sectionSubheading'])): ?><p class="irank-cards__subheading" style="font-family:<?php echo $sFamily; ?>;font-weight:<?php echo (int)$sWeight; ?>;font-size:<?php echo $sSize; ?>;color:<?php echo esc_attr($sColor); ?>;"><?php echo esc_html($attributes['sectionSubheading']); ?></p><?php endif; ?>
+        </header>
+      <?php endif; ?>
       <div class="irank-cards__track" tabindex="0">
         <?php foreach ($cards as $i => $c): ?>
           <article class="irank-card<?php echo !empty($c['badge']) ? ' is-badged' : ''; ?>">
-            <?php if (!empty($c['badge'])): ?><div class="irank-card__badge"><?php echo esc_html($c['badge']); ?></div><?php endif; ?>
-            <h3 class="irank-card__title"><?php echo esc_html($c['name']); ?></h3>
-            <p class="irank-card__tagline"><?php echo esc_html($c['tagline']); ?></p>
-            <div class="irank-card__price"><?php echo esc_html($c['price']); ?></div>
-            <ul class="irank-card__benefits">
-              <?php if (!empty($c['benefits']) && is_array($c['benefits'])) foreach ($c['benefits'] as $b): ?>
-                <li><?php echo esc_html($b); ?></li>
-              <?php endforeach; ?>
-            </ul>
-            <a href="<?php echo esc_url( isset($c['ctaUrl'])?$c['ctaUrl']:'#' ); ?>" class="irank-card__cta"><?php echo esc_html( isset($c['ctaText'])?$c['ctaText']:'Select' ); ?></a>
+            <div class="irank-card__media">
+              <?php if (!empty($c['imageUrl'])): ?>
+                <img src="<?php echo esc_url($c['imageUrl']); ?>" alt="<?php echo esc_attr($c['name']); ?>" />
+              <?php endif; ?>
+            </div>
+            <div class="irank-card__content">
+              <?php if (!empty($c['badge'])): ?><div class="irank-card__badge" style="background:<?php echo esc_attr($badgeBg); ?>;color:<?php echo esc_attr($badgeColor); ?>;"><?php echo esc_html($c['badge']); ?></div><?php endif; ?>
+              <h3 class="irank-card__title" style="font-family:<?php echo $nameFamily; ?>;font-weight:<?php echo (int)$nameWeight; ?>;font-size:<?php echo $nameSize; ?>;color:<?php echo esc_attr($nameColor); ?>;"><?php echo esc_html($c['name']); ?></h3>
+              <p class="irank-card__tagline" style="font-size:<?php echo $tagSize; ?>;color:<?php echo esc_attr($tagColor); ?>;"><?php echo esc_html($c['tagline']); ?></p>
+              <div class="irank-card__price" style="font-size:<?php echo $priceSize; ?>;color:<?php echo esc_attr($priceColor); ?>;"><?php echo esc_html($c['price']); ?></div>
+              <ul class="irank-card__benefits">
+                <?php if (!empty($c['benefits']) && is_array($c['benefits'])) foreach ($c['benefits'] as $b): ?>
+                  <li style="color:<?php echo esc_attr($benefitCol); ?>;"><?php echo esc_html($b); ?></li>
+                <?php endforeach; ?>
+              </ul>
+              <a href="<?php echo esc_url( isset($c['ctaUrl'])?$c['ctaUrl']:'#' ); ?>" class="irank-card__cta"><?php echo esc_html( isset($c['ctaText'])?$c['ctaText']:'Select' ); ?></a>
+            </div>
           </article>
         <?php endforeach; ?>
       </div>

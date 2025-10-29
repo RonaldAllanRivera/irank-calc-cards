@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.6 - Product Cards section header, split layout, styling controls
+- Added Section Header + Heading + Subheading to Product Cards (with Typography panel)
+- Per-card image field; split layout (image left, content right)
+- Colors panel: section gradient, card background, CTA bg/text + hover bg/text/border, badge colors
+- Isolated stylesheet `assets/css/cards.css` to avoid conflicts with calculator
+- Default font set to Poppins (no Nohemi required)
+- Docs: README updated with Product Cards details; HOWTO includes editor tutorial
+
 ## 0.1.5 - Remove REST tracking, lead form UX, settings cleanup
 - Removed all custom REST API routes and frontend REST calls
 - Lead form overlay validates only email and saves leads via admin-ajax to `wp_irank_calc_leads`
