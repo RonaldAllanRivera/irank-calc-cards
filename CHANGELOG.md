@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.7 - Product Cards badge gradient, arrow icons, image fit, layout cleanup
+- Badge moved to the top-right; 50px height with 14px/24px padding, radius 0 20px 0 20px
+- New Colors: Badge Gradient Start/End (defaults: `#FD9651` → `#F0532C`); removed legacy Badge BG option
+- Badge gradient applied via CSS variables; fixed content overlap by adding top padding when badged
+- Carousel arrows now use PNG icons with hover variants; native scrollbar hidden; dots UI removed
+- Card visuals: image set to object-fit: cover with no media padding; content column gets left padding; card border-radius set to 20px
+- Docs: README updated to reflect new badge gradient controls, arrow behavior, and visual tweaks
+
 ## 0.1.6 - Product Cards section header, split layout, styling controls
 - Added Section Header + Heading + Subheading to Product Cards (with Typography panel)
 - Per-card image field; split layout (image left, content right)

@@ -81,7 +81,7 @@
       // Colors
       cardsBgStart:{type:'string'}, cardsBgEnd:{type:'string'}, cardBg:{type:'string'},
       ctaBg:{type:'string'}, ctaColor:{type:'string'}, ctaHoverBg:{type:'string'}, ctaHoverColor:{type:'string'}, ctaHoverBorder:{type:'string'},
-      badgeBg:{type:'string'}, badgeColor:{type:'string'},
+      badgeColor:{type:'string'}, badgeGradStart:{type:'string'}, badgeGradEnd:{type:'string'},
       // Typography
       kickerFontFamily:{type:'string',default:'Poppins'}, kickerFontWeight:{type:'number',default:500}, kickerFontSize:{type:'string',default:'14px'}, kickerColor:{type:'string',default:'#ffffff'}, kickerBorderColor:{type:'string',default:'#ffffff'},
       headingFontFamily:{type:'string',default:'Poppins'}, headingFontWeight:{type:'number',default:600}, headingFontSize:{type:'string',default:'48px'}, headingLineHeight:{type:'string',default:'54px'}, headingColor:{type:'string',default:'#ffffff'},
@@ -128,7 +128,8 @@
             el(TextControl,{label:__('CTA Hover BG','irank-calc-cards'),value:props.attributes.ctaHoverBg||'',onChange:function(v){props.setAttributes({ctaHoverBg:v});},help:'#ffffff'}),
             el(TextControl,{label:__('CTA Hover Text','irank-calc-cards'),value:props.attributes.ctaHoverColor||'',onChange:function(v){props.setAttributes({ctaHoverColor:v});},help:'#000000'}),
             el(TextControl,{label:__('CTA Hover Border','irank-calc-cards'),value:props.attributes.ctaHoverBorder||'',onChange:function(v){props.setAttributes({ctaHoverBorder:v});},help:'#000000'}),
-            el(TextControl,{label:__('Badge BG','irank-calc-cards'),value:props.attributes.badgeBg||'',onChange:function(v){props.setAttributes({badgeBg:v});},help:'#ffbf00'}),
+            el(TextControl,{label:__('Badge Gradient Start','irank-calc-cards'),value:props.attributes.badgeGradStart||'',onChange:function(v){props.setAttributes({badgeGradStart:v});},help:'#FD9651'}),
+            el(TextControl,{label:__('Badge Gradient End','irank-calc-cards'),value:props.attributes.badgeGradEnd||'',onChange:function(v){props.setAttributes({badgeGradEnd:v});},help:'#F0532C'}),
             el(TextControl,{label:__('Badge Text','irank-calc-cards'),value:props.attributes.badgeColor||'',onChange:function(v){props.setAttributes({badgeColor:v});},help:'#000000'})
           ]),
           el(PanelBody,{title:__('Cards','irank-calc-cards'),initialOpen:true},[

@@ -28,12 +28,15 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Product Cards
   - Repeater for 3+ cards (name, tagline, price, benefits, badge, CTA, image)
   - Section controls: Header, Heading, Subheading (with Typography panel)
-  - Colors panel: section gradient, card background, CTA bg/text + hover bg/text/border, badge colors
-  - Split layout per card (image left, content right), swipeable carousel with prev/next + dots
+  - Colors panel: section gradient, card background, CTA bg/text + hover bg/text/border, badge text color, badge gradient start/end
+  - Split layout per card (image left, content right), swipeable carousel with prev/next arrows (no dots), keyboard navigation, and edge fade hints
   - Isolated stylesheet (`assets/css/cards.css`) to avoid conflicts with the calculator
   - Section Header “pill” with editable text and border colors (64px radius)
   - Price suffix displayed beside price (default “/month”) and optional price tagline below
   - Admin image preview for each card; Duplicate action to clone a card in-place
+  - Top-right badge: 50px height with 14px/24px padding, radius 0 20px 0 20px, configurable gradient (default #FD9651 → #F0532C)
+  - Arrows use PNG icons with hover variants; disabled at edges; scrollbar hidden
+  - Card visuals: image fills media area (object-fit: cover); card border-radius 20px; text column left padding
 
 ## Installation
 1. Copy `irank-calc-cards` to `wp-content/plugins/`.
@@ -46,7 +49,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Product Cards: in the Inspector
   - Section: set Section Header, Heading, Subheading
   - Cards: add 3+ cards. Each card has Name, Tagline, Price, Price Suffix (default “/month”), Price Tagline (below price), Benefits (one per line), Badge, CTA Text/URL, Image. Use Duplicate to clone a card and image preview to verify selection.
-  - Colors: section gradient (start/end), card background, CTA colors + hover, badge colors
+  - Colors: section gradient (start/end), card background, CTA colors + hover, badge text color, badge gradient start/end
   - Typography: Header/Heading/Subheading font family, weight, size, color; Section Header border color
 
 ### Lead form overlay

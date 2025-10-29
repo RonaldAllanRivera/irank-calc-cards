@@ -311,8 +311,9 @@ function irank_cc_register_blocks() {
             'ctaHoverBg'     => array( 'type' => 'string', 'default' => '#ffffff' ),
             'ctaHoverColor'  => array( 'type' => 'string', 'default' => '#000000' ),
             'ctaHoverBorder' => array( 'type' => 'string', 'default' => '#000000' ),
-            'badgeBg'        => array( 'type' => 'string', 'default' => '#ffbf00' ),
             'badgeColor'     => array( 'type' => 'string', 'default' => '#000000' ),
+            'badgeGradStart' => array( 'type' => 'string', 'default' => '#FD9651' ),
+            'badgeGradEnd'   => array( 'type' => 'string', 'default' => '#F0532C' ),
             // Typography for section header/heading/subheading
             'kickerFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
             'kickerFontWeight' => array( 'type' => 'number', 'default' => 500 ),
@@ -540,8 +541,11 @@ function irank_cc_render_cards_block( $attributes ) {
     $ctaHoverBg   = isset($attributes['ctaHoverBg'])   ? sanitize_hex_color($attributes['ctaHoverBg'])   : '#ffffff';
     $ctaHoverCol  = isset($attributes['ctaHoverColor'])? sanitize_hex_color($attributes['ctaHoverColor']): '#000000';
     $ctaHoverBorder = isset($attributes['ctaHoverBorder'])? sanitize_hex_color($attributes['ctaHoverBorder']) : '#000000';
-    $badgeBg      = isset($attributes['badgeBg'])      ? sanitize_hex_color($attributes['badgeBg'])      : '#ffbf00';
     $badgeColor   = isset($attributes['badgeColor'])   ? sanitize_hex_color($attributes['badgeColor'])   : '#000000';
+    $tmp_bgs = isset($attributes['badgeGradStart']) ? sanitize_hex_color($attributes['badgeGradStart']) : '';
+    $badgeGradStart = $tmp_bgs ? $tmp_bgs : '#FD9651';
+    $tmp_bge = isset($attributes['badgeGradEnd']) ? sanitize_hex_color($attributes['badgeGradEnd']) : '';
+    $badgeGradEnd   = $tmp_bge ? $tmp_bge : '#F0532C';
 
     $ff = function($primary){
         $primary = trim((string)$primary);
@@ -558,8 +562,8 @@ function irank_cc_render_cards_block( $attributes ) {
     $priceColor = isset($attributes['priceColor'])     ? sanitize_hex_color($attributes['priceColor']) : '#000000';
     $benefitCol = isset($attributes['benefitColor'])   ? sanitize_hex_color($attributes['benefitColor']) : '#333333';
 
-    $section_style = sprintf('--cards-grad-start:%s;--cards-grad-end:%s;--card-bg:%s;--cards-cta-bg:%s;--cards-cta-color:%s;--cards-cta-hover-bg:%s;--cards-cta-hover-color:%s;--cards-cta-hover-border:%s;--badge-bg:%s;--badge-color:%s;',
-        esc_attr($cardsBgStart), esc_attr($cardsBgEnd), esc_attr($cardBg), esc_attr($ctaBg), esc_attr($ctaColor), esc_attr($ctaHoverBg), esc_attr($ctaHoverCol), esc_attr($ctaHoverBorder), esc_attr($badgeBg), esc_attr($badgeColor)
+    $section_style = sprintf('--cards-grad-start:%s;--cards-grad-end:%s;--card-bg:%s;--cards-cta-bg:%s;--cards-cta-color:%s;--cards-cta-hover-bg:%s;--cards-cta-hover-color:%s;--cards-cta-hover-border:%s;--badge-color:%s;--badge-grad-start:%s;--badge-grad-end:%s;',
+        esc_attr($cardsBgStart), esc_attr($cardsBgEnd), esc_attr($cardBg), esc_attr($ctaBg), esc_attr($ctaColor), esc_attr($ctaHoverBg), esc_attr($ctaHoverCol), esc_attr($ctaHoverBorder), esc_attr($badgeColor), esc_attr($badgeGradStart), esc_attr($badgeGradEnd)
     );
 
     // Typography for section texts
@@ -603,7 +607,7 @@ function irank_cc_render_cards_block( $attributes ) {
               <?php endif; ?>
             </div>
             <div class="irank-card__content">
-              <?php if (!empty($c['badge'])): ?><div class="irank-card__badge" style="background:<?php echo esc_attr($badgeBg); ?>;color:<?php echo esc_attr($badgeColor); ?>;"><?php echo esc_html($c['badge']); ?></div><?php endif; ?>
+              <?php if (!empty($c['badge'])): ?><div class="irank-card__badge" style="color:<?php echo esc_attr($badgeColor); ?>;"><?php echo esc_html($c['badge']); ?></div><?php endif; ?>
               <h3 class="irank-card__title" style="font-family:<?php echo $nameFamily; ?>;font-weight:<?php echo (int)$nameWeight; ?>;font-size:<?php echo $nameSize; ?>;color:<?php echo esc_attr($nameColor); ?>;"><?php echo esc_html($c['name']); ?></h3>
               <p class="irank-card__tagline" style="font-size:<?php echo $tagSize; ?>;color:<?php echo esc_attr($tagColor); ?>;"><?php echo esc_html($c['tagline']); ?></p>
               <?php
