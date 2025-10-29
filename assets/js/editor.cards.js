@@ -70,7 +70,7 @@
       ctaBg:{type:'string'}, ctaColor:{type:'string'}, ctaHoverBg:{type:'string'}, ctaHoverColor:{type:'string'}, ctaHoverBorder:{type:'string'},
       badgeBg:{type:'string'}, badgeColor:{type:'string'},
       // Typography
-      kickerFontFamily:{type:'string',default:'Poppins'}, kickerFontWeight:{type:'number',default:500}, kickerFontSize:{type:'string',default:'14px'}, kickerColor:{type:'string',default:'#ffffff'},
+      kickerFontFamily:{type:'string',default:'Poppins'}, kickerFontWeight:{type:'number',default:500}, kickerFontSize:{type:'string',default:'14px'}, kickerColor:{type:'string',default:'#ffffff'}, kickerBorderColor:{type:'string',default:'#ffffff'},
       headingFontFamily:{type:'string',default:'Poppins'}, headingFontWeight:{type:'number',default:600}, headingFontSize:{type:'string',default:'48px'}, headingLineHeight:{type:'string',default:'54px'}, headingColor:{type:'string',default:'#ffffff'},
       subFontFamily:{type:'string',default:'Poppins'}, subFontWeight:{type:'number',default:600}, subFontSize:{type:'string',default:'48px'}, subColor:{type:'string',default:'#FFBB8E'}
     },
@@ -88,7 +88,8 @@
             el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.kickerFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({kickerFontFamily:v});}}),
             el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.kickerFontWeight||500,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({kickerFontWeight:parseInt(v,10)});}}),
             el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.kickerFontSize||'14px',onChange:function(v){props.setAttributes({kickerFontSize:v});}}),
-            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.kickerColor,onChange:function(v){props.setAttributes({kickerColor:v});}}) ]),
+            el('div',{},[ el('label',{},__('Text Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.kickerColor,onChange:function(v){props.setAttributes({kickerColor:v});}}) ]),
+            el('div',{},[ el('label',{},__('Border Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.kickerBorderColor,onChange:function(v){props.setAttributes({kickerBorderColor:v});}}) ]),
 
             el('hr'),
             el('h4',{},__('Heading','irank-calc-cards')),
@@ -106,8 +107,8 @@
             el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.subColor,onChange:function(v){props.setAttributes({subColor:v});}}) ])
           ]),
           el(PanelBody,{title:__('Colors','irank-calc-cards'),initialOpen:false},[
-            el(TextControl,{label:__('Section Gradient Start','irank-calc-cards'),value:props.attributes.cardsBgStart||'',onChange:function(v){props.setAttributes({cardsBgStart:v});},help:'#7c1a4a'}),
-            el(TextControl,{label:__('Section Gradient End','irank-calc-cards'),value:props.attributes.cardsBgEnd||'',onChange:function(v){props.setAttributes({cardsBgEnd:v});},help:'#7c1a4a'}),
+            el(TextControl,{label:__('Section Gradient Start','irank-calc-cards'),value:props.attributes.cardsBgStart||'',onChange:function(v){props.setAttributes({cardsBgStart:v});},help:'#92245A'}),
+            el(TextControl,{label:__('Section Gradient End','irank-calc-cards'),value:props.attributes.cardsBgEnd||'',onChange:function(v){props.setAttributes({cardsBgEnd:v});},help:'#92245A'}),
             el(TextControl,{label:__('Card Background','irank-calc-cards'),value:props.attributes.cardBg||'',onChange:function(v){props.setAttributes({cardBg:v});},help:'#ffffff'}),
             el(TextControl,{label:__('CTA BG','irank-calc-cards'),value:props.attributes.ctaBg||'',onChange:function(v){props.setAttributes({ctaBg:v});},help:'#92245A'}),
             el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:props.attributes.ctaColor||'',onChange:function(v){props.setAttributes({ctaColor:v});},help:'#ffffff'}),

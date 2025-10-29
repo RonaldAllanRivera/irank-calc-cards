@@ -294,8 +294,8 @@ function irank_cc_register_blocks() {
             'sectionHeader' => array( 'type' => 'string', 'default' => 'Choose your path to transformation' ),
             'sectionHeading' => array( 'type' => 'string', 'default' => 'All medications included in price.' ),
             'sectionSubheading' => array( 'type' => 'string', 'default' => 'No hidden pharmacy or lab fees.' ),
-            'cardsBgStart' => array( 'type' => 'string', 'default' => '#7c1a4a' ),
-            'cardsBgEnd'   => array( 'type' => 'string', 'default' => '#7c1a4a' ),
+            'cardsBgStart' => array( 'type' => 'string', 'default' => '#92245A' ),
+            'cardsBgEnd'   => array( 'type' => 'string', 'default' => '#92245A' ),
             'cardBg'       => array( 'type' => 'string', 'default' => '#ffffff' ),
             'nameFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
             'nameFontWeight' => array( 'type' => 'number', 'default' => 700 ),
@@ -318,6 +318,7 @@ function irank_cc_register_blocks() {
             'kickerFontWeight' => array( 'type' => 'number', 'default' => 500 ),
             'kickerFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
             'kickerColor'      => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'kickerBorderColor'=> array( 'type' => 'string', 'default' => '#ffffff' ),
 
             'headingFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
             'headingFontWeight' => array( 'type' => 'number', 'default' => 600 ),
@@ -519,6 +520,7 @@ add_action('wp_ajax_nopriv_irank_cc_lead','irank_cc_ajax_lead');
 
 function irank_cc_render_cards_block( $attributes ) {
     wp_enqueue_style( 'irank-cc-frontend' );
+    wp_enqueue_style( 'irank-cc-cards' );
     wp_enqueue_script( 'irank-cc-frontend-cards' );
     $cards = isset($attributes['cards']) && is_array($attributes['cards']) ? $attributes['cards'] : array();
     if ( empty( $cards ) ) {
@@ -530,8 +532,8 @@ function irank_cc_render_cards_block( $attributes ) {
     }
 
     // Read styling attributes with fallbacks
-    $cardsBgStart = isset($attributes['cardsBgStart']) ? sanitize_hex_color($attributes['cardsBgStart']) : '#7c1a4a';
-    $cardsBgEnd   = isset($attributes['cardsBgEnd'])   ? sanitize_hex_color($attributes['cardsBgEnd'])   : '#7c1a4a';
+    $cardsBgStart = isset($attributes['cardsBgStart']) ? sanitize_hex_color($attributes['cardsBgStart']) : '#92245A';
+    $cardsBgEnd   = isset($attributes['cardsBgEnd'])   ? sanitize_hex_color($attributes['cardsBgEnd'])   : '#92245A';
     $cardBg       = isset($attributes['cardBg'])       ? sanitize_hex_color($attributes['cardBg'])       : '#ffffff';
     $ctaBg        = isset($attributes['ctaBg'])        ? sanitize_hex_color($attributes['ctaBg'])        : '#92245A';
     $ctaColor     = isset($attributes['ctaColor'])     ? sanitize_hex_color($attributes['ctaColor'])     : '#ffffff';
@@ -565,6 +567,7 @@ function irank_cc_render_cards_block( $attributes ) {
     $kWeight = isset($attributes['kickerFontWeight']) ? intval($attributes['kickerFontWeight']) : 500;
     $kSize   = isset($attributes['kickerFontSize'])   ? esc_attr($attributes['kickerFontSize']) : '14px';
     $kColor  = isset($attributes['kickerColor'])      ? sanitize_hex_color($attributes['kickerColor']) : '#ffffff';
+    $kBorder = isset($attributes['kickerBorderColor'])? sanitize_hex_color($attributes['kickerBorderColor']) : '#ffffff';
 
     $hFamily = isset($attributes['headingFontFamily']) ? $ff($attributes['headingFontFamily']) : $ff('Poppins');
     $hWeight = isset($attributes['headingFontWeight']) ? intval($attributes['headingFontWeight']) : 600;
@@ -583,7 +586,7 @@ function irank_cc_render_cards_block( $attributes ) {
       <?php if (!empty($attributes['sectionHeader']) || !empty($attributes['sectionHeading']) || !empty($attributes['sectionSubheading'])): ?>
         <header class="irank-cards__header">
           <?php if (!empty($attributes['sectionHeader'])): ?>
-            <div class="irank-cards__kicker" style="font-family:<?php echo $kFamily; ?>;font-weight:<?php echo (int)$kWeight; ?>;font-size:<?php echo $kSize; ?>;color:<?php echo esc_attr($kColor); ?>;">
+            <div class="irank-cards__kicker" style="font-family:<?php echo $kFamily; ?>;font-weight:<?php echo (int)$kWeight; ?>;font-size:<?php echo $kSize; ?>;color:<?php echo esc_attr($kColor); ?>;border-color:<?php echo esc_attr($kBorder); ?>;">
               <?php echo esc_html($attributes['sectionHeader']); ?>
             </div>
           <?php endif; ?>

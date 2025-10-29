@@ -31,6 +31,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Colors panel: section gradient, card background, CTA bg/text + hover bg/text/border, badge colors
   - Split layout per card (image left, content right), swipeable carousel with prev/next + dots
   - Isolated stylesheet (`assets/css/cards.css`) to avoid conflicts with the calculator
+  - Section Header “pill” with editable text and border colors (64px radius)
 
 ## Installation
 1. Copy `irank-calc-cards` to `wp-content/plugins/`.
@@ -43,8 +44,8 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Product Cards: in the Inspector
   - Section: set Section Header, Heading, Subheading
   - Cards: add 3+ cards. Each card has Name, Tagline, Price, Benefits (one per line), Badge, CTA Text/URL, Image
-  - Colors: section gradient, card background, CTA colors + hover, badge colors
-  - Typography: Header/Heading/Subheading font family, weight, size, color
+  - Colors: section gradient (start/end), card background, CTA colors + hover, badge colors
+  - Typography: Header/Heading/Subheading font family, weight, size, color; Section Header border color
 
 ### Lead form overlay
 - The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side, then the lead is saved to the database via admin‑ajax. A large centered “Thanks!” message appears and the popup auto‑closes after a few seconds.

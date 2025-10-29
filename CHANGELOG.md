@@ -7,6 +7,9 @@
 - Isolated stylesheet `assets/css/cards.css` to avoid conflicts with calculator
 - Default font set to Poppins (no Nohemi required)
 - Docs: README updated with Product Cards details; HOWTO includes editor tutorial
+ - Section Header styles: 64px pill with editable text and border colors; spacing tuned to match design
+ - Removed Section Background solid color in favor of gradient start/end only; cleaned attributes and CSS
+ - Enqueue `irank-cc-cards` in Product Cards render so styles reliably apply on frontend
 
 ## 0.1.5 - Remove REST tracking, lead form UX, settings cleanup
 - Removed all custom REST API routes and frontend REST calls
