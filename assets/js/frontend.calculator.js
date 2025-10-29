@@ -27,6 +27,7 @@
     var cta = $('.irank-calc__cta', section);
     var overlay = $('.irank-calc__overlay', section);
     var overlayClose = $('.irank-calc__overlay-close', section);
+    var overlayInner = $('.irank-calc__overlay-inner', section);
     var form = $('.irank-calc__form', section);
     var formResult = $('.irank-calc__form-result', section);
     var ba = $('.irank-calc__ba', section);
@@ -54,6 +55,10 @@
     function openOverlay(){
       var w = parseFloat(slider.value||min); var loss = w*factor;
       overlay.hidden = false; overlay.setAttribute('aria-hidden','false'); document.body.classList.add('irank-no-scroll');
+      // Reset success state each open
+      if(form){ form.classList.remove('irank-calc__form--success'); }
+      if(formResult){ formResult.classList.remove('is-success'); formResult.textContent=''; }
+      if(overlayInner){ overlayInner.classList.remove('is-success'); }
       trackEvent();
     }
     function closeOverlay(){ overlay.hidden = true; overlay.setAttribute('aria-hidden','true'); document.body.classList.remove('irank-no-scroll'); }
@@ -63,7 +68,7 @@
     overlay && overlay.addEventListener('click', function(e){ if(e.target===overlay) closeOverlay(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !overlay.hidden){ closeOverlay(); } });
 
-    // Form submit -> client-side only (REST removed)
+    // Form submit -> admin-ajax (stores lead), then success screen and auto-close
     if(form){
       form.addEventListener('submit', function(e){
         e.preventDefault();
@@ -76,11 +81,35 @@
           if(emailInput){ emailInput.focus(); }
           return;
         }
+        var fd = new FormData(form);
+        fd.append('action','irank_cc_lead');
+        fd.append('nonce', (window.irankCC && irankCC.nonce) || '');
+        fd.append('weight', fmt(w));
+        fd.append('loss', fmt(loss));
+        fd.append('page_id', pageId);
+        fd.append('session_id', uuid());
+        fd.append('referrer', document.referrer||'');
         var submitBtn = form.querySelector('button[type="submit"]');
         if(submitBtn){ submitBtn.disabled = true; }
-        if(formResult){ formResult.textContent = 'Thanks! We\'ll be in touch soon.'; }
-        form.reset();
-        setTimeout(function(){ if(submitBtn){ submitBtn.disabled = false; } }, 600);
+        if(formResult){ formResult.textContent = 'Submitting...'; }
+        var ajaxUrl = (window.irankCC && irankCC.ajaxUrl) || '/wp-admin/admin-ajax.php';
+        fetch(ajaxUrl, { method:'POST', body: fd, credentials:'same-origin' })
+          .then(function(r){ return r.json().catch(function(){ return { success:false }; }); })
+          .then(function(resp){
+            if(resp && resp.success){
+              if(form){ form.classList.add('irank-calc__form--success'); }
+              if(overlayInner){ overlayInner.classList.add('is-success'); }
+              if(formResult){ formResult.textContent = "Thanks! We'll be in touch soon."; formResult.classList.add('is-success'); }
+              // Auto close overlay after 5s
+              setTimeout(function(){ if(!overlay.hidden){ closeOverlay(); } }, 5000);
+              form.reset();
+            } else {
+              if(formResult){ formResult.textContent = (resp && resp.data && resp.data.error === 'invalid_email') ? 'Please enter a valid email address.' : 'Please try again.'; }
+              if(emailInput){ emailInput.focus(); }
+            }
+          })
+          .catch(function(){ if(formResult){ formResult.textContent = 'Network error. Please try again.'; } })
+          .finally(function(){ if(submitBtn){ submitBtn.disabled = false; } });
       });
     }
 

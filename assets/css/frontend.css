@@ -292,6 +292,8 @@
   font-size: 20px;
   cursor: pointer;
 }
+/* Hide heading on success, keep close icon visible */
+.irank-calc__overlay-inner.is-success h3{ display:none; }
 .irank-calc__overlay-cta {
   display: inline-block;
   margin-top: 12px;
@@ -312,6 +314,10 @@
 
 /* Lead form */
 .irank-calc__form{ display:grid; gap:12px; margin-top:8px; }
+.irank-calc__form.is-hidden{ display:none; }
+.irank-calc__form.irank-calc__form--success .irank-calc__field,
+.irank-calc__form.irank-calc__form--success .irank-calc__form-actions{ display:none; }
+.irank-calc__form.irank-calc__form--success .irank-calc__form-result{ display:flex; }
 .irank-calc__field label{ display:block; font-size:14px; margin-bottom:6px; color:#555; }
 .irank-calc__field input{
   width:100%;
@@ -324,7 +330,17 @@
 }
 .irank-calc__field input:focus{ outline:none; border-color: var(--irank-cta-bg, #92245a); box-shadow: 0 0 0 3px rgba(146,36,90,0.15); }
 .irank-calc__form-actions{ margin-top:8px; }
-.irank-calc__form-result{ margin-top:8px; font-size:14px; color:#333; }
+.irank-calc__form-result{ margin-top:8px; font-size:14px; color:#333; min-height:0; }
+.irank-calc__form-result.is-success{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:180px;
+  font-size:30px;
+  font-weight:600;
+  color:#222;
+}
 
 /* Cards */
 .irank-cards {
@@ -413,3 +429,7 @@
   .irank-calc__slider { margin: 20px 0 24px 0; }
   .irank-calc__cta { width: 100%; }
 }
+
+/* Overrides to ensure consistent success layout and sizing */
+.irank-calc__overlay-inner{ min-height:200px; }
+.irank-calc__form.irank-calc__form--success .irank-calc__form-result{ display:flex !important; }

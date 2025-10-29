@@ -4,7 +4,7 @@
   - WP Admin → Plugins → “IRANK Calc & Cards” → Activate.
 - **Settings**
   - WP Admin → Settings → “IRANK Calc & Cards”.
-  - Adjust min/max/step, loss factor, unit, gradient colors, tracking toggle.
+  - Adjust min/max/step, loss factor, unit, gradient colors.
 - **Add blocks**
   - Edit any page.
   - Insert block “Weight Loss Calculator”.
@@ -13,10 +13,14 @@
 - **Frontend behavior**
   - Drag slider → weight and “loss” animate.
   - Before/After image reveal moves smoothly.
-  - Click CTA → opens same‑page Results overlay showing weight/loss.
-  - Tracking event is sent with `sendBeacon`.
-- **Reports**
-  - WP Admin → Tools → IRANK Reports → view totals by date, export CSV.
+  - Click CTA → opens lead form overlay (Full Name, Email, Phone).
+  - Only Email is required and validated client‑side.
+  - Submit → form hides and a large centered “Thanks! We’ll be in touch soon.” message appears.
+  - Overlay auto‑closes after ~5 seconds.
+  - Submission is saved to the database via admin‑ajax.
+- **Leads (admin)**
+  - WP Admin → Tools → IRANK Leads → verify submissions (Date, Name, Email, Phone, Page, Weight, Loss).
+  - Use “Export CSV” to download the data.
 
 # Short Gutenberg guide (no‑build)
 

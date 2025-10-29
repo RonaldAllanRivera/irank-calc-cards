@@ -310,6 +310,13 @@ function irank_cc_render_calculator_block( $attributes ) {
     $a = irank_cc_calc_options_merge( $attributes );
     wp_enqueue_style( 'irank-cc-frontend' );
     wp_enqueue_script( 'irank-cc-frontend-calculator' );
+    // Localize AJAX URL and nonce for lead submissions (non-REST)
+    if ( ! wp_script_is( 'irank-cc-frontend-calculator', 'done' ) ) {
+        wp_localize_script( 'irank-cc-frontend-calculator', 'irankCC', array(
+            'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'irank_cc_lead' ),
+        ) );
+    }
 
     $min = (int)$a['minWeight'];
     $max = (int)$a['maxWeight'];
@@ -424,6 +431,51 @@ function irank_cc_render_calculator_block( $attributes ) {
     <?php
     return ob_get_clean();
 }
+
+// AJAX: Save lead without REST
+function irank_cc_ajax_lead(){
+    // Optional nonce validation (only if provided)
+    $nonce = isset($_POST['nonce']) ? sanitize_text_field( wp_unslash($_POST['nonce']) ) : '';
+    if ( $nonce && ! wp_verify_nonce( $nonce, 'irank_cc_lead' ) ) {
+        wp_send_json_error( array( 'error' => 'bad_nonce' ), 400 );
+    }
+
+    $full_name = isset($_POST['full_name']) ? sanitize_text_field( wp_unslash($_POST['full_name']) ) : '';
+    $email     = isset($_POST['email']) ? sanitize_email( wp_unslash($_POST['email']) ) : '';
+    $phone     = isset($_POST['phone']) ? sanitize_text_field( wp_unslash($_POST['phone']) ) : '';
+    $weight    = isset($_POST['weight']) ? floatval( $_POST['weight'] ) : null;
+    $loss      = isset($_POST['loss']) ? floatval( $_POST['loss'] ) : null;
+    $page_id   = isset($_POST['page_id']) ? intval( $_POST['page_id'] ) : null;
+    $session_id= isset($_POST['session_id']) ? sanitize_text_field( substr( wp_unslash($_POST['session_id']), 0, 64 ) ) : '';
+    $referrer  = isset($_POST['referrer']) ? wp_unslash( $_POST['referrer'] ) : '';
+
+    if ( empty($email) || ! is_email($email) ) {
+        wp_send_json_error( array( 'error' => 'invalid_email' ), 400 );
+    }
+
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    $ip_hash = hash( 'sha256', 'irank-salt|' . $ip );
+    $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+    global $wpdb; $table = $wpdb->prefix . 'irank_calc_leads';
+    $wpdb->insert( $table, array(
+        'created_at' => current_time('mysql'),
+        'page_id'    => $page_id ?: null,
+        'full_name'  => $full_name ?: null,
+        'email'      => $email ?: null,
+        'phone'      => $phone ?: null,
+        'weight'     => $weight ?: null,
+        'loss'       => $loss ?: null,
+        'session_id' => $session_id ?: null,
+        'referrer'   => $referrer ?: null,
+        'user_agent' => $ua ?: null,
+        'ip_hash'    => $ip_hash,
+    ), array('%s','%d','%s','%s','%s','%f','%f','%s','%s','%s','%s') );
+
+    wp_send_json_success();
+}
+add_action('wp_ajax_irank_cc_lead','irank_cc_ajax_lead');
+add_action('wp_ajax_nopriv_irank_cc_lead','irank_cc_ajax_lead');
 
 function irank_cc_render_cards_block( $attributes ) {
     wp_enqueue_style( 'irank-cc-frontend' );
