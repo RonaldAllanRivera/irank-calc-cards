@@ -92,8 +92,13 @@
 }
 .irank-card__price {
   font-weight: 800;
-  margin: 4px 0 8px;
+  margin: 4px 0 6px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
 }
+.irank-card__price-suffix { font-weight: 500; font-size: .6em; opacity: .8; }
+.irank-card__price-note { margin: 0 0 10px; font-size: 14px; opacity: .7; }
 .irank-card__benefits {
   margin: 0;
   padding-left: 18px;

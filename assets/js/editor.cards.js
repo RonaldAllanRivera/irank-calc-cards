@@ -15,7 +15,7 @@
 
   function renderCardEditor(props, idx){
     var cards = props.attributes.cards || [];
-    var c = cards[idx] || {name:'',tagline:'',price:'',benefits:[],badge:'',ctaText:'',ctaUrl:'',imageId:0,imageUrl:''};
+    var c = cards[idx] || {name:'',tagline:'',price:'',priceSuffix:'/month',priceNote:'',benefits:[],badge:'',ctaText:'',ctaUrl:'',imageId:0,imageUrl:''};
     function update(key,val){
       var next = cards.slice();
       next[idx] = clone(c);
@@ -36,6 +36,14 @@
             if(idx<next.length-1){ var t = next[idx+1]; next[idx+1]=next[idx]; next[idx]=t; }
             props.setAttributes({cards:next});
           }}, '↓'),
+          el(Button,{isSecondary:true,onClick:function(){
+            var next = cards.slice();
+            var dup = clone(c);
+            // Optionally annotate copied name
+            if(dup && typeof dup.name === 'string' && dup.name.trim()){ dup.name = dup.name + ' (Copy)'; }
+            next.splice(idx+1,0,dup);
+            props.setAttributes({cards:next});
+          }}, __('Duplicate','irank-calc-cards')),
           el(Button,{isDestructive:true,onClick:function(){
             var next = cards.slice(); next.splice(idx,1); props.setAttributes({cards:next});
           }}, __('Remove','irank-calc-cards'))
@@ -44,12 +52,17 @@
       el(TextControl,{label:__('Name','irank-calc-cards'),value:c.name,onChange:function(v){update('name',v);}}),
       el(TextControl,{label:__('Tagline','irank-calc-cards'),value:c.tagline,onChange:function(v){update('tagline',v);}}),
       el(TextControl,{label:__('Price','irank-calc-cards'),value:c.price,onChange:function(v){update('price',v);}}),
+      el(TextControl,{label:__('Price Suffix','irank-calc-cards'),help:'/month',value:c.priceSuffix,onChange:function(v){update('priceSuffix',v);}}),
+      el(TextControl,{label:__('Price Tagline (below price)','irank-calc-cards'),placeholder:'(everything included)',value:c.priceNote,onChange:function(v){update('priceNote',v);}}),
       el(TextareaControl,{label:__('Benefits (one per line)','irank-calc-cards'),value:(c.benefits||[]).join('\n'),onChange:function(v){update('benefits', (v||'').split(/\n+/).filter(function(s){return s.trim().length; }));}}),
       el(TextControl,{label:__('Badge','irank-calc-cards'),value:c.badge,onChange:function(v){update('badge',v);}}),
       el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:c.ctaText,onChange:function(v){update('ctaText',v);}}),
       el(TextControl,{label:__('CTA URL','irank-calc-cards'),value:c.ctaUrl,onChange:function(v){update('ctaUrl',v);}}),
       el('div',{},[
         el('label',{}, __('Image','irank-calc-cards')),
+        c.imageUrl ? el('div',{style:{margin:'8px 0'}},
+          el('img',{src:c.imageUrl,alt:c.name||'',style:{maxWidth:'100%',height:'auto',display:'block',border:'1px solid #eee',borderRadius:'8px'}})
+        ) : null,
         el(MediaUpload,{onSelect:function(m){ update('imageId',m.id); update('imageUrl',(m.sizes&&m.sizes.medium&&m.sizes.medium.url)||m.url||''); },
           allowedTypes:['image'], value:c.imageId, render:function(o){ return el(Button,{isSecondary:true,onClick:o.open}, c.imageUrl?__('Change Image','irank-calc-cards'):__('Select Image','irank-calc-cards')); }})
       ])
@@ -122,7 +135,7 @@
             cards.map(function(_,i){ return renderCardEditor(props,i); }),
             el(Button,{isPrimary:true,onClick:function(){
               var next = (cards||[]).slice();
-              next.push({name:'',tagline:'',price:'',benefits:[],badge:'',ctaText:'',ctaUrl:'',imageId:0,imageUrl:''});
+              next.push({name:'',tagline:'',price:'',priceSuffix:'/month',priceNote:'',benefits:[],badge:'',ctaText:'',ctaUrl:'',imageId:0,imageUrl:''});
               props.setAttributes({cards:next});
             }}, __('Add Card','irank-calc-cards'))
           ])

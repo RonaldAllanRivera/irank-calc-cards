@@ -10,6 +10,8 @@
  - Section Header styles: 64px pill with editable text and border colors; spacing tuned to match design
  - Removed Section Background solid color in favor of gradient start/end only; cleaned attributes and CSS
  - Enqueue `irank-cc-cards` in Product Cards render so styles reliably apply on frontend
+ - Price UX: per‑card Price Suffix (defaults to "/month") rendered beside price; optional Price Tagline under price
+ - Editor UX: image preview shown in each card; Duplicate action to clone a card inline
 
 ## 0.1.5 - Remove REST tracking, lead form UX, settings cleanup
 - Removed all custom REST API routes and frontend REST calls

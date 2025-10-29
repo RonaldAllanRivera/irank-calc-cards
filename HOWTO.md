@@ -16,10 +16,12 @@
 
 - Add “Product Cards” block to a page.
 - In the sidebar:
-  - Section: set Heading and Subheading.
-  - Cards: add 3+ cards. For each: Name, Tagline, Price, Benefits (one per line), Badge (optional), CTA Text/URL, Image.
-  - Colors: set section gradient, card background, CTA colors and hover, badge colors.
+  - Section: set Section Header, Heading, Subheading.
+  - Typography: Section Header text color and border color; Heading/Subheading font family, weight, size, color.
+  - Cards: add 3+ cards. For each: Name, Tagline, Price, Price Suffix (default “/month”), Price Tagline (below price), Benefits (one per line), Badge (optional), CTA Text/URL, Image.
+  - Colors: set Section Gradient Start/End, card background, CTA colors and hover, badge colors.
 - Frontend
+  - Price shows with suffix beside it (e.g., “/month”); price tagline appears below.
   - Swipe cards on mobile (scroll-snap). Use prev/next buttons and dots on desktop.
 
 # How to test
@@ -73,7 +75,7 @@
   - Gradient start/end
 - **Product cards block controls**
   - In “Cards” panel, click “Add Card”.
-  - For each card: Name, Tagline, Price, Benefits (one per line), Badge, CTAs.
+  - For each card: Name, Tagline, Price, Price Suffix, Price Tagline, Benefits (one per line), Badge, CTA Text/URL, Image.
   - Use ↑/↓ to reorder, Remove to delete.
 - **Save/Preview**
   - Update the page, then View to test interactions.

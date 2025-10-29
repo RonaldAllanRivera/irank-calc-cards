@@ -32,6 +32,8 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Split layout per card (image left, content right), swipeable carousel with prev/next + dots
   - Isolated stylesheet (`assets/css/cards.css`) to avoid conflicts with the calculator
   - Section Header “pill” with editable text and border colors (64px radius)
+  - Price suffix displayed beside price (default “/month”) and optional price tagline below
+  - Admin image preview for each card; Duplicate action to clone a card in-place
 
 ## Installation
 1. Copy `irank-calc-cards` to `wp-content/plugins/`.
@@ -43,7 +45,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Weight Loss Calculator: add images (Before/After), set min/max/step, initial weight, factor, unit, colors, CTA text.
 - Product Cards: in the Inspector
   - Section: set Section Header, Heading, Subheading
-  - Cards: add 3+ cards. Each card has Name, Tagline, Price, Benefits (one per line), Badge, CTA Text/URL, Image
+  - Cards: add 3+ cards. Each card has Name, Tagline, Price, Price Suffix (default “/month”), Price Tagline (below price), Benefits (one per line), Badge, CTA Text/URL, Image. Use Duplicate to clone a card and image preview to verify selection.
   - Colors: section gradient (start/end), card background, CTA colors + hover, badge colors
   - Typography: Header/Heading/Subheading font family, weight, size, color; Section Header border color
 

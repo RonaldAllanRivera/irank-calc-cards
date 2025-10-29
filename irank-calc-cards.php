@@ -525,9 +525,9 @@ function irank_cc_render_cards_block( $attributes ) {
     $cards = isset($attributes['cards']) && is_array($attributes['cards']) ? $attributes['cards'] : array();
     if ( empty( $cards ) ) {
         $cards = array(
-            array('name'=>'Compounded Semaglutide','tagline'=>'All meds included','price'=>'$179','benefits'=>array('Free shipping','Weekly support','Cancel anytime'),'badge'=>'Most Popular','ctaText'=>'Get started','ctaUrl'=>'#'),
-            array('name'=>'Starter Plan','tagline'=>'Great value','price'=>'$99','benefits'=>array('Email support','Basic features'),'badge'=>'','ctaText'=>'Choose plan','ctaUrl'=>'#'),
-            array('name'=>'Premium','tagline'=>'Everything included','price'=>'$249','benefits'=>array('Priority support','Extra features'),'badge'=>'','ctaText'=>'Choose plan','ctaUrl'=>'#'),
+            array('name'=>'Compounded Semaglutide','tagline'=>'All meds included','price'=>'$179','priceSuffix'=>'/month','priceNote'=>'(everything included)','benefits'=>array('Free shipping','Weekly support','Cancel anytime'),'badge'=>'Most Popular','ctaText'=>'Get started','ctaUrl'=>'#'),
+            array('name'=>'Starter Plan','tagline'=>'Great value','price'=>'$99','priceSuffix'=>'/month','priceNote'=>'','benefits'=>array('Email support','Basic features'),'badge'=>'','ctaText'=>'Choose plan','ctaUrl'=>'#'),
+            array('name'=>'Premium','tagline'=>'Everything included','price'=>'$249','priceSuffix'=>'/month','priceNote'=>'','benefits'=>array('Priority support','Extra features'),'badge'=>'','ctaText'=>'Choose plan','ctaUrl'=>'#'),
         );
     }
 
@@ -606,7 +606,19 @@ function irank_cc_render_cards_block( $attributes ) {
               <?php if (!empty($c['badge'])): ?><div class="irank-card__badge" style="background:<?php echo esc_attr($badgeBg); ?>;color:<?php echo esc_attr($badgeColor); ?>;"><?php echo esc_html($c['badge']); ?></div><?php endif; ?>
               <h3 class="irank-card__title" style="font-family:<?php echo $nameFamily; ?>;font-weight:<?php echo (int)$nameWeight; ?>;font-size:<?php echo $nameSize; ?>;color:<?php echo esc_attr($nameColor); ?>;"><?php echo esc_html($c['name']); ?></h3>
               <p class="irank-card__tagline" style="font-size:<?php echo $tagSize; ?>;color:<?php echo esc_attr($tagColor); ?>;"><?php echo esc_html($c['tagline']); ?></p>
-              <div class="irank-card__price" style="font-size:<?php echo $priceSize; ?>;color:<?php echo esc_attr($priceColor); ?>;"><?php echo esc_html($c['price']); ?></div>
+              <?php
+                $suffix = '/month';
+                if ( array_key_exists('priceSuffix', $c) ) {
+                    $tmp = trim((string)$c['priceSuffix']);
+                    $suffix = ($tmp === '') ? '' : $tmp;
+                }
+                $note = '';
+                if ( ! empty($c['priceNote']) ) { $note = trim((string)$c['priceNote']); }
+              ?>
+              <div class="irank-card__price" style="font-size:<?php echo $priceSize; ?>;color:<?php echo esc_attr($priceColor); ?>;">
+                <?php echo esc_html($c['price']); ?><?php if ($suffix !== ''): ?> <span class="irank-card__price-suffix"><?php echo esc_html($suffix); ?></span><?php endif; ?>
+              </div>
+              <?php if ($note !== ''): ?><p class="irank-card__price-note"><?php echo esc_html($note); ?></p><?php endif; ?>
               <ul class="irank-card__benefits">
                 <?php if (!empty($c['benefits']) && is_array($c['benefits'])) foreach ($c['benefits'] as $b): ?>
                   <li style="color:<?php echo esc_attr($benefitCol); ?>;"><?php echo esc_html($b); ?></li>
