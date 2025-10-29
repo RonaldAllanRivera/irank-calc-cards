@@ -30,9 +30,16 @@
       section.classList.toggle('is-at-start', idx<=0);
       section.classList.toggle('is-at-end', idx>=max);
     }
+    function updateArrowTop(){
+      if(!track) return;
+      // Compute center of track relative to section
+      var top = track.offsetTop + (track.clientHeight / 2);
+      section.style.setProperty('--arrow-top', top + 'px');
+    }
     track.addEventListener('scroll', function(){ window.requestAnimationFrame(updateUI); });
-    window.addEventListener('resize', function(){ window.requestAnimationFrame(updateUI); });
+    window.addEventListener('resize', function(){ window.requestAnimationFrame(function(){ updateUI(); updateArrowTop(); }); });
     updateUI();
+    updateArrowTop();
 
     prev && prev.addEventListener('click', function(){ if(prev.getAttribute('aria-disabled')==='true') return; scrollToIndex(track, nearestIndex(track)-1); });
     next && next.addEventListener('click', function(){ if(next.getAttribute('aria-disabled')==='true') return; scrollToIndex(track, nearestIndex(track)+1); });

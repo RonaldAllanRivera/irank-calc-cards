@@ -154,7 +154,7 @@
 .irank-cards__prev,
 .irank-cards__next {
   position: absolute; /* anchored to .irank-cards */
-  top: calc(50% + 10px);
+  top: var(--arrow-top, calc(50% + 10px));
   transform: translateY(-50%);
   z-index: 5;
   background-color: transparent;
