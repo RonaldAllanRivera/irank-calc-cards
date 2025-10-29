@@ -1,7 +1,11 @@
 /* Product Cards add-on stylesheet (scoped) */
 .irank-cards {
   --gap: 16px;
-  background: linear-gradient(100deg, var(--cards-grad-start, #92245a), var(--cards-grad-end, #92245a));
+  background: linear-gradient(
+    100deg,
+    var(--cards-grad-start, #92245a),
+    var(--cards-grad-end, #92245a)
+  );
   border-radius: 12px;
   padding: 60px 50px;
   color: #111;
@@ -22,16 +26,20 @@
 }
 .irank-cards::before {
   left: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,.20), rgba(0,0,0,0));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
   opacity: 0;
 }
 .irank-cards::after {
   right: 0;
-  background: linear-gradient(270deg, rgba(0,0,0,.20), rgba(0,0,0,0));
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
   opacity: 0;
 }
-.irank-cards:not(.is-at-start)::before { opacity: 1; }
-.irank-cards:not(.is-at-end)::after { opacity: 1; }
+.irank-cards:not(.is-at-start)::before {
+  opacity: 1;
+}
+.irank-cards:not(.is-at-end)::after {
+  opacity: 1;
+}
 .irank-cards__header {
   text-align: center;
   color: #fff;
@@ -65,9 +73,11 @@
   -webkit-overflow-scrolling: touch;
   /* Hide native scrollbar across browsers */
   -ms-overflow-style: none; /* IE and old Edge */
-  scrollbar-width: none;    /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
-.irank-cards__track::-webkit-scrollbar { display: none; }
+.irank-cards__track::-webkit-scrollbar {
+  display: none;
+}
 .irank-card {
   scroll-snap-align: start;
   background: var(--card-bg, #fff);
@@ -83,13 +93,23 @@
     min-width: 80%;
     grid-template-columns: 1fr 1.2fr;
   }
-  .irank-card__media { min-height: 320px; }
+  .irank-card__media {
+    min-height: 320px;
+  }
+  .irank-card__content {
+    padding-left: 24px;
+  }
 }
 @media (min-width: 1100px) {
   .irank-card {
     min-width: 80%;
   }
-  .irank-card__media { min-height: 360px; }
+  .irank-card__media {
+    min-height: 360px;
+  }
+  .irank-card__content {
+    padding-left: 24px;
+  }
 }
 .irank-card__media {
   background: #f6f6f6;
@@ -108,7 +128,8 @@
   display: block;
 }
 .irank-card__content {
-  padding: 16px;
+  padding: 0;
+  padding-left: 16px;
 }
 .irank-card__badge {
   background: var(--badge-bg, #ffbf00);
@@ -133,8 +154,16 @@
   align-items: baseline;
   gap: 6px;
 }
-.irank-card__price-suffix { font-weight: 500; font-size: .6em; opacity: .8; }
-.irank-card__price-note { margin: 0 0 10px; font-size: 14px; opacity: .7; }
+.irank-card__price-suffix {
+  font-weight: 500;
+  font-size: 0.6em;
+  opacity: 0.8;
+}
+.irank-card__price-note {
+  margin: 0 0 10px;
+  font-size: 14px;
+  opacity: 0.7;
+}
 .irank-card__benefits {
   margin: 0;
   padding-left: 18px;
@@ -156,7 +185,11 @@
   color: var(--cards-cta-hover-color, #000);
   border-color: var(--cards-cta-hover-border, #000);
 }
-.irank-cards__nav { margin-top: 0; display: flex; justify-content: center; }
+.irank-cards__nav {
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+}
 .irank-cards__prev,
 .irank-cards__next {
   position: absolute; /* anchored to .irank-cards */
@@ -181,30 +214,41 @@
 }
 .irank-cards__prev:hover,
 .irank-cards__prev:focus,
-.irank-cards__prev:active{
+.irank-cards__prev:active {
   /* swap to dark PNG on hover */
-  background-image: url('../img/left-dark.png');
+  background-image: url("../img/left-dark.png");
   background-color: transparent !important;
   box-shadow: none !important;
   outline: none;
 }
 .irank-cards__next:hover,
 .irank-cards__next:focus,
-.irank-cards__next:active{
-  background-image: url('../img/right-dark.png');
+.irank-cards__next:active {
+  background-image: url("../img/right-dark.png");
   background-color: transparent !important;
   box-shadow: none !important;
   outline: none;
 }
 /* No hover effect when disabled */
 .irank-cards__prev[aria-disabled="true"],
-.irank-cards__next[aria-disabled="true"]{ pointer-events: none; }
-.irank-cards__prev { left: 12px; background-image: url('../img/left.png'); }
-.irank-cards__next { right: 12px; background-image: url('../img/right.png'); }
-.irank-cards__dots, .irank-cards__dot { display: none; }
+.irank-cards__next[aria-disabled="true"] {
+  pointer-events: none;
+}
+.irank-cards__prev {
+  left: 12px;
+  background-image: url("../img/left.png");
+}
+.irank-cards__next {
+  right: 12px;
+  background-image: url("../img/right.png");
+}
+.irank-cards__dots,
+.irank-cards__dot {
+  display: none;
+}
 .irank-cards__prev[aria-disabled="true"],
-.irank-cards__next[aria-disabled="true"]{
-  opacity: .4;
+.irank-cards__next[aria-disabled="true"] {
+  opacity: 0.4;
   cursor: default;
   box-shadow: none;
 }
