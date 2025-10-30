@@ -146,7 +146,7 @@
   .irank-card__media { order: 2; }
   /* Mobile media: smaller container and show full image */
   .irank-card__media { height: var(--media-h-mobile); min-height: var(--media-h-mobile); }
-  .irank-card__media img { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+  .irank-card__media img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
   /* Remove any gap between content and media */
   .irank-card__content { padding-bottom: 0 !important; margin-bottom: 0 !important; display:flex; flex-direction:column; gap: 8px; min-height: 550px; padding-left: 16px !important; padding-right: 16px !important; }
   .irank-card__content > * { margin-bottom: 0 !important; }
@@ -163,7 +163,7 @@
   .irank-card.is-badged .irank-card__badge { right: -16px; }
   /* CTA typography on mobile */
   .irank-card__cta {
-    font-size: 14px;
+    font-size: 5px;
     width: 85% !important;
     max-width: 100%;
     display: block;
@@ -215,7 +215,7 @@
 /* Re-assert mobile media sizing after base declaration so it wins in cascade */
 @media (max-width: 719.98px) {
   .irank-card__media { height: var(--media-h-mobile) !important; min-height: var(--media-h-mobile) !important; }
-  .irank-card__media img { width: 100%; height: 100% !important; object-fit: cover; object-position: center center; }
+  .irank-card__media img { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: cover; object-position: center bottom !important; }
 }
 .irank-card__content {
   padding: 0;
