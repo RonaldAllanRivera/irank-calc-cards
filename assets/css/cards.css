@@ -98,6 +98,11 @@
   .irank-card__content { padding-left: 24px; }
   .irank-card.is-badged .irank-card__content { padding-top: 60px; }
 }
+/* Mobile: 90% slide width to show ~10% peek of next card */
+@media (max-width: 719.98px) {
+  .irank-cards__track { grid-auto-columns: 95%; }
+  .irank-card { min-width: 95%; }
+}
 @media (min-width: 1100px) {
   .irank-card {
     min-width: 80%;
