@@ -22,7 +22,11 @@
   - Colors: set Section Gradient Start/End, card background, CTA colors and hover, badge colors.
 - Frontend
   - Price shows with suffix beside it (e.g., “/month”); price tagline appears below.
-  - Swipe cards on mobile (scroll-snap). Use prev/next buttons and dots on desktop.
+  - Swipe cards on mobile (scroll-snap). Use prev/next buttons on all sizes; the viewer bar (dots) appears on mobile.
+  - Mobile specifics:
+    - CTA: “Select this medication →”, centered 90% width, padding 20px/12px, one line.
+    - Image area: sized via mobile variable, fills with centered crop.
+    - Section header pill: one line at 14px.
 
 # How to test
 
