@@ -28,7 +28,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Product Cards
   - Repeater for 3+ cards (name, tagline, price, benefits, badge, CTA, image)
   - Section controls: Header, Heading, Subheading (with Typography panel)
-  - Colors panel: section gradient, card background, CTA bg/text + hover bg/text/border, badge text color, badge gradient start/end
+  - Colors panel: section gradient, card background, CTA gradient start/end, CTA hover gradient start/end, CTA text + hover text/border, badge text color, badge gradient start/end
   - Split layout per card (image left, content right), swipeable carousel with prev/next arrows (no dots), keyboard navigation, and edge fade hints
   - Isolated stylesheet (`assets/css/cards.css`) to avoid conflicts with the calculator
   - Section Header “pill” with editable text and border colors (64px radius)
@@ -50,7 +50,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Product Cards: in the Inspector
   - Section: set Section Header, Heading, Subheading
   - Cards: add 3+ cards. Each card has Name, Tagline, Price, Price Suffix (default “/month”), Price Tagline (below price), Benefits (one per line), Badge, CTA Text/URL, Image. Use Duplicate to clone a card and image preview to verify selection.
-  - Colors: section gradient (start/end), card background, CTA colors + hover, badge text color, badge gradient start/end
+  - Colors: section gradient (start/end), card background, CTA gradient (start/end), CTA hover gradient (start/end), CTA text + hover text/border, badge text color, badge gradient start/end
   - Typography:
     - Header/Heading/Subheading font family, weight, size, line-height, color; Section Header border color
     - Card content defaults:

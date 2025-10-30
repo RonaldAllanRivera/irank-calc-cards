@@ -4,6 +4,7 @@
  * Description: Weight loss calculator and product cards as no-build Gutenberg blocks with same-page results and first-party tracking.
  * Version: 0.1.4
  * Author: Ronald Allan Rivera
+ * Author URI: https://github.com/RonaldAllanRivera/irank-calc-cards
  * Requires at least: 6.8
  * Requires PHP: 8.1
  * Text Domain: irank-calc-cards
@@ -335,9 +336,11 @@ function irank_cc_register_blocks() {
             'benefitsColor'     => array( 'type' => 'string', 'default' => '#3B3B3A' ),
             // Legacy fallback (read-only): kept for existing content that used benefitColor
             'benefitColor'      => array( 'type' => 'string', 'default' => '#3B3B3A' ),
-            'ctaBg'          => array( 'type' => 'string', 'default' => '#92245A' ),
+            'ctaGradStart'   => array( 'type' => 'string', 'default' => '#E22797' ),
+            'ctaGradEnd'     => array( 'type' => 'string', 'default' => '#FD9651' ),
             'ctaColor'       => array( 'type' => 'string', 'default' => '#ffffff' ),
-            'ctaHoverBg'     => array( 'type' => 'string', 'default' => '#ffffff' ),
+            'ctaHoverGradStart'=> array( 'type' => 'string', 'default' => '#FFB0D6' ),
+            'ctaHoverGradEnd'=> array( 'type' => 'string', 'default' => '#FFFFFF' ),
             'ctaHoverColor'  => array( 'type' => 'string', 'default' => '#000000' ),
             'ctaHoverBorder' => array( 'type' => 'string', 'default' => '#000000' ),
             'badgeColor'     => array( 'type' => 'string', 'default' => '#000000' ),
@@ -565,9 +568,15 @@ function irank_cc_render_cards_block( $attributes ) {
     $cardsBgStart = isset($attributes['cardsBgStart']) ? sanitize_hex_color($attributes['cardsBgStart']) : '#92245A';
     $cardsBgEnd   = isset($attributes['cardsBgEnd'])   ? sanitize_hex_color($attributes['cardsBgEnd'])   : '#92245A';
     $cardBg       = isset($attributes['cardBg'])       ? sanitize_hex_color($attributes['cardBg'])       : '#ffffff';
-    $ctaBg        = isset($attributes['ctaBg'])        ? sanitize_hex_color($attributes['ctaBg'])        : '#92245A';
+    $tmp_cta_gs   = isset($attributes['ctaGradStart']) ? sanitize_hex_color($attributes['ctaGradStart']) : '';
+    $ctaGradStart = $tmp_cta_gs ? $tmp_cta_gs : '#E22797';
+    $tmp_cta_ge   = isset($attributes['ctaGradEnd'])   ? sanitize_hex_color($attributes['ctaGradEnd'])   : '';
+    $ctaGradEnd   = $tmp_cta_ge ? $tmp_cta_ge : '#FD9651';
     $ctaColor     = isset($attributes['ctaColor'])     ? sanitize_hex_color($attributes['ctaColor'])     : '#ffffff';
-    $ctaHoverBg   = isset($attributes['ctaHoverBg'])   ? sanitize_hex_color($attributes['ctaHoverBg'])   : '#ffffff';
+    $tmp_cta_hgs  = isset($attributes['ctaHoverGradStart']) ? sanitize_hex_color($attributes['ctaHoverGradStart']) : '';
+    $ctaHoverGradStart = $tmp_cta_hgs ? $tmp_cta_hgs : '#FFB0D6';
+    $tmp_cta_hge  = isset($attributes['ctaHoverGradEnd']) ? sanitize_hex_color($attributes['ctaHoverGradEnd']) : '';
+    $ctaHoverGradEnd = $tmp_cta_hge ? $tmp_cta_hge : '#FFFFFF';
     $ctaHoverCol  = isset($attributes['ctaHoverColor'])? sanitize_hex_color($attributes['ctaHoverColor']): '#000000';
     $ctaHoverBorder = isset($attributes['ctaHoverBorder'])? sanitize_hex_color($attributes['ctaHoverBorder']) : '#000000';
     $badgeColor   = isset($attributes['badgeColor'])   ? sanitize_hex_color($attributes['badgeColor'])   : '#000000';
@@ -619,8 +628,8 @@ function irank_cc_render_cards_block( $attributes ) {
     $benefitColLegacy = isset($attributes['benefitColor']) ? sanitize_hex_color($attributes['benefitColor']) : '#3B3B3A';
     $bfColor    = isset($attributes['benefitsColor']) ? sanitize_hex_color($attributes['benefitsColor']) : $benefitColLegacy;
 
-    $section_style = sprintf('--cards-grad-start:%s;--cards-grad-end:%s;--card-bg:%s;--cards-cta-bg:%s;--cards-cta-color:%s;--cards-cta-hover-bg:%s;--cards-cta-hover-color:%s;--cards-cta-hover-border:%s;--badge-color:%s;--badge-grad-start:%s;--badge-grad-end:%s;',
-        esc_attr($cardsBgStart), esc_attr($cardsBgEnd), esc_attr($cardBg), esc_attr($ctaBg), esc_attr($ctaColor), esc_attr($ctaHoverBg), esc_attr($ctaHoverCol), esc_attr($ctaHoverBorder), esc_attr($badgeColor), esc_attr($badgeGradStart), esc_attr($badgeGradEnd)
+    $section_style = sprintf('--cards-grad-start:%s;--cards-grad-end:%s;--card-bg:%s;--cards-cta-grad-start:%s;--cards-cta-grad-end:%s;--cards-cta-color:%s;--cards-cta-hover-grad-start:%s;--cards-cta-hover-grad-end:%s;--cards-cta-hover-color:%s;--cards-cta-hover-border:%s;--badge-color:%s;--badge-grad-start:%s;--badge-grad-end:%s;',
+        esc_attr($cardsBgStart), esc_attr($cardsBgEnd), esc_attr($cardBg), esc_attr($ctaGradStart), esc_attr($ctaGradEnd), esc_attr($ctaColor), esc_attr($ctaHoverGradStart), esc_attr($ctaHoverGradEnd), esc_attr($ctaHoverCol), esc_attr($ctaHoverBorder), esc_attr($badgeColor), esc_attr($badgeGradStart), esc_attr($badgeGradEnd)
     );
 
     // Typography for section texts

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.9 - Product Cards: CTA gradients and styling
+- Replaced solid CTA backgrounds with gradients
+  - New: CTA Gradient Start/End; CTA Hover Gradient Start/End
+  - Defaults: CTA `#E22797 → #FD9651`; Hover `#FFB0D6 → #FFFFFF`
+- CSS-only CTA shape: border-radius 64px; padding 12px/20px
+- Editor: updated Colors panel; removed old CTA BG and CTA Hover BG
+- Frontend: gradients passed via CSS variables
+
 ## 0.1.8 - Product Cards: full typography controls
 - Added typography controls for card content with defaults:
   - Name (Poppins, 700, 36px, 40px, #3B3B3A)

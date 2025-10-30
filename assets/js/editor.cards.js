@@ -80,7 +80,7 @@
       sectionSubheading:{type:'string',default:'No hidden pharmacy or lab fees.'},
       // Colors
       cardsBgStart:{type:'string'}, cardsBgEnd:{type:'string'}, cardBg:{type:'string'},
-      ctaBg:{type:'string'}, ctaColor:{type:'string'}, ctaHoverBg:{type:'string'}, ctaHoverColor:{type:'string'}, ctaHoverBorder:{type:'string'},
+      ctaGradStart:{type:'string'}, ctaGradEnd:{type:'string'}, ctaColor:{type:'string'}, ctaHoverGradStart:{type:'string'}, ctaHoverGradEnd:{type:'string'}, ctaHoverColor:{type:'string'}, ctaHoverBorder:{type:'string'},
       badgeColor:{type:'string'}, badgeGradStart:{type:'string'}, badgeGradEnd:{type:'string'},
       // Typography
       kickerFontFamily:{type:'string',default:'Poppins'}, kickerFontWeight:{type:'number',default:500}, kickerFontSize:{type:'string',default:'14px'}, kickerColor:{type:'string',default:'#ffffff'}, kickerBorderColor:{type:'string',default:'#ffffff'},
@@ -178,9 +178,11 @@
             el(TextControl,{label:__('Section Gradient Start','irank-calc-cards'),value:props.attributes.cardsBgStart||'',onChange:function(v){props.setAttributes({cardsBgStart:v});},help:'#92245A'}),
             el(TextControl,{label:__('Section Gradient End','irank-calc-cards'),value:props.attributes.cardsBgEnd||'',onChange:function(v){props.setAttributes({cardsBgEnd:v});},help:'#92245A'}),
             el(TextControl,{label:__('Card Background','irank-calc-cards'),value:props.attributes.cardBg||'',onChange:function(v){props.setAttributes({cardBg:v});},help:'#ffffff'}),
-            el(TextControl,{label:__('CTA BG','irank-calc-cards'),value:props.attributes.ctaBg||'',onChange:function(v){props.setAttributes({ctaBg:v});},help:'#92245A'}),
+            el(TextControl,{label:__('CTA Gradient Start','irank-calc-cards'),value:props.attributes.ctaGradStart||'',onChange:function(v){props.setAttributes({ctaGradStart:v});},help:'#E22797'}),
+            el(TextControl,{label:__('CTA Gradient End','irank-calc-cards'),value:props.attributes.ctaGradEnd||'',onChange:function(v){props.setAttributes({ctaGradEnd:v});},help:'#FD9651'}),
             el(TextControl,{label:__('CTA Text','irank-calc-cards'),value:props.attributes.ctaColor||'',onChange:function(v){props.setAttributes({ctaColor:v});},help:'#ffffff'}),
-            el(TextControl,{label:__('CTA Hover BG','irank-calc-cards'),value:props.attributes.ctaHoverBg||'',onChange:function(v){props.setAttributes({ctaHoverBg:v});},help:'#ffffff'}),
+            el(TextControl,{label:__('CTA Hover Gradient Start','irank-calc-cards'),value:props.attributes.ctaHoverGradStart||'',onChange:function(v){props.setAttributes({ctaHoverGradStart:v});},help:'#FFB0D6'}),
+            el(TextControl,{label:__('CTA Hover Gradient End','irank-calc-cards'),value:props.attributes.ctaHoverGradEnd||'',onChange:function(v){props.setAttributes({ctaHoverGradEnd:v});},help:'#FFFFFF'}),
             el(TextControl,{label:__('CTA Hover Text','irank-calc-cards'),value:props.attributes.ctaHoverColor||'',onChange:function(v){props.setAttributes({ctaHoverColor:v});},help:'#000000'}),
             el(TextControl,{label:__('CTA Hover Border','irank-calc-cards'),value:props.attributes.ctaHoverBorder||'',onChange:function(v){props.setAttributes({ctaHoverBorder:v});},help:'#000000'}),
             el(TextControl,{label:__('Badge Gradient Start','irank-calc-cards'),value:props.attributes.badgeGradStart||'',onChange:function(v){props.setAttributes({badgeGradStart:v});},help:'#FD9651'}),

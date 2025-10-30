@@ -178,17 +178,16 @@
 .irank-card__cta {
   display: inline-block;
   margin-top: 10px;
-  background: var(--cards-cta-bg, #92245a);
+  background: linear-gradient(90deg, var(--cards-cta-grad-start, #E22797), var(--cards-cta-grad-end, #FD9651));
   color: var(--cards-cta-color, #fff);
-  padding: 10px 16px;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 64px;
   text-decoration: none;
   border: 2px solid var(--cards-cta-border, transparent);
-  transition: background-color 0.15s ease, color 0.15s ease,
-    border-color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 .irank-card__cta:hover {
-  background: var(--cards-cta-hover-bg, #fff);
+  background: linear-gradient(90deg, var(--cards-cta-hover-grad-start, #FFB0D6), var(--cards-cta-hover-grad-end, #FFFFFF));
   color: var(--cards-cta-hover-color, #000);
   border-color: var(--cards-cta-hover-border, #000);
 }
