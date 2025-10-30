@@ -130,6 +130,8 @@
     font-size: 14px;
     line-height: 22px;
   }
+  /* CTA typography on mobile */
+  .irank-card__cta { font-size: 16px; }
 }
 @media (min-width: 1100px) {
   .irank-card {
