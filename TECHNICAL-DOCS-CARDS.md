@@ -41,7 +41,6 @@ Render flow
 - Block PHP
   - Renderer: `irank_cc_render_cards_block()` in `irank-calc-cards.php`.
   - Attributes: defined in `register_block_type('irank/product-cards', ...)` (section texts, card array, colors, typography, CTA gradients, badge gradients).
-  - Mobile CTA text override: uses `wp_is_mobile()` to output “Select this medication →” only on mobile.
 - Frontend JS
   - File: `assets/js/frontend.cards.js`.
   - Initializes track, prev/next, builds `.irank-cards__dot` buttons, sets `aria-current="true"` on the active dot, and supports keyboard left/right.
@@ -81,7 +80,6 @@ Common extensions
 
 ## Trade‑offs considered
 - Dots vs. arrows only: dots added for mobile discoverability; hidden on desktop per design.
-- Mobile CTA override in PHP (`wp_is_mobile()`): simplest server‑side approach; if a full page cache serves the same HTML to all devices, consider a CSS/JS alternative for the label.
 - Fixed mobile media height vs. responsive height: chosen variable `--media-h-mobile` for predictable cropping and quick tuning.
 
 ## Testing checklist

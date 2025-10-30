@@ -32,6 +32,14 @@
       section.classList.toggle('is-at-start', idx<=0);
       section.classList.toggle('is-at-end', idx>=max);
     }
+    // Ensure mobile CTA label regardless of server UA detection / caching
+    function applyMobileCtaLabel(){
+      var isMobile = window.matchMedia && window.matchMedia('(max-width: 719.98px)').matches;
+      $all('.irank-card__cta', section).forEach(function(a){
+        if(!a.dataset.ctaOrig){ a.dataset.ctaOrig = (a.textContent||'').trim(); }
+        a.textContent = isMobile ? 'Select Medication' : (a.dataset.ctaOrig || a.textContent);
+      });
+    }
     function updateArrowTop(){
       if(!track) return;
       // Compute center of track relative to section
@@ -39,9 +47,10 @@
       section.style.setProperty('--arrow-top', top + 'px');
     }
     track.addEventListener('scroll', function(){ window.requestAnimationFrame(updateUI); });
-    window.addEventListener('resize', function(){ window.requestAnimationFrame(function(){ updateUI(); updateArrowTop(); }); });
+    window.addEventListener('resize', function(){ window.requestAnimationFrame(function(){ updateUI(); updateArrowTop(); applyMobileCtaLabel(); }); });
     updateUI();
     updateArrowTop();
+    applyMobileCtaLabel();
 
     prev && prev.addEventListener('click', function(){ if(prev.getAttribute('aria-disabled')==='true') return; scrollToIndex(track, nearestIndex(track)-1); });
     next && next.addEventListener('click', function(){ if(next.getAttribute('aria-disabled')==='true') return; scrollToIndex(track, nearestIndex(track)+1); });

@@ -1,7 +1,7 @@
 # Code Review Preparation
 
 ## Context
-The plugin ships two server‑rendered Gutenberg blocks with a lightweight, dependency‑free frontend: the Weight Loss Calculator and the Product Cards carousel. The Calculator provides a slider‑driven UX, a before/after reveal, and a lead form modal that persists to WP via admin‑ajax. Product Cards implement a scroll‑snap carousel with arrows and a mobile viewer bar. Recent work focused on Product Cards mobile UX (viewer bar, CTA, image container, spacing) and removed the legacy IRANK Reports feature while retaining IRANK Leads.
+The plugin ships two server‑rendered Gutenberg blocks with a lightweight, dependency‑free frontend: the Weight Loss Calculator and the Product Cards carousel. The Calculator provides a slider‑driven UX, a before/after reveal, and a lead form modal that persists to WP via admin‑ajax. Product Cards implement a scroll‑snap carousel with arrows and a mobile viewer bar. 
 
 ## Technical decisions
 - **SSR dynamic blocks (PHP)**
@@ -21,8 +21,6 @@ The plugin ships two server‑rendered Gutenberg blocks with a lightweight, depe
   - Tools → IRANK Leads lists recent rows with CSV export (nonce + cap check).
 - **Mobile viewer bar (dots) only on mobile**
   - Markup container rendered in PHP; JS creates buttons; CSS shows on mobile, hides on desktop. Active is `#F0532C`.
-- **Mobile CTA behavior**
-  - Server conditional `wp_is_mobile()` to output “Select this medication →”. Style: 16px, 90% width, centered, 20px/12px, single line.
 - **Image container**
   - Mobile height via `--media-h-mobile` (default 275px); `object-fit: cover; object-position: center` to avoid gaps.
 - **Precise peek on mobile**

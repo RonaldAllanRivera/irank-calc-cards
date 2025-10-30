@@ -643,7 +643,7 @@ function irank_cc_render_cards_block( $attributes ) {
                   <li><?php echo esc_html($b); ?></li>
                 <?php endforeach; ?>
               </ul>
-              <a href="<?php echo esc_url( isset($c['ctaUrl'])?$c['ctaUrl']:'#' ); ?>" class="irank-card__cta"><?php echo esc_html( ( function_exists('wp_is_mobile') && wp_is_mobile() ) ? 'Select this medication →' : ( isset($c['ctaText']) ? $c['ctaText'] : 'Select' ) ); ?></a>
+              <a href="<?php echo esc_url( isset($c['ctaUrl'])?$c['ctaUrl']:'#' ); ?>" class="irank-card__cta"><?php echo esc_html( isset($c['ctaText']) ? $c['ctaText'] : 'Select' ); ?></a>
             </div>
           </article>
         <?php endforeach; ?>
