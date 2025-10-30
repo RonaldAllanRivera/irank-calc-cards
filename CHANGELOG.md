@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.10 - Product Cards: mobile UX and viewer bar
+- Mobile viewer bar (dots) added below carousel; active dot styled to solid `#F0532C`
+- JS: dots `aria-current` handling for reliable active styling
+- Mobile CTA
+  - Text override: “Select this medication →”
+  - Typography: 16px; width 90%; centered; padding 20px/12px; single line
+- Mobile layout: content stacks above image
+- Mobile image container: variable height (`--media-h-mobile`, default 275px), image `object-fit: cover; object-position: center`
+- Precise mobile slider peek using CSS variables `--peek` and `--gap`
+- Section Header pill fits on one line at 14px on small screens
+- Benefits: custom check icon bullets via CSS
+- Various spacing refinements for title, tagline, price note, benefits, and CTA
+
 ## 0.1.9 - Product Cards: CTA gradients and styling
 - Replaced solid CTA backgrounds with gradients
   - New: CTA Gradient Start/End; CTA Hover Gradient Start/End

@@ -24,7 +24,9 @@
     function updateUI(){
       var idx = nearestIndex(track);
       var max = Math.max(0, cards.length-1);
-      if(dotsWrap){ $all('.irank-cards__dot', dotsWrap).forEach(function(d,i){ d.toggleAttribute('aria-current', i===idx); }); }
+      if(dotsWrap){
+        $all('.irank-cards__dot', dotsWrap).forEach(function(d,i){ d.setAttribute('aria-current', i===idx ? 'true' : 'false'); });
+      }
       if(prev){ prev.toggleAttribute('aria-disabled', idx<=0); prev.toggleAttribute('disabled', idx<=0); }
       if(next){ next.toggleAttribute('aria-disabled', idx>=max); next.toggleAttribute('disabled', idx>=max); }
       section.classList.toggle('is-at-start', idx<=0);

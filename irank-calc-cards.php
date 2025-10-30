@@ -699,6 +699,7 @@ function irank_cc_render_cards_block( $attributes ) {
           </article>
         <?php endforeach; ?>
       </div>
+      <div class="irank-cards__dots" aria-hidden="false"></div>
       <div class="irank-cards__nav">
         <button type="button" class="irank-cards__prev" aria-label="Previous">‹</button>
         <button type="button" class="irank-cards__next" aria-label="Next">›</button>

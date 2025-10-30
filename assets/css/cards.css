@@ -13,6 +13,13 @@
     sans-serif;
   position: relative;
 }
+
+/* Final mobile override to SHOW viewer bar (base hide rule comes later in cascade) */
+@media (max-width: 719.98px) {
+  .irank-cards__dots { display: flex !important; justify-content: center; align-items: center; gap: 8px; padding: 10px 0 14px; }
+  .irank-cards__dot { display: inline-block !important; width: 22px; height: 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.6); background: rgba(255,255,255,0.7); }
+  .irank-cards__dot[aria-current="true"] { border-color: #F0532C !important; background: #F0532C !important; }
+}
 /* Edge fades */
 .irank-cards::before,
 .irank-cards::after {
@@ -100,6 +107,30 @@
 }
 /* Mobile: slide width = 100% - peek - gap (precise peek) */
 @media (max-width: 719.98px) {
+  /* Slider viewer bar (dots) */
+  .irank-cards__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0 14px;
+  }
+  .irank-cards__dot {
+    display: inline-block;
+    width: 22px;
+    height: 6px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.7);
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+  .irank-cards__dot[aria-current="true"] {
+    border-color: transparent;
+    background: linear-gradient(90deg, var(--badge-grad-start, #FD9651), var(--badge-grad-end, #F0532C));
+  }
   .irank-cards { --peek: 5%; --gap: 12px; --media-h-mobile: 275px; }
   .irank-cards__track {
     grid-auto-columns: calc(100% - var(--peek) - var(--gap));
@@ -322,9 +353,11 @@
   right: 12px;
   background-image: url("../img/right.png");
 }
-.irank-cards__dots,
-.irank-cards__dot {
-  display: none;
+@media (min-width: 720px) {
+  .irank-cards__dots,
+  .irank-cards__dot {
+    display: none;
+  }
 }
 .irank-cards__prev[aria-disabled="true"],
 .irank-cards__next[aria-disabled="true"] {

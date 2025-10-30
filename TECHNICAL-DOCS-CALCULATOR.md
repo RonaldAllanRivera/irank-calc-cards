@@ -1,7 +1,7 @@
 # Weight Loss Calculator — Technical Documentation
 
 ## Overview
-This plugin provides two dynamic Gutenberg blocks. The Weight Loss Calculator block implements a slider-driven experience with animated loss estimate, a before/after visual reveal, and a lead form modal that saves leads to WordPress via admin‑ajax (no REST).
+This plugin is a dynamic Gutenberg blocks. The Weight Loss Calculator block implements a slider-driven experience with animated loss estimate, a before/after visual reveal, and a lead form modal that saves leads to WordPress via admin‑ajax (no REST).
 
 - Primary file: `irank-calc-cards.php`
 - Frontend assets: `assets/js/frontend.calculator.js`, `assets/css/frontend.css`

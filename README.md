@@ -10,7 +10,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 ## Plugin metadata
 - Requires at least: 6.8
 - Requires PHP: 8.1
-- Stable tag: 0.1.6
+- Stable tag: 0.1.10
 - License: GPL-2.0-or-later
 
 ## Description
@@ -29,7 +29,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Repeater for 3+ cards (name, tagline, price, benefits, badge, CTA, image)
   - Section controls: Header, Heading, Subheading (with Typography panel)
   - Colors panel: section gradient, card background, CTA gradient start/end, CTA hover gradient start/end, CTA text + hover text/border, badge text color, badge gradient start/end
-  - Split layout per card (image left, content right), swipeable carousel with prev/next arrows (no dots), keyboard navigation, and edge fade hints
+  - Split layout per card (image left, content right), swipeable carousel with prev/next arrows and a mobile viewer bar (dots)
   - Isolated stylesheet (`assets/css/cards.css`) to avoid conflicts with the calculator
   - Section Header “pill” with editable text and border colors (64px radius)
   - Price suffix displayed beside price (default “/month”) and optional price tagline below
@@ -37,6 +37,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Top-right badge: 50px height with 14px/24px padding, radius 0 20px 0 20px, configurable gradient (default #FD9651 → #F0532C)
   - Arrows use PNG icons with hover variants; disabled at edges; scrollbar hidden
   - Card visuals: image fills media area (object-fit: cover); card border-radius 20px; text column left padding
+  - Benefits list renders with a check icon bullet per line
   - Typography controls for card content: Name, Tagline, Price, Price Suffix, Price Tagline, Benefits (family, weight, size, color, line-height)
 
 ## Installation
@@ -60,6 +61,18 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
       - Price Suffix: Poppins, 400, 16px, line-height 22px, #3B3B3A
       - Price Tagline: Poppins, 400, 14px, line-height 16px, #3B3B3A
       - Benefits: Poppins, 600, 16px, line-height 22px, #3B3B3A
+
+### Mobile behavior (Product Cards)
+- Viewer bar (dots) appears below the carousel on mobile. The active dot is solid `#F0532C`.
+- Layout stacks vertically on mobile: content above image.
+- CTA on mobile
+  - Label overrides to “Select this medication →”
+  - Centered at 90% width, padding 20px/12px, single line
+- Image container on mobile uses a CSS variable for height and cover fit
+  - `--media-h-mobile: 275px` by default; image `object-fit: cover; object-position: center`.
+- Slider “peek” on mobile controlled by variables
+  - `--peek` (default 5%) and `--gap` (default 12px) feed `grid-auto-columns: calc(100% - var(--peek) - var(--gap))` for precise peeking.
+- Section Header pill stays on a single line at 14px font size.
 
 ### Lead form overlay
 - The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side, then the lead is saved to the database via admin‑ajax. A large centered “Thanks!” message appears and the popup auto‑closes after a few seconds.
