@@ -278,3 +278,50 @@
   background: #111;
   color: #fff;
 }
+
+/* Responsive typography for small screens */
+@media (max-width: 480px) {
+  .irank-card__title {
+    font-size: 28px !important;
+    line-height: 34px !important;
+  }
+  .irank-card__tagline {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+  .irank-card__price {
+    font-size: 48px !important;
+    line-height: 56px !important;
+  }
+  .irank-card__price-suffix {
+    font-size: 14px !important;
+  }
+  .irank-card__price-note {
+    font-size: 13px !important;
+    line-height: 16px !important;
+  }
+  .irank-card__benefits {
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }
+  .irank-card__benefits li {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  .irank-card__benefits li::before {
+    width: 18px;
+    height: 18px;
+    top: 2px;
+  }
+  .irank-cards__kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: clamp(11px, 3.2vw, 14px) !important;
+    white-space: nowrap;
+    max-width: calc(100% - 12px);
+    margin: 0 auto;
+    padding: 6px 12px;
+  }
+}
