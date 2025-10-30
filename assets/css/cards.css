@@ -100,9 +100,9 @@
 }
 /* Mobile: 90% slide width to show ~10% peek of next card */
 @media (max-width: 719.98px) {
-  .irank-cards__track { grid-auto-columns: 95%; }
+  .irank-cards__track { grid-auto-columns: 90%; }
   .irank-card {
-    min-width: 95%;
+    min-width: 90%;
     display: flex;           /* mobile: stack */
     flex-direction: column;  /* content above media */
   }
@@ -128,6 +128,10 @@
   padding: 0;
   position: relative;
   min-height: 260px;
+  overflow: hidden;                 /* clip image to corners */
+  border-bottom-left-radius: 20px;  /* match card radius */
+  border-bottom-right-radius: 20px; /* match card radius */
+  line-height: 0;                   /* avoid stray inline gaps */
 }
 .irank-card__media img {
   width: 100%;
