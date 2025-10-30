@@ -85,7 +85,14 @@
       // Typography
       kickerFontFamily:{type:'string',default:'Poppins'}, kickerFontWeight:{type:'number',default:500}, kickerFontSize:{type:'string',default:'14px'}, kickerColor:{type:'string',default:'#ffffff'}, kickerBorderColor:{type:'string',default:'#ffffff'},
       headingFontFamily:{type:'string',default:'Poppins'}, headingFontWeight:{type:'number',default:600}, headingFontSize:{type:'string',default:'48px'}, headingLineHeight:{type:'string',default:'54px'}, headingColor:{type:'string',default:'#ffffff'},
-      subFontFamily:{type:'string',default:'Poppins'}, subFontWeight:{type:'number',default:600}, subFontSize:{type:'string',default:'48px'}, subColor:{type:'string',default:'#FFBB8E'}
+      subFontFamily:{type:'string',default:'Poppins'}, subFontWeight:{type:'number',default:600}, subFontSize:{type:'string',default:'48px'}, subColor:{type:'string',default:'#FFBB8E'},
+      // Card content typography (defaults mirror PHP)
+      nameFontFamily:{type:'string',default:'Poppins'}, nameFontWeight:{type:'number',default:700}, nameFontSize:{type:'string',default:'36px'}, nameLineHeight:{type:'string',default:'40px'}, nameColor:{type:'string',default:'#3B3B3A'},
+      taglineFontFamily:{type:'string',default:'Poppins'}, taglineFontWeight:{type:'number',default:600}, taglineFontSize:{type:'string',default:'16px'}, taglineLineHeight:{type:'string',default:'22px'}, taglineColor:{type:'string',default:'#3B3B3A'},
+      priceFontFamily:{type:'string',default:'Poppins'}, priceFontWeight:{type:'number',default:700}, priceFontSize:{type:'string',default:'56px'}, priceLineHeight:{type:'string',default:'56px'}, priceColor:{type:'string',default:'#3B3B3A'},
+      suffixFontFamily:{type:'string',default:'Poppins'}, suffixFontWeight:{type:'number',default:400}, suffixFontSize:{type:'string',default:'16px'}, suffixLineHeight:{type:'string',default:'22px'}, suffixColor:{type:'string',default:'#3B3B3A'},
+      priceNoteFontFamily:{type:'string',default:'Poppins'}, priceNoteFontWeight:{type:'number',default:400}, priceNoteFontSize:{type:'string',default:'14px'}, priceNoteLineHeight:{type:'string',default:'16px'}, priceNoteColor:{type:'string',default:'#3B3B3A'},
+      benefitsFontFamily:{type:'string',default:'Poppins'}, benefitsFontWeight:{type:'number',default:600}, benefitsFontSize:{type:'string',default:'16px'}, benefitsLineHeight:{type:'string',default:'22px'}, benefitsColor:{type:'string',default:'#3B3B3A'}
     },
     edit: function(props){
       var cards = props.attributes.cards || [];
@@ -117,7 +124,55 @@
             el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.subFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({subFontFamily:v});}}),
             el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.subFontWeight||600,options:[{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({subFontWeight:parseInt(v,10)});}}),
             el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.subFontSize||'48px',onChange:function(v){props.setAttributes({subFontSize:v});}}),
-            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.subColor,onChange:function(v){props.setAttributes({subColor:v});}}) ])
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.subColor,onChange:function(v){props.setAttributes({subColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Card Name','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.nameFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({nameFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.nameFontWeight||700,options:[{label:'Regular (400)',value:400},{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({nameFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.nameFontSize||'36px',onChange:function(v){props.setAttributes({nameFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.nameLineHeight||'40px',onChange:function(v){props.setAttributes({nameLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.nameColor,onChange:function(v){props.setAttributes({nameColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Tagline','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.taglineFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({taglineFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.taglineFontWeight||600,options:[{label:'Regular (400)',value:400},{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({taglineFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.taglineFontSize||'16px',onChange:function(v){props.setAttributes({taglineFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.taglineLineHeight||'22px',onChange:function(v){props.setAttributes({taglineLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.taglineColor,onChange:function(v){props.setAttributes({taglineColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Price','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.priceFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({priceFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.priceFontWeight||700,options:[{label:'Regular (400)',value:400},{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({priceFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.priceFontSize||'56px',onChange:function(v){props.setAttributes({priceFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.priceLineHeight||'56px',onChange:function(v){props.setAttributes({priceLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.priceColor,onChange:function(v){props.setAttributes({priceColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Price Suffix','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.suffixFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({suffixFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.suffixFontWeight||400,options:[{label:'Regular (400)',value:400},{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({suffixFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.suffixFontSize||'16px',onChange:function(v){props.setAttributes({suffixFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.suffixLineHeight||'22px',onChange:function(v){props.setAttributes({suffixLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.suffixColor,onChange:function(v){props.setAttributes({suffixColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Price Tagline','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.priceNoteFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({priceNoteFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.priceNoteFontWeight||400,options:[{label:'Regular (400)',value:400},{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({priceNoteFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.priceNoteFontSize||'14px',onChange:function(v){props.setAttributes({priceNoteFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.priceNoteLineHeight||'16px',onChange:function(v){props.setAttributes({priceNoteLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.priceNoteColor,onChange:function(v){props.setAttributes({priceNoteColor:v});}}) ]),
+
+            el('hr'),
+            el('h4',{},__('Benefits','irank-calc-cards')),
+            el(SelectControl,{label:__('Font Family','irank-calc-cards'),value:props.attributes.benefitsFontFamily||'Poppins',options:[{label:'Poppins',value:'Poppins'}],onChange:function(v){props.setAttributes({benefitsFontFamily:v});}}),
+            el(SelectControl,{label:__('Weight','irank-calc-cards'),value:props.attributes.benefitsFontWeight||600,options:[{label:'Regular (400)',value:400},{label:'Medium (500)',value:500},{label:'Semi Bold (600)',value:600},{label:'Bold (700)',value:700}],onChange:function(v){props.setAttributes({benefitsFontWeight:parseInt(v,10)});}}),
+            el(TextControl,{label:__('Size','irank-calc-cards'),value:props.attributes.benefitsFontSize||'16px',onChange:function(v){props.setAttributes({benefitsFontSize:v});}}),
+            el(TextControl,{label:__('Line Height','irank-calc-cards'),value:props.attributes.benefitsLineHeight||'22px',onChange:function(v){props.setAttributes({benefitsLineHeight:v});}}),
+            el('div',{},[ el('label',{},__('Color','irank-calc-cards')), el(ColorPalette,{value:props.attributes.benefitsColor,onChange:function(v){props.setAttributes({benefitsColor:v});}}) ]),
           ]),
           el(PanelBody,{title:__('Colors','irank-calc-cards'),initialOpen:false},[
             el(TextControl,{label:__('Section Gradient Start','irank-calc-cards'),value:props.attributes.cardsBgStart||'',onChange:function(v){props.setAttributes({cardsBgStart:v});},help:'#92245A'}),

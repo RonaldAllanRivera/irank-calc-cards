@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.8 - Product Cards: full typography controls
+- Added typography controls for card content with defaults:
+  - Name (Poppins, 700, 36px, 40px, #3B3B3A)
+  - Tagline (Poppins, 600, 16px, 22px, #3B3B3A)
+  - Price (Poppins, 700, 56px, 56px, #3B3B3A)
+  - Price Suffix (Poppins, 400, 16px, 22px, #3B3B3A)
+  - Price Tagline (Poppins, 400, 14px, 16px, #3B3B3A)
+  - Benefits (Poppins, 600, 16px, 22px, #3B3B3A)
+- Editor: added matching controls in Typography panel
+- Frontend: applied styles inline with sanitization and existing font resolver
+- Back-compat: preserved legacy benefitColor as fallback
+
 ## 0.1.7 - Product Cards badge gradient, arrow icons, image fit, layout cleanup
 - Badge moved to the top-right; 50px height with 14px/24px padding, radius 0 20px 0 20px
 - New Colors: Badge Gradient Start/End (defaults: `#FD9651` → `#F0532C`); removed legacy Badge BG option

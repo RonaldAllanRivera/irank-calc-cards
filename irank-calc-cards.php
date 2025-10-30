@@ -297,15 +297,44 @@ function irank_cc_register_blocks() {
             'cardsBgStart' => array( 'type' => 'string', 'default' => '#92245A' ),
             'cardsBgEnd'   => array( 'type' => 'string', 'default' => '#92245A' ),
             'cardBg'       => array( 'type' => 'string', 'default' => '#ffffff' ),
-            'nameFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
-            'nameFontWeight' => array( 'type' => 'number', 'default' => 700 ),
-            'nameFontSize'   => array( 'type' => 'string', 'default' => '32px' ),
-            'nameColor'      => array( 'type' => 'string', 'default' => '#000000' ),
-            'taglineFontSize'=> array( 'type' => 'string', 'default' => '16px' ),
-            'taglineColor'   => array( 'type' => 'string', 'default' => '#666666' ),
-            'priceFontSize'  => array( 'type' => 'string', 'default' => '28px' ),
-            'priceColor'     => array( 'type' => 'string', 'default' => '#000000' ),
-            'benefitColor'   => array( 'type' => 'string', 'default' => '#333333' ),
+            // Card content typography (defaults per spec)
+            'nameFontFamily'   => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'nameFontWeight'   => array( 'type' => 'number', 'default' => 700 ), // Bold
+            'nameFontSize'     => array( 'type' => 'string', 'default' => '36px' ),
+            'nameLineHeight'   => array( 'type' => 'string', 'default' => '40px' ),
+            'nameColor'        => array( 'type' => 'string', 'default' => '#3B3B3A' ),
+
+            'taglineFontFamily'=> array( 'type' => 'string', 'default' => 'Poppins' ),
+            'taglineFontWeight'=> array( 'type' => 'number', 'default' => 600 ), // SemiBold
+            'taglineFontSize'  => array( 'type' => 'string', 'default' => '16px' ),
+            'taglineLineHeight'=> array( 'type' => 'string', 'default' => '22px' ),
+            'taglineColor'     => array( 'type' => 'string', 'default' => '#3B3B3A' ),
+
+            'priceFontFamily'  => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'priceFontWeight'  => array( 'type' => 'number', 'default' => 700 ), // Bold
+            'priceFontSize'    => array( 'type' => 'string', 'default' => '56px' ),
+            'priceLineHeight'  => array( 'type' => 'string', 'default' => '56px' ),
+            'priceColor'       => array( 'type' => 'string', 'default' => '#3B3B3A' ),
+
+            'suffixFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'suffixFontWeight' => array( 'type' => 'number', 'default' => 400 ), // Regular
+            'suffixFontSize'   => array( 'type' => 'string', 'default' => '16px' ),
+            'suffixLineHeight' => array( 'type' => 'string', 'default' => '22px' ),
+            'suffixColor'      => array( 'type' => 'string', 'default' => '#3B3B3A' ),
+
+            'priceNoteFontFamily' => array( 'type' => 'string', 'default' => 'Poppins' ),
+            'priceNoteFontWeight' => array( 'type' => 'number', 'default' => 400 ), // Regular
+            'priceNoteFontSize'   => array( 'type' => 'string', 'default' => '14px' ),
+            'priceNoteLineHeight' => array( 'type' => 'string', 'default' => '16px' ),
+            'priceNoteColor'      => array( 'type' => 'string', 'default' => '#3B3B3A' ),
+
+            'benefitsFontFamily'=> array( 'type' => 'string', 'default' => 'Poppins' ),
+            'benefitsFontWeight'=> array( 'type' => 'number', 'default' => 600 ), // SemiBold
+            'benefitsFontSize'  => array( 'type' => 'string', 'default' => '16px' ),
+            'benefitsLineHeight'=> array( 'type' => 'string', 'default' => '22px' ),
+            'benefitsColor'     => array( 'type' => 'string', 'default' => '#3B3B3A' ),
+            // Legacy fallback (read-only): kept for existing content that used benefitColor
+            'benefitColor'      => array( 'type' => 'string', 'default' => '#3B3B3A' ),
             'ctaBg'          => array( 'type' => 'string', 'default' => '#92245A' ),
             'ctaColor'       => array( 'type' => 'string', 'default' => '#ffffff' ),
             'ctaHoverBg'     => array( 'type' => 'string', 'default' => '#ffffff' ),
@@ -552,15 +581,43 @@ function irank_cc_render_cards_block( $attributes ) {
         if ($primary === 'Nohemi') return "'Nohemi','Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
         return "'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif";
     };
-    $nameFamily = isset($attributes['nameFontFamily']) ? $ff($attributes['nameFontFamily']) : $ff('Nohemi');
+    // Name
+    $nameFamily = isset($attributes['nameFontFamily']) ? $ff($attributes['nameFontFamily']) : $ff('Poppins');
     $nameWeight = isset($attributes['nameFontWeight']) ? intval($attributes['nameFontWeight']) : 700;
-    $nameSize   = isset($attributes['nameFontSize'])   ? esc_attr($attributes['nameFontSize']) : '32px';
-    $nameColor  = isset($attributes['nameColor'])      ? sanitize_hex_color($attributes['nameColor']) : '#000000';
-    $tagSize    = isset($attributes['taglineFontSize'])? esc_attr($attributes['taglineFontSize']) : '16px';
-    $tagColor   = isset($attributes['taglineColor'])   ? sanitize_hex_color($attributes['taglineColor']) : '#666666';
-    $priceSize  = isset($attributes['priceFontSize'])  ? esc_attr($attributes['priceFontSize']) : '28px';
-    $priceColor = isset($attributes['priceColor'])     ? sanitize_hex_color($attributes['priceColor']) : '#000000';
-    $benefitCol = isset($attributes['benefitColor'])   ? sanitize_hex_color($attributes['benefitColor']) : '#333333';
+    $nameSize   = isset($attributes['nameFontSize'])   ? esc_attr($attributes['nameFontSize']) : '36px';
+    $nameLine   = isset($attributes['nameLineHeight']) ? esc_attr($attributes['nameLineHeight']) : '40px';
+    $nameColor  = isset($attributes['nameColor'])      ? sanitize_hex_color($attributes['nameColor']) : '#3B3B3A';
+    // Tagline
+    $tagFamily  = isset($attributes['taglineFontFamily']) ? $ff($attributes['taglineFontFamily']) : $ff('Poppins');
+    $tagWeight  = isset($attributes['taglineFontWeight']) ? intval($attributes['taglineFontWeight']) : 600;
+    $tagSize    = isset($attributes['taglineFontSize'])    ? esc_attr($attributes['taglineFontSize']) : '16px';
+    $tagLine    = isset($attributes['taglineLineHeight'])  ? esc_attr($attributes['taglineLineHeight']) : '22px';
+    $tagColor   = isset($attributes['taglineColor'])       ? sanitize_hex_color($attributes['taglineColor']) : '#3B3B3A';
+    // Price
+    $priceFamily= isset($attributes['priceFontFamily']) ? $ff($attributes['priceFontFamily']) : $ff('Poppins');
+    $priceWeight= isset($attributes['priceFontWeight']) ? intval($attributes['priceFontWeight']) : 700;
+    $priceSize  = isset($attributes['priceFontSize'])   ? esc_attr($attributes['priceFontSize']) : '56px';
+    $priceLine  = isset($attributes['priceLineHeight']) ? esc_attr($attributes['priceLineHeight']) : '56px';
+    $priceColor = isset($attributes['priceColor'])      ? sanitize_hex_color($attributes['priceColor']) : '#3B3B3A';
+    // Suffix
+    $sufFamily  = isset($attributes['suffixFontFamily']) ? $ff($attributes['suffixFontFamily']) : $ff('Poppins');
+    $sufWeight  = isset($attributes['suffixFontWeight']) ? intval($attributes['suffixFontWeight']) : 400;
+    $sufSize    = isset($attributes['suffixFontSize'])   ? esc_attr($attributes['suffixFontSize']) : '16px';
+    $sufLine    = isset($attributes['suffixLineHeight']) ? esc_attr($attributes['suffixLineHeight']) : '22px';
+    $sufColor   = isset($attributes['suffixColor'])      ? sanitize_hex_color($attributes['suffixColor']) : '#3B3B3A';
+    // Price note
+    $pnFamily   = isset($attributes['priceNoteFontFamily']) ? $ff($attributes['priceNoteFontFamily']) : $ff('Poppins');
+    $pnWeight   = isset($attributes['priceNoteFontWeight']) ? intval($attributes['priceNoteFontWeight']) : 400;
+    $pnSize     = isset($attributes['priceNoteFontSize'])   ? esc_attr($attributes['priceNoteFontSize']) : '14px';
+    $pnLine     = isset($attributes['priceNoteLineHeight']) ? esc_attr($attributes['priceNoteLineHeight']) : '16px';
+    $pnColor    = isset($attributes['priceNoteColor'])      ? sanitize_hex_color($attributes['priceNoteColor']) : '#3B3B3A';
+    // Benefits (fallback to legacy benefitColor)
+    $bfFamily   = isset($attributes['benefitsFontFamily']) ? $ff($attributes['benefitsFontFamily']) : $ff('Poppins');
+    $bfWeight   = isset($attributes['benefitsFontWeight']) ? intval($attributes['benefitsFontWeight']) : 600;
+    $bfSize     = isset($attributes['benefitsFontSize'])   ? esc_attr($attributes['benefitsFontSize']) : '16px';
+    $bfLine     = isset($attributes['benefitsLineHeight']) ? esc_attr($attributes['benefitsLineHeight']) : '22px';
+    $benefitColLegacy = isset($attributes['benefitColor']) ? sanitize_hex_color($attributes['benefitColor']) : '#3B3B3A';
+    $bfColor    = isset($attributes['benefitsColor']) ? sanitize_hex_color($attributes['benefitsColor']) : $benefitColLegacy;
 
     $section_style = sprintf('--cards-grad-start:%s;--cards-grad-end:%s;--card-bg:%s;--cards-cta-bg:%s;--cards-cta-color:%s;--cards-cta-hover-bg:%s;--cards-cta-hover-color:%s;--cards-cta-hover-border:%s;--badge-color:%s;--badge-grad-start:%s;--badge-grad-end:%s;',
         esc_attr($cardsBgStart), esc_attr($cardsBgEnd), esc_attr($cardBg), esc_attr($ctaBg), esc_attr($ctaColor), esc_attr($ctaHoverBg), esc_attr($ctaHoverCol), esc_attr($ctaHoverBorder), esc_attr($badgeColor), esc_attr($badgeGradStart), esc_attr($badgeGradEnd)
@@ -608,8 +665,8 @@ function irank_cc_render_cards_block( $attributes ) {
             </div>
             <div class="irank-card__content">
               <?php if (!empty($c['badge'])): ?><div class="irank-card__badge" style="color:<?php echo esc_attr($badgeColor); ?>;"><?php echo esc_html($c['badge']); ?></div><?php endif; ?>
-              <h3 class="irank-card__title" style="font-family:<?php echo $nameFamily; ?>;font-weight:<?php echo (int)$nameWeight; ?>;font-size:<?php echo $nameSize; ?>;color:<?php echo esc_attr($nameColor); ?>;"><?php echo esc_html($c['name']); ?></h3>
-              <p class="irank-card__tagline" style="font-size:<?php echo $tagSize; ?>;color:<?php echo esc_attr($tagColor); ?>;"><?php echo esc_html($c['tagline']); ?></p>
+              <h3 class="irank-card__title" style="font-family:<?php echo $nameFamily; ?>;font-weight:<?php echo (int)$nameWeight; ?>;font-size:<?php echo $nameSize; ?>;line-height:<?php echo $nameLine; ?>;color:<?php echo esc_attr($nameColor); ?>;"><?php echo esc_html($c['name']); ?></h3>
+              <p class="irank-card__tagline" style="font-family:<?php echo $tagFamily; ?>;font-weight:<?php echo (int)$tagWeight; ?>;font-size:<?php echo $tagSize; ?>;line-height:<?php echo $tagLine; ?>;color:<?php echo esc_attr($tagColor); ?>;"><?php echo esc_html($c['tagline']); ?></p>
               <?php
                 $suffix = '/month';
                 if ( array_key_exists('priceSuffix', $c) ) {
@@ -619,13 +676,13 @@ function irank_cc_render_cards_block( $attributes ) {
                 $note = '';
                 if ( ! empty($c['priceNote']) ) { $note = trim((string)$c['priceNote']); }
               ?>
-              <div class="irank-card__price" style="font-size:<?php echo $priceSize; ?>;color:<?php echo esc_attr($priceColor); ?>;">
-                <?php echo esc_html($c['price']); ?><?php if ($suffix !== ''): ?> <span class="irank-card__price-suffix"><?php echo esc_html($suffix); ?></span><?php endif; ?>
+              <div class="irank-card__price" style="font-family:<?php echo $priceFamily; ?>;font-weight:<?php echo (int)$priceWeight; ?>;font-size:<?php echo $priceSize; ?>;line-height:<?php echo $priceLine; ?>;color:<?php echo esc_attr($priceColor); ?>;">
+                <?php echo esc_html($c['price']); ?><?php if ($suffix !== ''): ?> <span class="irank-card__price-suffix" style="font-family:<?php echo $sufFamily; ?>;font-weight:<?php echo (int)$sufWeight; ?>;font-size:<?php echo $sufSize; ?>;line-height:<?php echo $sufLine; ?>;color:<?php echo esc_attr($sufColor); ?>;"><?php echo esc_html($suffix); ?></span><?php endif; ?>
               </div>
-              <?php if ($note !== ''): ?><p class="irank-card__price-note"><?php echo esc_html($note); ?></p><?php endif; ?>
-              <ul class="irank-card__benefits">
+              <?php if ($note !== ''): ?><p class="irank-card__price-note" style="font-family:<?php echo $pnFamily; ?>;font-weight:<?php echo (int)$pnWeight; ?>;font-size:<?php echo $pnSize; ?>;line-height:<?php echo $pnLine; ?>;color:<?php echo esc_attr($pnColor); ?>;"><?php echo esc_html($note); ?></p><?php endif; ?>
+              <ul class="irank-card__benefits" style="font-family:<?php echo $bfFamily; ?>;font-weight:<?php echo (int)$bfWeight; ?>;font-size:<?php echo $bfSize; ?>;line-height:<?php echo $bfLine; ?>;color:<?php echo esc_attr($bfColor); ?>;">
                 <?php if (!empty($c['benefits']) && is_array($c['benefits'])) foreach ($c['benefits'] as $b): ?>
-                  <li style="color:<?php echo esc_attr($benefitCol); ?>;"><?php echo esc_html($b); ?></li>
+                  <li><?php echo esc_html($b); ?></li>
                 <?php endforeach; ?>
               </ul>
               <a href="<?php echo esc_url( isset($c['ctaUrl'])?$c['ctaUrl']:'#' ); ?>" class="irank-card__cta"><?php echo esc_html( isset($c['ctaText'])?$c['ctaText']:'Select' ); ?></a>

@@ -37,6 +37,7 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Top-right badge: 50px height with 14px/24px padding, radius 0 20px 0 20px, configurable gradient (default #FD9651 → #F0532C)
   - Arrows use PNG icons with hover variants; disabled at edges; scrollbar hidden
   - Card visuals: image fills media area (object-fit: cover); card border-radius 20px; text column left padding
+  - Typography controls for card content: Name, Tagline, Price, Price Suffix, Price Tagline, Benefits (family, weight, size, color, line-height)
 
 ## Installation
 1. Copy `irank-calc-cards` to `wp-content/plugins/`.
@@ -50,7 +51,15 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
   - Section: set Section Header, Heading, Subheading
   - Cards: add 3+ cards. Each card has Name, Tagline, Price, Price Suffix (default “/month”), Price Tagline (below price), Benefits (one per line), Badge, CTA Text/URL, Image. Use Duplicate to clone a card and image preview to verify selection.
   - Colors: section gradient (start/end), card background, CTA colors + hover, badge text color, badge gradient start/end
-  - Typography: Header/Heading/Subheading font family, weight, size, color; Section Header border color
+  - Typography:
+    - Header/Heading/Subheading font family, weight, size, line-height, color; Section Header border color
+    - Card content defaults:
+      - Name: Poppins, 700, 36px, line-height 40px, #3B3B3A
+      - Tagline: Poppins, 600, 16px, line-height 22px, #3B3B3A
+      - Price: Poppins, 700, 56px, line-height 56px, #3B3B3A
+      - Price Suffix: Poppins, 400, 16px, line-height 22px, #3B3B3A
+      - Price Tagline: Poppins, 400, 14px, line-height 16px, #3B3B3A
+      - Benefits: Poppins, 600, 16px, line-height 22px, #3B3B3A
 
 ### Lead form overlay
 - The calculator CTA opens a modal overlay with a simple lead form (Full name, Email, Phone). Email is validated client‑side, then the lead is saved to the database via admin‑ajax. A large centered “Thanks!” message appears and the popup auto‑closes after a few seconds.
