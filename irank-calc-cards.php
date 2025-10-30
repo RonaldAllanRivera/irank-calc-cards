@@ -34,24 +34,8 @@ function irank_cc_activate() {
     if ( ! is_array( $opt ) ) update_option( 'irank_cc_options', irank_cc_default_options() );
 
     global $wpdb;
-    $table = $wpdb->prefix . 'irank_calc_events';
     $charset_collate = $wpdb->get_charset_collate();
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    $sql = "CREATE TABLE $table (
-        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-        created_at DATETIME NOT NULL,
-        page_id BIGINT UNSIGNED NULL,
-        weight FLOAT NULL,
-        loss FLOAT NULL,
-        session_id VARCHAR(64) NULL,
-        referrer TEXT NULL,
-        user_agent TEXT NULL,
-        ip_hash CHAR(64) NULL,
-        variant VARCHAR(64) NULL,
-        PRIMARY KEY  (id),
-        KEY created_at (created_at)
-    ) $charset_collate;";
-    dbDelta( $sql );
 
     // Leads table
     $table2 = $wpdb->prefix . 'irank_calc_leads';
@@ -90,17 +74,7 @@ function irank_cc_render_settings_page() {
     IRANK_CC_Settings::render_page();
 }
 
-function irank_cc_admin_reports_menu() {
-    add_submenu_page(
-        'tools.php',
-        'IRANK Reports',
-        'IRANK Reports',
-        'manage_options',
-        'irank-cc-reports',
-        'irank_cc_render_reports_page'
-    );
-}
-add_action( 'admin_menu', 'irank_cc_admin_reports_menu' );
+ 
 
 function irank_cc_admin_leads_menu() {
     add_submenu_page(
@@ -114,34 +88,9 @@ function irank_cc_admin_leads_menu() {
 }
 add_action( 'admin_menu', 'irank_cc_admin_leads_menu' );
 
-function irank_cc_render_reports_page() {
-    if ( ! current_user_can('manage_options') ) return;
-    global $wpdb; $table = $wpdb->prefix.'irank_calc_events';
-    $total = (int)$wpdb->get_var("SELECT COUNT(*) FROM $table");
-    $recent = $wpdb->get_results("SELECT DATE(created_at) d, COUNT(*) c FROM $table GROUP BY DATE(created_at) ORDER BY d DESC LIMIT 30", ARRAY_A);
-    $export_url = wp_nonce_url( admin_url('admin-post.php?action=irank_cc_export_csv'), 'irank_cc_export' );
-    echo '<div class="wrap"><h1>IRANK Reports</h1>';
-    echo '<p>Total events: <strong>'.esc_html($total).'</strong></p>';
-    echo '<p><a class="button" href="'.esc_url($export_url).'">Export CSV</a></p>';
-    echo '<table class="widefat"><thead><tr><th>Date</th><th>Count</th></tr></thead><tbody>';
-    if ($recent){ foreach($recent as $r){ echo '<tr><td>'.esc_html($r['d']).'</td><td>'.esc_html($r['c']).'</td></tr>'; } }
-    else { echo '<tr><td colspan="2">No data yet.</td></tr>'; }
-    echo '</tbody></table></div>';
-}
+ 
 
-function irank_cc_export_csv() {
-    if ( ! current_user_can('manage_options') ) wp_die('Forbidden');
-    check_admin_referer('irank_cc_export');
-    global $wpdb; $table = $wpdb->prefix.'irank_calc_events';
-    $rows = $wpdb->get_results("SELECT * FROM $table ORDER BY id DESC", ARRAY_A);
-    nocache_headers();
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="irank-events.csv"');
-    $out = fopen('php://output','w');
-    if ($rows){ fputcsv($out, array_keys($rows[0])); foreach($rows as $row){ fputcsv($out,$row); } }
-    fclose($out); exit;
-}
-add_action('admin_post_irank_cc_export_csv','irank_cc_export_csv');
+ 
 
 function irank_cc_render_leads_page(){
     if ( ! current_user_can('manage_options') ) return;
