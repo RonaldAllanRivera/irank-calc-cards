@@ -113,6 +113,18 @@
   }
   .irank-card__content { order: 1; }
   .irank-card__media { order: 2; }
+  /* Anchor image crop to bottom on mobile */
+  .irank-card__media img { object-position: center bottom; }
+  /* Remove fixed height on mobile to avoid bottom gap */
+  .irank-card__media { min-height: 0; height: auto; }
+  .irank-card__media img { width: 100%; height: auto; }
+  /* Remove any gap between content and media */
+  .irank-card__content { padding-bottom: 0 !important; margin-bottom: 0 !important; display:flex; flex-direction:column; gap: 8px; }
+  .irank-card__content > * { margin-bottom: 0 !important; }
+  .irank-card__title, .irank-card__tagline, .irank-card__price, .irank-card__price-note, .irank-card__benefits, .irank-card__cta { margin-bottom: 0 !important; }
+  .irank-card__benefits { margin-bottom: 0; }
+  .irank-card__cta { margin-bottom: 0; display:block; }
+  .irank-card__media { margin-top: 0 !important; }
   /* Badge text size on mobile */
   .irank-card__badge {
     font-size: 14px;
@@ -149,6 +161,15 @@
   object-fit: cover; /* use contain if you prefer no crop */
   object-position: center;
   display: block;
+}
+.irank-card__content {
+  padding: 0;
+  padding-left: 16px;
+}
+/* Re-assert mobile media sizing after base declaration so it wins in cascade */
+@media (max-width: 719.98px) {
+  .irank-card__media { min-height: 0 !important; height: auto !important; }
+  .irank-card__media img { width: 100%; height: auto !important; object-fit: cover; object-position: center bottom; }
 }
 .irank-card__content {
   padding: 0;
@@ -315,27 +336,27 @@
     line-height: 40px !important;
   }
   .irank-card__title {
-    font-size: 28px !important;
-    line-height: 34px !important;
+    font-size: 24px !important;
+    line-height: 28px !important;
   }
   .irank-card__tagline {
     font-size: 14px !important;
     line-height: 20px !important;
   }
   .irank-card__price {
-    font-size: 48px !important;
+    font-size: 56px !important;
     line-height: 56px !important;
   }
   .irank-card__price-suffix {
-    font-size: 14px !important;
+    font-size: 16px !important;
   }
   .irank-card__price-note {
-    font-size: 13px !important;
+    font-size: 14px !important;
     line-height: 16px !important;
   }
   .irank-card__benefits {
     font-size: 14px !important;
-    line-height: 22px !important;
+    line-height: 20px !important;
   }
   .irank-card__benefits li {
     margin: 8px 0;
