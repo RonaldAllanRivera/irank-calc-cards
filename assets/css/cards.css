@@ -98,16 +98,26 @@
   .irank-card__content { padding-left: 24px; }
   .irank-card.is-badged .irank-card__content { padding-top: 60px; }
 }
-/* Mobile: 90% slide width to show ~10% peek of next card */
+/* Mobile: slide width = 100% - peek - gap (precise peek) */
 @media (max-width: 719.98px) {
-  .irank-cards__track { grid-auto-columns: 90%; }
+  .irank-cards { --peek: 5%; --gap: 12px; }
+  .irank-cards__track {
+    grid-auto-columns: calc(100% - var(--peek) - var(--gap));
+    padding: 10px 16px; /* smaller side padding on mobile */
+  }
   .irank-card {
-    min-width: 90%;
+    width: 100%;
+    min-width: 0;            /* let grid column define width */
     display: flex;           /* mobile: stack */
     flex-direction: column;  /* content above media */
   }
   .irank-card__content { order: 1; }
   .irank-card__media { order: 2; }
+  /* Badge text size on mobile */
+  .irank-card__badge {
+    font-size: 14px;
+    line-height: 22px;
+  }
 }
 @media (min-width: 1100px) {
   .irank-card {
