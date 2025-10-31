@@ -163,7 +163,7 @@
   .irank-card.is-badged .irank-card__badge { right: -16px; }
   /* CTA typography on mobile */
   .irank-card__cta {
-    font-size: 5px;
+    font-size: 12px !important;
     width: 85% !important;
     max-width: 100%;
     display: block;
