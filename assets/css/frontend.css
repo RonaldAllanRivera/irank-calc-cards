@@ -39,6 +39,18 @@
     object-fit: contain;
   }
 }
+@media (max-width: 899.98px) {
+  .irank-calc__ba--before,
+  .irank-calc__ba--after {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center bottom !important;
+  }
+  .irank-calc__ba { overflow: hidden !important; }
+}
 /* .irank-calc__visual{ position:relative; min-height:490px; background:rgba(255,255,255,.1); border-radius:12px; padding:8px; } */
 
 .irank-calc__visual {
