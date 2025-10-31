@@ -24,12 +24,12 @@ Render flow
 - Per‑card content (name, tagline, price, suffix, price tagline, benefits, badge, CTA, image): ✅
 - CTA gradients (normal + hover) with CSS variables; 64px radius, 12/20 padding (desktop): ✅
 - Benefits bullets with custom check icon (one per line): ✅
-- Mobile UX
+ - Mobile UX
   - Stacked layout (content above image): ✅
-  - Mobile CTA: one line, centered 90% width, 20px/12px padding, 16px font; text override to “Select this medication →”: ✅
+  - Mobile CTA: one line, centered 85% width, 20px/12px padding, 16px font; text override to “Select Medication”: ✅
   - Mobile viewer bar (dots) with active state styling: ✅
   - Precise slider peek using `--peek` + `--gap` variables: ✅
-  - Image container sized via `--media-h-mobile` and `object-fit: cover; object-position: center`: ✅
+  - Image container sized via `--media-h-mobile` and `object-fit: cover; object-position: center bottom`: ✅
   - Header pill fits one line at 14px; typography reductions and spacing tuned: ✅
 
 ## Why this implementation

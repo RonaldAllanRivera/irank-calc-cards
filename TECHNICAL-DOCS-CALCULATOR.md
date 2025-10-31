@@ -66,6 +66,7 @@ Common extensions
 - Keyboard support for revealing image handle and closing modal (Escape).
 - Reduced motion respected.
 - Success state: hides form controls, shows large centered Thank‑you message; modal auto‑closes.
+ - Mobile popup width capped at ~90vw; lead form inputs/textarea are centered at ~80% width for readability.
 
 ## Security, privacy, and data model
 - Sanitization: `sanitize_text_field`, `sanitize_email`, `floatval`, `intval`, `wp_unslash`.

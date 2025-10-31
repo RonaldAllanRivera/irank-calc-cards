@@ -10,7 +10,7 @@ Tested on WordPress 6.8.3+ and PHP 8.4. Works on shared PHP‑only hosting and L
 ## Plugin metadata
 - Requires at least: 6.8
 - Requires PHP: 8.1
-- Stable tag: 0.1.10
+- Stable tag: 0.1.11
 - License: GPL-2.0-or-later
 
 ## Description
@@ -66,10 +66,10 @@ Server‑rendered (dynamic) blocks with progressive enhancement. The calculator 
 - Viewer bar (dots) appears below the carousel on mobile. The active dot is solid `#F0532C`.
 - Layout stacks vertically on mobile: content above image.
 - CTA on mobile
-  - Label overrides to “Select this medication →”
-  - Centered at 90% width, padding 20px/12px, single line
+  - Label overrides to “Select Medication”
+  - Centered at 85% width, padding 20px/12px, single line
 - Image container on mobile uses a CSS variable for height and cover fit
-  - `--media-h-mobile: 275px` by default; image `object-fit: cover; object-position: center`.
+  - `--media-h-mobile: 275px` by default; image `object-fit: cover; object-position: center bottom`.
 - Slider “peek” on mobile controlled by variables
   - `--peek` (default 5%) and `--gap` (default 12px) feed `grid-auto-columns: calc(100% - var(--peek) - var(--gap))` for precise peeking.
 - Section Header pill stays on a single line at 14px font size.

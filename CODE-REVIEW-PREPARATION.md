@@ -43,7 +43,7 @@ The plugin ships two server‑rendered Gutenberg blocks with a lightweight, depe
 - **Modal overlay vs separate landing page for lead capture**
   - Overlay keeps context and increases conversion; separate page adds navigation friction.
 - **Client‑only CTA label change vs `wp_is_mobile()`**
-  - JS/CSS alternative would avoid cache variance but adds FOUC risk; server check kept for simplicity. If full‑page cache serves one HTML to all devices, consider CSS/JS fallback.
+  - We now use a client‑side `matchMedia('(max-width: 719.98px)')` override to set the mobile CTA label. This avoids cache variance from server‑side UA detection and removes dependency on `wp_is_mobile()`. If needed, a server hint can still be added, but client wins on load.
 - **`object-fit: contain` vs `cover`**
   - Contain avoided letterboxing; spec required full‑bleed card visuals → chose cover.
 - **Always‑visible dots vs mobile‑only**
@@ -79,7 +79,7 @@ The plugin ships two server‑rendered Gutenberg blocks with a lightweight, depe
 
 ## Risks and mitigations
 - **UA detection via `wp_is_mobile()`**
-  - Risk: cache or proxy may serve desktop HTML to mobile; Mitigation: prefer CSS/JS label in cached environments.
+  - Risk: cache or proxy may serve a single HTML to all devices; Mitigation: we rely on client‑side `matchMedia` for CTA label to avoid cache variance.
 - **Custom CSS overrides in themes**
   - Risk: collisions; Mitigation: styles are in a scoped file with specific class names. Keep selectors narrowly scoped.
 - **Long images with extreme aspect ratios**

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.11 - UI refinements (calculator + product cards)
+- Calculator overlay (mobile): popup width limited to 90vw for better fit
+- Lead form fields: inputs/textarea centered at 80% width across devices
+- Product Cards (mobile): image bottom anchoring (`object-position: center bottom`)
+- Product Cards (mobile): CTA label now "Select Medication", width 85%, centered
+- Product Cards (desktop): CTA bottom margin 20px for breathing room
+- Product Cards (desktop): media bottom-right corner set to square (no radius)
+
 ## 0.1.10 - Product Cards: mobile UX and viewer bar
 - Mobile viewer bar (dots) added below carousel; active dot styled to solid `#F0532C`
 - JS: dots `aria-current` handling for reliable active styling

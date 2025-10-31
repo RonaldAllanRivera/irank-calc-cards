@@ -24,8 +24,8 @@
   - Price shows with suffix beside it (e.g., “/month”); price tagline appears below.
   - Swipe cards on mobile (scroll-snap). Use prev/next buttons on all sizes; the viewer bar (dots) appears on mobile.
   - Mobile specifics:
-    - CTA: “Select this medication →”, centered 90% width, padding 20px/12px, one line.
-    - Image area: sized via mobile variable, fills with centered crop.
+    - CTA: “Select Medication”, centered 85% width, padding 20px/12px, one line.
+    - Image area: sized via mobile variable, fills with cover crop anchored to the bottom (center bottom).
     - Section header pill: one line at 14px.
 
 # How to test
@@ -48,6 +48,8 @@
   - Submit → form hides and a large centered “Thanks! We’ll be in touch soon.” message appears.
   - Overlay auto‑closes after ~5 seconds.
   - Submission is saved to the database via admin‑ajax.
+  - On mobile, the popup width is limited to ~90% of the viewport.
+  - Lead form inputs/textarea render at ~80% of the form width, centered.
 - **Leads (admin)**
   - WP Admin → Tools → IRANK Leads → verify submissions (Date, Name, Email, Phone, Page, Weight, Loss).
   - Use “Export CSV” to download the data.
