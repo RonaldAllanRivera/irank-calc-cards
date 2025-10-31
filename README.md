@@ -108,5 +108,51 @@ Admin → Settings → IRANK Calc & Cards
 - Frontend: `assets/js/frontend.*.js` (vanilla ES5)
 - Styles: `assets/css/frontend.css`
 
+## Screenshots
+
+### Admin
+
+- Block inspector (1)
+
+  ![Admin Block 1](admin-block1.jpg)
+
+- Block inspector (2)
+
+  ![Admin Block 2](admin-block2.jpg)
+
+- Leads list
+
+  ![Admin Leads](admin-leads.jpg)
+
+- Plugin settings
+
+  ![Admin Settings](admin-settings.jpg)
+
+### Frontend
+
+- Lead form (desktop)
+
+  ![Lead Form Desktop](leadform-desktop.jpg)
+
+- Lead form (mobile)
+
+  ![Lead Form Mobile](leadform-mobile.jpg)
+
+- Calculator (desktop)
+
+  ![Calculator Desktop](screenshot-calc.jpg)
+
+- Calculator (mobile)
+
+  ![Calculator Mobile](screenshot-calc-mobile.jpg)
+
+- Product Cards (desktop)
+
+  ![Product Cards Desktop](screenshot-product-card.jpg)
+
+- Product Cards (mobile)
+
+  ![Product Cards Mobile](screenshot-product-card-mobile.jpg)
+
 ## Changelog
 See `CHANGELOG.md` for details.
