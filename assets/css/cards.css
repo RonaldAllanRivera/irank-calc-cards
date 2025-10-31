@@ -141,14 +141,15 @@
     min-width: 0;            /* let grid column define width */
     display: flex;           /* mobile: stack */
     flex-direction: column;  /* content above media */
+    background: transparent !important; /* allow media to own bottom corners */
   }
   .irank-card__content { order: 1; }
   .irank-card__media { order: 2; }
   /* Mobile media: smaller container and show full image */
-  .irank-card__media { height: var(--media-h-mobile); min-height: var(--media-h-mobile); }
+  .irank-card__media { height: var(--media-h-mobile); min-height: var(--media-h-mobile); background: transparent !important; border-radius: 0 0 20px 20px; overflow: hidden; }
   .irank-card__media img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
   /* Remove any gap between content and media */
-  .irank-card__content { padding-bottom: 0 !important; margin-bottom: 0 !important; display:flex; flex-direction:column; gap: 8px; min-height: 550px; padding-left: 16px !important; padding-right: 16px !important; }
+  .irank-card__content { padding-bottom: 0 !important; margin-bottom: 0 !important; display:flex; flex-direction:column; gap: 8px; min-height: 550px; padding-left: 16px !important; padding-right: 16px !important; background: #fff; border-radius: 20px 20px 0 0; }
   .irank-card__content > * { margin-bottom: 0 !important; }
   .irank-card__title, .irank-card__tagline, .irank-card__price, .irank-card__price-note, .irank-card__benefits, .irank-card__cta { margin-bottom: 0 !important; }
   .irank-card__benefits { margin-bottom: 0; }
@@ -214,8 +215,8 @@
 }
 /* Re-assert mobile media sizing after base declaration so it wins in cascade */
 @media (max-width: 719.98px) {
-  .irank-card__media { height: var(--media-h-mobile) !important; min-height: var(--media-h-mobile) !important; }
-  .irank-card__media img { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: cover; object-position: center bottom !important; }
+  .irank-card__media { height: var(--media-h-mobile) !important; min-height: var(--media-h-mobile) !important; background: transparent !important; background-color: transparent !important; }
+  .irank-card__media img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 50% 100% !important; }
 }
 .irank-card__content {
   padding: 0;
