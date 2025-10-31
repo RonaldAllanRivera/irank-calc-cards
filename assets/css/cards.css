@@ -104,6 +104,7 @@
   .irank-card__media { min-height: 320px; }
   .irank-card__content { padding-left: 24px; }
   .irank-card.is-badged .irank-card__content { padding-top: 60px; }
+  .irank-card__cta { margin-bottom: 20px !important; }
 }
 /* Mobile: slide width = 100% - peek - gap (precise peek) */
 @media (max-width: 719.98px) {
