@@ -297,6 +297,12 @@
   width: min(90vw, 520px);
   position: relative;
 }
+@media (max-width: 600px) {
+  .irank-calc__overlay-inner {
+    width: 90vw !important;
+    box-sizing: border-box; /* ensure padding is included in 90vw */
+  }
+}
 .irank-calc__overlay-close {
   position: absolute;
   top: 8px;
